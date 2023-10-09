@@ -1,0 +1,77 @@
+<form [formGroup]="positionForm" (ngSubmit)="submit()" [noValidate]="false">
+	<mat-form-field>
+		<mat-select required formControlName="project" placeholder="Choose a project" #projectSelect
+					[(ngModel)]="selectedProject">
+			<mat-option>
+				<ngx-mat-select-search required placeholderLabel="Search"
+									   [formControl]="projectFilterCtrl"></ngx-mat-select-search>
+			</mat-option>
+
+
+			<mat-option *ngFor="let project of filteredProjects | async" [value]="project">
+				{{project.name}}
+			</mat-option>
+		</mat-select>
+		<mat-error *ngIf="positionForm.controls['project'].invalid && positionForm.controls['project'].touched">
+			Please select an option.
+		</mat-error>
+	</mat-form-field>
+
+
+	<mat-form-field>
+		<mat-select formControlName="role" required placeholder="Select a role" #roleSelect
+					[(ngModel)]="selectedRole">
+			<mat-option *ngFor="let role of roles " [value]="role">
+				{{role}}
+			</mat-option>
+		</mat-select>
+		<mat-error *ngIf="positionForm.controls['role'].invalid && positionForm.controls['role'].touched">
+			Please select an option.
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field>
+		<mat-select formControlName="seniority" required placeholder="Select a seniority" #roleSelect
+					[(ngModel)]="selectedSeniority">
+			<mat-option *ngFor="let seniority of seniorities " [value]="seniority">
+				{{seniority}}
+			</mat-option>
+		</mat-select>
+		<mat-error *ngIf="positionForm.controls['seniority'].invalid && positionForm.controls['seniority'].touched">
+			Please select an option.
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field class="number">
+		<input formControlName="number" required matInput [(ngModel)]="numberOfOpenPositions"
+			   placeholder="Number of open positions">
+		<mat-error *ngIf="positionForm.controls['number'].invalid && positionForm.controls['number'].touched">
+			Please input a number.
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field>
+		<input formControlName="farming" required matInput [(ngModel)]="farming"
+			   placeholder="Farming">
+		<mat-error *ngIf="positionForm.controls['farming'].invalid && positionForm.controls['farming'].touched">
+			Please input a number.
+		</mat-error>
+	</mat-form-field>
+
+	<mat-form-field>
+		<input formControlName="date" required matInput [(ngModel)]="positionStartDate" [matDatepicker]="picker"
+			   placeholder="Position start date">
+		<mat-datepicker-toggle matSuffix [for]="picker">
+			<mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+		</mat-datepicker-toggle>
+		<mat-datepicker #picker></mat-datepicker>
+		<mat-error *ngIf="positionForm.controls['date'].invalid && positionForm.controls['date'].touched">
+			Please select a date.
+		</mat-error>
+	</mat-form-field>
+
+	<div class="btn-group">
+		<button mat-button type="submit" [disabled]="!positionForm.valid">{{submitButtonText}}</button>
+		<button mat-button type="button" *ngIf="cancelForm" (click)="cancelForm.emit()">Cancel</button>
+	</div>
+</form>

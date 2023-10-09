@@ -1,0 +1,6 @@
+gradle
+rootProject.name = 'project-opportunities'
+include 'back-end'
+include 'front-end'
+
+

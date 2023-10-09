@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title th:remove="all">Template for HTML email</title>
+</head>
+<body>
+<p th:text="'Dear ' + ${name} + ','"></p>
+<br>
+<p
+	th:text="'There is a new interest in the ' + ${projectName} + ' project for the ' + ${positionSeniority} + ' ' + ${positionRoleName} + ' position.	You can find the contact details for the interested party at the bottom of this email.' ">
+</p>
+<br>
+<br>
+<p>Name: <span th:text="${fullName}"></span></p>
+<p>Username: <span th:text="${username}"></span></p>
+<p>Email address: <span th:text="${userEmail}"></span></p>
+<br>
+<br>
+
+<footer>
+	<p>Automated email from Project Opportunities. Do not reply.</p>
+</footer>
+</body>
+</html>

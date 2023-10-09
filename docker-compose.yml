@@ -1,0 +1,105 @@
+version: '3.1'
+
+services:
+  flyway:
+    container_name: flyway
+    image: flyway/flyway
+    environment:
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=admin
+      - FLYWAY_URL=jdbc:postgresql://db:5432/
+      - FLYWAY_SCHEMAS=flyway
+      - FLYWAY_MIXED=true
+    command: -locations=filesystem:/flyway/sql -connectRetries=60 migrate
+    volumes:
+      - ./flyway:/flyway/sql
+    depends_on:
+      db:
+        condition: service_healthy
+
+
+  db:
+    container_name: db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - "dbData:/var/lib/postgresql/data"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d", "postgres", "-U", "postgres"]
+      retries: 10
+      interval: 3s
+
+  keycloak:
+    container_name: keycloak
+    image: bitnami/keycloak:latest
+    environment:
+      KEYCLOAK_HTTP_PORT: 8090
+      KEYCLOAK_USER: user
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_DATABASE_NAME: bn_keycloak
+      KEYCLOAK_DATABASE_USER: bn_keycloak
+      KEYCLOAK_DATABASE_PASSWORD: admin
+      KEYCLOAK_DATABASE_HOST: db
+    ports:
+      - "8090:8090"
+    dns:
+      - 8.8.8.8
+    depends_on:
+      flyway:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [ "CMD-SHELL", "curl http://keycloak:8090/auth/realms/project-opportunities" ]
+      interval: 4s
+      retries: 10
+    volumes:
+      - ./keycloak-theme:/opt/bitnami/keycloak/themes
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - "1025:1025" # smtp server
+      - "8025:8025" # web ui
+    dns:
+      - 8.8.8.8
+  back-end:
+    container_name: back-end
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    build:
+      dockerfile: Dockerfile
+      context: ./back-end
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/
+      SPRING_DATASOURCE_HOST: db
+      SPRING_FLYWAY_URL: jdbc:postgresql://db:5432/
+      KEYCLOAK_HOST: keycloak
+      KEYCLOAK_PORT: 8090
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8090/realms/project-opportunities/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8090/realms/project-opportunities
+      SPRING_MAIL_HOST: mailhog
+    depends_on:
+      keycloak:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+
+  front-end:
+    container_name: front-end
+    ports:
+      - "80:80"
+    build:
+      dockerfile: Dockerfile
+      context: ./front-end
+    dns:
+      - 8.8.8.8
+volumes:
+  dbData:
+

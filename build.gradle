@@ -1,0 +1,44 @@
+plugins {
+	id 'base'
+	id 'org.jetbrains.gradle.docker' version '1.5.2'
+	id 'com.github.node-gradle.node' version '5.0.0' apply false
+}
+group = 'com.thesis'
+version = '0.0.1-SNAPSHOT'
+
+docker {
+	registries {
+		create("projectopportunities") {
+			username = USERNAME
+			password = PASSWORD
+			url = REGISTRY_URL
+		}
+	}
+}
+
+tasks.register('pushToAzure') {
+	group 'docker'
+	dependsOn 'dockerProjectopportunitiesLogin'
+	doLast {
+		exec {
+			workingDir './back-end'
+			executable 'docker'
+			args 'build', '-t', 'projectopportunities.azurecr.io/projectopportunities/back-end', '.'
+		}
+		exec {
+			workingDir './back-end'
+			executable 'docker'
+			args 'push', 'projectopportunities.azurecr.io/projectopportunities/back-end'
+		}
+		exec {
+			workingDir './front-end'
+			executable 'docker'
+			args 'build', '-t', 'projectopportunities.azurecr.io/projectopportunities/front-end', '.'
+		}
+		exec {
+			workingDir './front-end'
+			executable 'docker'
+			args 'push', 'projectopportunities.azurecr.io/projectopportunities/front-end'
+		}
+	}
+}

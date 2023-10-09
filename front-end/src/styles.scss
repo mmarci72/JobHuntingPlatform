@@ -1,0 +1,20 @@
+$green: #00E6A0;
+
+html, body {
+	height: 100%;
+	margin: 0;
+	font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
+}
+
+.border-green {
+	border: 2px solid $green;
+}
+
+button:active {
+	background-color: #00E6A0;
+}
+
+button:hover {
+	background-color: #99F5D9;
+}
+

@@ -1,0 +1,14 @@
+<div class="pt-2">
+	<mat-checkbox [checked]="userNotification.emailNotificationEnabled ?? false" (change)="emailNotificationChange()"
+				  color="primary"
+				  class="center"> Enable email notifications when a new position is added
+	</mat-checkbox>
+	<mat-checkbox [checked]="userNotification.pushNotificationEnabled ?? false" (change)="pushNotificationChange()"
+				  color="primary"
+				  class="center"> Enable push notifications when a new position is added
+	</mat-checkbox>
+
+	<ng-container *ngIf="userNotification.emailNotificationEnabled || userNotification.pushNotificationEnabled">
+		<app-settings-preferences></app-settings-preferences>
+	</ng-container>
+</div>

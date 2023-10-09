@@ -1,0 +1,87 @@
+<div>
+	<p>Manage existing positions:</p>
+
+	<mat-form-field>
+		<mat-select required placeholder="Choose a project" #projectSelect
+					[(ngModel)]="selectedProject" (ngModelChange)="projectChanged()">
+			<mat-option>
+				<ngx-mat-select-search required placeholderLabel="Search"
+									   [formControl]="projectFilterCtrl"></ngx-mat-select-search>
+			</mat-option>
+
+			<mat-option *ngFor="let project of filteredProjects | async" [value]="project">
+				{{project.name}}
+			</mat-option>
+		</mat-select>
+	</mat-form-field>
+
+
+	<table *ngIf="isProjectSelected" mat-table [dataSource]="dataSource" matSort matSortDisableClear="true"
+		   class="mat-elevation-z2">
+		<ng-container matColumnDef="postDate">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project post date">
+				Post Date
+			</th>
+			<td mat-cell *matCellDef="let position"> {{position.startDate | date}} </td>
+		</ng-container>
+		<ng-container matColumnDef="startDate">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project start date">
+				Start Date
+			</th>
+			<td mat-cell *matCellDef="let position"> {{position.postDate | date}} </td>
+		</ng-container>
+		<ng-container matColumnDef="role">
+			<th mat-header-cell *matHeaderCellDef>
+				Role
+			</th>
+			<td mat-cell *matCellDef="let position"> {{position.roleName | underscore}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="seniority">
+			<th mat-header-cell *matHeaderCellDef>
+				Seniority
+			</th>
+			<td mat-cell *matCellDef="let position">
+				{{position.seniorityName | underscore}}
+			</td>
+			<mat-footer-cell *matFooterCellDef>
+
+			</mat-footer-cell>
+		</ng-container>
+		<ng-container matColumnDef="number">
+			<th mat-header-cell *matHeaderCellDef> Number of open positions</th>
+			<td mat-cell *matCellDef="let position">
+				{{position.numberOfOpenPositions}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="farming">
+			<th mat-header-cell *matHeaderCellDef>Farming percentage</th>
+			<td mat-cell *matCellDef="let position">
+				{{position.farming}}
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="close">
+			<th mat-header-cell *matHeaderCellDef>Close position</th>
+			<td mat-cell *matCellDef="let position">
+				<button (click)="closePositionDialog(position.positionId)">Close</button>
+			</td>
+		</ng-container>
+
+		<ng-container matColumnDef="edit">
+			<th mat-header-cell *matHeaderCellDef>Edit position</th>
+			<td mat-cell *matCellDef="let position">
+				<button (click)="editPosition.emit(position)">Edit</button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+	</table>
+
+	<mat-paginator *ngIf="isProjectSelected" [pageSize]="10"
+				   [pageSizeOptions]="[10,30,50,100]"
+				   [showFirstLastButtons]="true" [hidePageSize]="false">
+
+	</mat-paginator>
+</div>

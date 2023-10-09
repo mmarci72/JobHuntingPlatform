@@ -1,0 +1,22 @@
+<div *ngIf="comments.length > 0"
+	 class="row text-center d-flex flex-column text-center align-items-center align-middle align-items-stretch">
+	<div
+		class="col-md-4 mb-5 mb-md-0 d-flex m-2 flex-column align-items-stretch mx-auto"
+		*ngFor="let comment of comments">
+		<div class="card testimonial-card">
+			<div class="card-body">
+				<p class="dark-grey-text mt-4">
+					<i class="fas fa-quote-left pe-2"></i>{{comment.data}}
+				</p>
+			</div>
+			<div class="card-footer">
+				<p>Posted on {{comment.creationDate | date}} by {{comment.fullName}}</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="text-center mt-2">
+	<button type="button" class="mx-auto border-0 rounded-3" (click)="router.navigate(['/projects'])">
+		Go back
+	</button>
+</div>

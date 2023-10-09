@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Ico/Login</title>
+    <g id="Ico/Login" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="avatar" transform="translate(11.000000, 9.000000)" stroke="#003246" stroke-width="1.5">
+            <path d="M10,11 C13.0376,11 15.5,8.5376 15.5,5.5 C15.5,2.46243 13.0376,0 10,0 C6.9624,0 4.5,2.46243 4.5,5.5 C4.5,8.5376 6.9624,11 10,11 Z" id="Path"></path>
+            <line x1="3.99902" y1="27.9999" x2="3.99902" y2="20.9999" id="Path"></line>
+            <line x1="3.99902" y1="21" x2="3.99902" y2="19.99" id="Path" stroke-linecap="round"></line>
+            <line x1="16" y1="27.9999" x2="16" y2="20.9999" id="Path"></line>
+            <line x1="16" y1="21" x2="16" y2="20" id="Path" stroke-linecap="round"></line>
+            <path d="M20,28 L20,19 C20,17.6739 19.4732,16.4021 18.5355,15.4645 C17.5979,14.5268 16.3261,14 15,14 L5,14 C3.67392,14 2.40215,14.5268 1.46447,15.4645 C0.52678,16.4021 0,17.6739 0,19 L0,28" id="Path"></path>
+        </g>
+    </g>
+</svg>

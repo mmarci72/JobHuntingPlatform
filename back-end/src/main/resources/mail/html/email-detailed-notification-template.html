@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<title th:remove="all">Template for HTML email</title>
+</head>
+<body>
+<p th:text="'Dear ' + ${fullName} + ','"></p>
+<br>
+<p th:text="'A new position has been posted on the website with the following details:'"></p>
+<br>
+<br>
+<p th:text="'Project: ' + ${position.project.name}"></p>
+<p th:text="'Seniority: ' + ${position.seniorityName.toLowerCase()}"></p>
+<p th:text="'Role: ' + ${position.roleName.toLowerCase().replace('_', ' ')}"></p>
+<p th:text="'Start date: ' + ${position.startDate}"></p>
+<p th:text="'Post date: ' + ${position.postDate}"></p>
+
+<div style="display: flex; gap: .5rem;">
+	<span
+		th:text="'You can sign up to this position by '"></span>
+	<span> <a href="http://localhost/projects">clicking here</a> </span>
+</div>
+<br>
+<br>
+
+<footer>
+	<p>Automated email from Project Opportunities. Do not reply.</p>
+</footer>
+</body>
+</html>

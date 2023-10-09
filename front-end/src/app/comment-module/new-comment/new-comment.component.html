@@ -1,0 +1,14 @@
+<div class="text-center">
+	<button *ngIf="!isAddNewComment" type="button" class="mx-auto mt-3 border-0 rounded-3" (click)="toggleAddNewComment()">Add new
+		comment
+	</button>
+	<div *ngIf="isAddNewComment">
+		<form class="new-comment-form">
+			<mat-form-field>
+				<textarea matInput placeholder="Write your comment here" [(ngModel)]="commentText" name="comment"></textarea>
+			</mat-form-field>
+			<button type="submit" (click)="addNewComment()">Save</button>
+			<button type="submit" (click)="cancelNewComment()">Cancel</button>
+		</form>
+	</div>
+</div>

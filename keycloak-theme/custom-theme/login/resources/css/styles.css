@@ -1,0 +1,44 @@
+html {
+	font-family: 'Inter-Regular', Arial, sans-serif;
+}
+
+.logo-img {
+	margin-bottom: 50px;
+}
+
+.kc-login, .kc-register {
+	background-color: #003246;
+}
+
+
+.login-pf body {
+	background: none;
+}
+
+#kc-header {
+	color: black;
+}
+
+#username {
+	background-image: url("../img/Login.svg");
+	background-repeat: no-repeat;
+	padding: 6px 12px 6px 60px;
+	border: solid #668490;
+	border-width: 0 0 1px 0;
+	border-radius: 0;
+	height: 52px;
+}
+
+#password, #password-confirm {
+	background-image: url("../img/Pass.svg");
+	background-repeat: no-repeat;
+	padding: 6px 12px 6px 60px;
+	border: solid #668490;
+	border-width: 0 0 1px 0;
+	border-radius: 0;
+	height: 52px;
+}
+
+#kc-login, #kc-register {
+	border-radius: 10px;
+}

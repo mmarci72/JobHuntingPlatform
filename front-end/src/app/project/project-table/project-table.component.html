@@ -1,0 +1,131 @@
+<h1>Browse open positions</h1>
+
+<div class="project-table border-green">
+
+
+	<div>
+		<mat-form-field class="filter">
+			<mat-label>Filter</mat-label>
+			<input matInput placeholder="Search columns" [(ngModel)]="searchText" (keyup)="searchKey($event)">
+		</mat-form-field>
+		<button (click)="clearFilters()">Clear filters</button>
+	</div>
+
+
+	<table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true" class="mat-elevation-z5">
+		<ng-container matColumnDef="name">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project name"> Name</th>
+			<td mat-cell *matCellDef="let project">
+				{{project.name}}
+				<ng-container *ngIf="isNewPosition(project)">
+					<br>
+					<span class="new-project">NEW</span>
+				</ng-container>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="description">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project description"> Description
+			</th>
+			<td mat-cell *matCellDef="let project"> {{project.description}} </td>
+		</ng-container>
+		<ng-container matColumnDef="technologies">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by technologies"> Technologies</th>
+			<td mat-cell *matCellDef="let project"> {{project.technologies}} </td>
+		</ng-container>
+		<ng-container matColumnDef="startDate">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project start date">
+				Start Date
+			</th>
+			<td mat-cell *matCellDef="let project"> {{project.positionStarDate | date}} </td>
+		</ng-container>
+		<ng-container matColumnDef="postDate">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by project creation date">
+				Post Date
+			</th>
+			<td mat-cell *matCellDef="let project"> {{project.positionPostDate | date}} </td>
+		</ng-container>
+		<ng-container matColumnDef="role">
+			<th mat-header-cell *matHeaderCellDef> Role
+				<mat-select [panelWidth]="null" multiple [(ngModel)]="selectedRoles"
+							(ngModelChange)="applyRoleFilter()">
+					<mat-option *ngFor="let role of roles" [value]="role">
+						{{role | underscore}}
+					</mat-option>
+				</mat-select>
+			</th>
+			<td mat-cell *matCellDef="let project"> {{project.roleName | underscore}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="seniority">
+			<th mat-header-cell *matHeaderCellDef> Seniority
+				<mat-select [panelWidth]="null" multiple [(ngModel)]="selectedSeniorities"
+							(ngModelChange)="applySeniorityFilter()">
+					<mat-option *ngFor="let seniority of seniorities" [value]="seniority">
+						{{seniority | underscore}}
+					</mat-option>
+				</mat-select>
+			</th>
+			<td mat-cell *matCellDef="let project">
+				{{project.seniorityName | underscore}}
+			</td>
+			<mat-footer-cell *matFooterCellDef>
+
+			</mat-footer-cell>
+		</ng-container>
+		<ng-container matColumnDef="unit">
+			<th mat-header-cell *matHeaderCellDef> Unit
+				<mat-select panelClass="" [panelWidth]="null" multiple [(ngModel)]="selectedUnits"
+							(ngModelChange)="applyUnitFilter()">
+					<mat-option *ngFor="let unit of units" [value]="unit">
+						{{unit | underscore}}
+					</mat-option>
+				</mat-select>
+			</th>
+			<td mat-cell *matCellDef="let project">
+				{{project.unitName | underscore}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="number">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header> Number of open positions</th>
+			<td mat-cell *matCellDef="let project">
+				{{project.numberOfOpenPositions}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="farming">
+			<th mat-header-cell *matHeaderCellDef mat-sort-header>Farming percentage</th>
+			<td mat-cell *matCellDef="let project">
+				{{project.farming}}
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="comments">
+			<th mat-header-cell *matHeaderCellDef><a>Comments</a></th>
+			<td mat-cell *matCellDef="let project">
+				<button [routerLink]="['/comment']"
+				   [queryParams]="{id: project.positionId, projectName: getProjectNameById(project)}">
+					View Comments
+				</button>
+			</td>
+		</ng-container>
+		<ng-container matColumnDef="interested">
+			<th mat-header-cell *matHeaderCellDef><a>Sign up</a></th>
+			<td mat-cell *matCellDef="let project">
+				<div *ngIf="project.signedUp; then thenBlock; else elseBlock"></div>
+				<ng-template #thenBlock>
+					<p>You've signed up!</p>
+				</ng-template>
+				<ng-template #elseBlock>
+					<button (click)="signUpDialog(project.positionId)">I'm interested</button>
+				</ng-template>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+	</table>
+
+	<mat-paginator [pageSize]="10"
+				   [pageSizeOptions]="[10,30,50,100]"
+				   [showFirstLastButtons]="true" [hidePageSize]="false">
+
+	</mat-paginator>
+</div>

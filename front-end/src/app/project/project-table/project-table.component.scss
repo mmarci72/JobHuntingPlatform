@@ -1,0 +1,76 @@
+$green: #003246;
+h1 {
+	margin-top: 2rem;
+	margin-left: 2rem;
+}
+
+.new-project {
+	color: white;
+	background-color: $green;
+	margin-top: 2rem;
+	border: 2px solid $green;
+}
+
+.project-table {
+	margin-left: 2rem;
+	margin-right: 2rem;
+}
+
+.filter {
+	margin: 2rem 2rem 0 2rem;
+	width: 10rem;
+	height: 5rem;
+}
+
+.mat-column-description {
+	max-width: 280px;
+}
+
+.mat-column-name {
+	max-width: 80px;
+}
+
+.mat-column-postDate {
+	max-width: 80px;
+}
+
+.mat-column-startDate {
+	max-width: 80px;
+}
+
+.mat-column-technologies {
+	max-width: 110px;
+}
+
+.mat-column-role {
+	max-width: 80px;
+}
+
+.mat-column-seniority {
+	max-width: 80px;
+}
+
+.mat-column-comments {
+	max-width: 80px;
+}
+
+.mat-column-interested {
+	max-width: 90px;
+}
+
+.mat-column-unit {
+	max-width: 70px;
+}
+
+.mat-column-number {
+	max-width: 80px;
+}
+
+.mat-column-farming {
+	max-width: 70px;
+}
+
+.filter-dropdown {
+	max-width: 120px;
+}
+
