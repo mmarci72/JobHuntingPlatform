@@ -1,20 +1,9 @@
 plugins {
 	id 'base'
-	id 'org.jetbrains.gradle.docker' version '1.5.2'
 	id 'com.github.node-gradle.node' version '5.0.0' apply false
 }
 group = 'com.thesis'
 version = '0.0.1-SNAPSHOT'
-
-docker {
-	registries {
-		create("projectopportunities") {
-			username = USERNAME
-			password = PASSWORD
-			url = REGISTRY_URL
-		}
-	}
-}
 
 tasks.register('pushToAzure') {
 	group 'docker'
