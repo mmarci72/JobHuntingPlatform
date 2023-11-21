@@ -32,7 +32,6 @@ The project uses the following technology stack:
 - Keycloak for authentication and authorization management
 - Docker for containerizing the above services
 - Azure Container Registry for storing docker images
-- LDAP to get information of employees from their username and to automatically authenticate Career Coaches
 
 ## Steps for building the project
 
@@ -44,9 +43,8 @@ Take the following simple steps:
 2. From the root of the project run `./gradlew back-end:assemble`
 3. From the root of the project run `docker compose up --build -d`
 4. Once the build is complete, the following ports will be in use:
-	- 80: Angular front-end
-	- 8080: Spring back-end
-	- 8090: keycloak admin console
-	- 8025: mailhog web ui
 
-
+   - 80: Angular front-end
+   - 8080: Spring back-end
+   - 8090: keycloak admin console
+   - 8025: mailhog web ui
