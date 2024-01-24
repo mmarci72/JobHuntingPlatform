@@ -1,17 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-import { Comment } from '../model/comment.model';
-import { SessionStorageService } from './session-storage.service';
+import { Comment } from "../model/comment.model";
+import { SessionStorageService } from "./session-storage.service";
+import { BaseService } from "./base.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
-export class CommentService {
-
-	private readonly baseUrl = 'http://localhost:8080'
-
-	constructor(private readonly http: HttpClient, private readonly sessionStorageService: SessionStorageService) { }
+export class CommentService extends BaseService {
+	constructor(
+		private readonly http: HttpClient,
+		private readonly sessionStorageService: SessionStorageService,
+	) {
+		super();
+	}
 
 	getComments() {
 		return this.http.get<Comment[]>(`${this.baseUrl}/comments`);
@@ -26,8 +29,7 @@ export class CommentService {
 	}
 
 	async createComment(comment: Comment) {
-		comment.username = (await this.sessionStorageService.getUser()).username
+		comment.username = (await this.sessionStorageService.getUser()).username;
 		return this.http.post<Comment>(`${this.baseUrl}/comments`, comment);
-
 	}
 }

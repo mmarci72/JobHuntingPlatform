@@ -1,19 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-import { ProjectPosition } from '../model/project-position.model';
+import { ProjectPosition } from "../model/project-position.model";
+import { BaseService } from "./base.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
-export class PositionService {
-
-
-	baseUrl = 'http://localhost:8080/positions'
-
-
+export class PositionService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-
+		super();
 	}
 
 	addPosition(position: ProjectPosition) {
@@ -29,6 +25,6 @@ export class PositionService {
 	}
 
 	patchPosition(position: ProjectPosition) {
-		return this.http.patch(`${this.baseUrl}/${position.positionId}`, position)
+		return this.http.patch(`${this.baseUrl}/${position.positionId}`, position);
 	}
 }

@@ -1,22 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-import { UserNotification } from '../model/user-notification.model';
+import { UserNotification } from "../model/user-notification.model";
+import { BaseService } from "./base.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
-export class UserNotificationService {
-
-	private readonly baseUrl = 'http://localhost:8080/notifications'
-
-	constructor(private readonly http: HttpClient) { }
+export class UserNotificationService extends BaseService {
+	constructor(private readonly http: HttpClient) {
+		super();
+	}
 
 	changeNotification(userNotification: UserNotification) {
-		return this.http.patch<UserNotification>(`${this.baseUrl}/${userNotification.username}`, userNotification)
+		return this.http.patch<UserNotification>(`${this.baseUrl}/${userNotification.username}`, userNotification);
 	}
 
 	getPreferences(username: string) {
-		return this.http.get<UserNotification>(`${this.baseUrl}/${username}`)
+		return this.http.get<UserNotification>(`${this.baseUrl}/${username}`);
 	}
 }
