@@ -1,14 +1,16 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BaseService } from "./base.service";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
-export class SeniorityService {
-
-	constructor(private readonly http: HttpClient) { }
+export class SeniorityService extends BaseService {
+	constructor(private readonly http: HttpClient) {
+		super();
+	}
 
 	getSeniorities() {
-		return this.http.get<string[]>(`http://localhost:8080/seniorities`)
+		return this.http.get<string[]>(`${this.baseUrl}/seniorities`);
 	}
 }

@@ -1,16 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
-import { Preference } from '../model/preference.model';
+import {Preference} from '../model/preference.model';
+import {BaseService} from "./base.service";
 
 @Injectable({
 	providedIn: 'root'
 })
-export class PreferenceService {
+export class PreferenceService extends BaseService {
 
-	private readonly baseUrl = 'http://localhost:8080';
-
-	constructor(private readonly http: HttpClient) { }
+	constructor(private readonly http: HttpClient) {
+		super()
+	}
 
 	getPreferencesForUser(username: string) {
 		return this.http.get<Preference>(`${this.baseUrl}/preferences/${username}`)
