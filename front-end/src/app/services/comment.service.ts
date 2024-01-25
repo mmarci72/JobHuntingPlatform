@@ -29,7 +29,7 @@ export class CommentService extends BaseService {
 	}
 
 	async createComment(comment: Comment) {
-		comment.username = (await this.sessionStorageService.getUser()).username;
+		comment.username = (await this.sessionStorageService.getUser()).username as string;
 		return this.http.post<Comment>(`${this.baseUrl}/comments`, comment);
 	}
 }

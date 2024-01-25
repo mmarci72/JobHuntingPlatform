@@ -3,9 +3,9 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } fr
 import { KeycloakService } from "keycloak-angular";
 
 import { AppComponent } from "../app.component";
-import { User } from "../model/user.model";
 import { AuthService } from "../services/authentication.service";
 import { SessionStorageService } from "../services/session-storage.service";
+import { KeycloakProfile } from "keycloak-js";
 
 @Component({
 	selector: "app-header",
@@ -13,7 +13,7 @@ import { SessionStorageService } from "../services/session-storage.service";
 	styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements AfterViewInit {
-	user: User = new User();
+	user?: KeycloakProfile;
 	isInRole = false;
 
 	@ViewChild("welcome") welcome!: ElementRef;

@@ -1,34 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwPush } from '@angular/service-worker';
-import { catchError, of } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { SwPush } from "@angular/service-worker";
+import { catchError, of } from "rxjs";
 
-import { User } from '../model/user.model';
-import { UserNotification } from '../model/user-notification.model';
-import { PushNotificationService } from '../services/push-notification.service';
-import { SessionStorageService } from '../services/session-storage.service';
-import { SubscriptionService } from '../services/subscription.service';
-import { UserNotificationService } from '../services/user-notification.service';
+import { UserNotification } from "../model/user-notification.model";
+import { PushNotificationService } from "../services/push-notification.service";
+import { SessionStorageService } from "../services/session-storage.service";
+import { SubscriptionService } from "../services/subscription.service";
+import { UserNotificationService } from "../services/user-notification.service";
+import { KeycloakProfile } from "keycloak-js";
 
 @Component({
-	selector: 'app-settings',
-	templateUrl: './settings.component.html',
-	styleUrls: ['./settings.component.scss']
+	selector: "app-settings",
+	templateUrl: "./settings.component.html",
+	styleUrls: ["./settings.component.scss"],
 })
 export class SettingsComponent implements OnInit {
 	userNotification: UserNotification = new UserNotification();
-	user!: User
+	user!: KeycloakProfile;
 
-	readonly successString = 'Changes saved!'
-	readonly errorString = 'Error saving changes!'
+	readonly successString = "Changes saved!";
+	readonly errorString = "Error saving changes!";
 
 	constructor(
-		private readonly userNotificationService: UserNotificationService, private readonly swPush: SwPush,
+		private readonly userNotificationService: UserNotificationService,
+		private readonly swPush: SwPush,
 		private readonly pushNotificationService: PushNotificationService,
-		private readonly subscriptionService: SubscriptionService, private readonly snackBar: MatSnackBar,
-		private readonly sessionStorageService: SessionStorageService
-	) {
-	}
+		private readonly subscriptionService: SubscriptionService,
+		private readonly snackBar: MatSnackBar,
+		private readonly sessionStorageService: SessionStorageService,
+	) {}
 
 	async ngOnInit() {
 		this.user = await this.sessionStorageService.getUser();
@@ -37,27 +38,28 @@ export class SettingsComponent implements OnInit {
 	}
 
 	private getPreferences() {
-		this.userNotificationService.getPreferences(this.userNotification.username ?? '')
-			.subscribe(result => {
-				if (result) {
-					this.userNotification = result;
-				}
-				else {
-					this.userNotification.username = this.user.username;
-				}
-			})
+		this.userNotificationService.getPreferences(this.userNotification.username ?? "").subscribe((result) => {
+			if (result) {
+				this.userNotification = result;
+			} else {
+				this.userNotification.username = this.user.username;
+			}
+		});
 	}
 
 	emailNotificationChange() {
 		this.userNotification.emailNotificationEnabled = !this.userNotification.emailNotificationEnabled;
 
-		this.userNotificationService.changeNotification(this.userNotification).pipe(catchError((err) => {
-			this.openSnackBar(this.errorString, 'Ok');
-			console.error(err);
-			return of(null);
-		}))
-			.subscribe(() => this.openSnackBar(this.successString, 'Ok')
-			);
+		this.userNotificationService
+			.changeNotification(this.userNotification)
+			.pipe(
+				catchError((err) => {
+					this.openSnackBar(this.errorString, "Ok");
+					console.error(err);
+					return of(null);
+				}),
+			)
+			.subscribe(() => this.openSnackBar(this.successString, "Ok"));
 	}
 
 	pushNotificationChange() {
@@ -65,27 +67,28 @@ export class SettingsComponent implements OnInit {
 
 		this.userNotificationService.changeNotification(this.userNotification).subscribe(async () => {
 			if (this.userNotification.pushNotificationEnabled) {
-
 				try {
 					const value = await this.pushNotificationService.generateSubscription();
-					value.subscribe(() => this.openSnackBar('Changes saved!', 'Ok'))
+					value.subscribe(() => this.openSnackBar("Changes saved!", "Ok"));
+				} catch (e) {
+					this.openSnackBar(this.errorString, "Ok");
 				}
-				catch (e) {
-					this.openSnackBar(this.errorString, 'Ok');
-				}
-			}
-			else if (this.user.username) {
-				this.subscriptionService.deleteSubscription(this.user.username).pipe(catchError((err) => {
-					this.openSnackBar(this.errorString, 'Ok');
-					console.error(err);
-					return of(null);
-				}))
-					.subscribe(() => this.openSnackBar(this.successString, 'Ok'));
+			} else if (this.user.username) {
+				this.subscriptionService
+					.deleteSubscription(this.user.username)
+					.pipe(
+						catchError((err) => {
+							this.openSnackBar(this.errorString, "Ok");
+							console.error(err);
+							return of(null);
+						}),
+					)
+					.subscribe(() => this.openSnackBar(this.successString, "Ok"));
 			}
 		});
 	}
 
 	openSnackBar(message: string, action: string) {
-		this.snackBar.open(message, action, { duration: 2000 })
+		this.snackBar.open(message, action, { duration: 2000 });
 	}
 }
