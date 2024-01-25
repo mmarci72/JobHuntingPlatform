@@ -9,7 +9,7 @@ import { BaseService } from "./base.service";
 })
 export class SubscriptionService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("subscriptions");
 	}
 
 	addSubscription(subscription: Subscription) {

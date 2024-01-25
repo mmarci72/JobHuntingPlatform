@@ -11,7 +11,7 @@ import { BaseService } from "./base.service";
 })
 export class ProjectService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("projects");
 	}
 
 	getProjects(): Observable<Project[]> {
