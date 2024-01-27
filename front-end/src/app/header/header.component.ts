@@ -40,10 +40,10 @@ export class HeaderComponent implements AfterViewInit {
 
 	private async refreshUser() {
 		this.user = await this.sessionStorageService.getUser();
-		this.http.post<boolean>("http://localhost:8081/user", this.user).subscribe((result) => {
-			this.isInRole = result;
-			this.cd.detectChanges();
-		});
+
+		//TODO This will have to be replaced by a logic that checks for escalated privileges
+		this.isInRole = true;
+
 		this.welcome.nativeElement.textContent = `Welcome, ${this.user.firstName} ${this.user.lastName}`;
 		this.cd.detectChanges();
 	}
