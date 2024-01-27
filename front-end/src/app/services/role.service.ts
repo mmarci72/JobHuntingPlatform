@@ -7,10 +7,10 @@ import { BaseService } from "./base.service";
 })
 export class RoleService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("roles");
 	}
 
 	getAllRoles() {
-		return this.http.get<string[]>(`${this.baseUrl}/roles`);
+		return this.http.get<string[]>(`${this.baseUrl}`);
 	}
 }
