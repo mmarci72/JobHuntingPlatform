@@ -1,39 +1,54 @@
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 1',
-		'Desc 1',
-		'2022-01-01', 'Java, Angular', 'BANKING');
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 2',
-		'Desc 2',
-		'2022-04-10', 'Spring, React, OpenShift', 'GROWTH_MARKETS');
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 3',
-		'Desc 3',
-		'2023-01-12', 'Java, Spring, Angular, Azure', 'INSURANCE');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain)
+VALUES ('Company 1', '1999-02-13', 'Budapest, Hungary', 130, 250, 'GROWTH_MARKETS');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain)
+VALUES ('Company 2', '2002-06-20', 'Eger, Hungary', 10, 30, 'INSURANCE');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain)
+VALUES ('Company 3', '2000-02-13', 'Budapest, Hungary', 1000, 1500, 'BANKING');
 
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (1, 'SENIOR', 'SOFTWARE_ENGINEER', 1, 100, '2023-02-01', '2023-01-23');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (2, 'PROFESSIONAL', 'SOFTWARE_ENGINEER', 2, 60, '2023-02-10', '2022-01-20');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (3, 'SENIOR', 'SOLUTION_ARCHITECT', 1, 80, '2023-01-12', '2023-01-03');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (2, 'JUNIOR', 'REQUIREMENT_ENGINEER', 1, 100, '2023-02-20', '2022-01-20');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (1, 'ANY', 'SOFTWARE_ENGINEER', 1, 20, '2023-02-01', '2023-01-23');
+INSERT INTO position(company_id, position_name, start_date, seniority, role, requirements_description, offer_description,
+                     responsibilities_description, salary_min, salary_max)
+VALUES (0, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+        'Some description goes here that will be much longer than this',
+        'Offer description goes here..............',
+        'Write clean code ;)', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority, role, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (0, 'Tech Squad Lead', '2024-06-21', 'PROFESSIONAL', 'PROJECT_MANAGER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Manage team', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority, role, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (1, 'Java Developer', '2024-03-10', 'JUNIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Coding', 800000);
+INSERT INTO position(company_id, position_name, start_date, seniority, role, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (2, 'Test Engineer', '2024-03-10', 'INTERN', 'TESTER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Test stuff', 400000);
 
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (1, 'I can only recommend this project', '2022-02-03', 'ujvmarcell', 'Marcell Újvári');
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (2, 'This project is a little bit overwhelming, but might be for you if you are up for the challenge', '2023-04-03',
-		'user', 'Test User');
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (3, 'I really enjoy working on this project', '2022-08-03', 'ujvarim', 'Marcell Újvári');
+
+INSERT INTO technology(position_id, name)
+VALUES (0,'Spring');
+INSERT INTO technology(position_id, name)
+VALUES (0,'Javascript');
+INSERT INTO technology(position_id, name)
+VALUES (0,'Backend');
+INSERT INTO technology(position_id, name)
+VALUES (1,'Backend');
+INSERT INTO technology(position_id, name)
+VALUES (1,'Python');
+INSERT INTO technology(position_id, name)
+VALUES (1,'Typescript');
+INSERT INTO technology(position_id, name)
+VALUES (2,'Java');
+INSERT INTO technology(position_id, name)
+VALUES (3,'Testing');
+
+
 
 INSERT INTO interests(position_id, userName)
 values (1, 'ujvarim')
