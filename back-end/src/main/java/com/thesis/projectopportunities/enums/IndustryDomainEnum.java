@@ -3,7 +3,7 @@ package com.thesis.projectopportunities.enums;
 import lombok.Getter;
 
 @Getter
-public enum UnitEnum {
+public enum IndustryDomainEnum {
 	BANKING("Banking"),
 	PUBLIC_SECTOR("Public Sector"),
 	INSURANCE("Insurance"),
@@ -12,26 +12,26 @@ public enum UnitEnum {
 
 	final String literal;
 
-	UnitEnum(String literal) {
+	IndustryDomainEnum(String literal) {
 		this.literal = literal;
 	}
 
-	public static UnitEnum toEnum(String literal) {
+	public static IndustryDomainEnum toEnum(String literal) {
 		switch (literal) {
 			case "Banking" -> {
-				return UnitEnum.BANKING;
+				return IndustryDomainEnum.BANKING;
 			}
 			case "Public Sector" -> {
-				return UnitEnum.PUBLIC_SECTOR;
+				return IndustryDomainEnum.PUBLIC_SECTOR;
 			}
 			case "Insurance" -> {
-				return UnitEnum.INSURANCE;
+				return IndustryDomainEnum.INSURANCE;
 			}
 			case "Growth Markets" -> {
-				return UnitEnum.GROWTH_MARKETS;
+				return IndustryDomainEnum.GROWTH_MARKETS;
 			}
 			case ("T&I") -> {
-				return UnitEnum.T_AND_I;
+				return IndustryDomainEnum.T_AND_I;
 			}
 			default -> throw new IllegalArgumentException("Non existent unit");
 
