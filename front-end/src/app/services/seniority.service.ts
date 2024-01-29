@@ -7,10 +7,10 @@ import { BaseService } from "./base.service";
 })
 export class SeniorityService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("seniorities");
 	}
 
 	getSeniorities() {
-		return this.http.get<string[]>(`${this.baseUrl}/seniorities`);
+		return this.http.get<string[]>(`${this.baseUrl}`);
 	}
 }

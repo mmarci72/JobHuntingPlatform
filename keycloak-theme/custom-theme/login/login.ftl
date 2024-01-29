@@ -15,7 +15,7 @@
                         <#if !usernameHidden??>
 							<div class="${properties.kcFormGroupClass!}">
 								<input tabindex="1" id="username" class="${properties.kcInputClass!}" name="username"
-									   placeholder="User-ID" value="${(login.username!'')}" type="text" autofocus
+									   placeholder="Username" value="${(login.username!'')}" type="text" autofocus
 									   autocomplete="off"
 									   aria-invalid="<#if messagesPerField.existsError('username','password')>true</#if>"
 								/>

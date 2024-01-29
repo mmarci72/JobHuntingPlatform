@@ -9,7 +9,7 @@ import { BaseService } from "./base.service";
 })
 export class UserNotificationService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("notifications");
 	}
 
 	changeNotification(userNotification: UserNotification) {

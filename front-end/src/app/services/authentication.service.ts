@@ -1,14 +1,12 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { KeycloakService } from "keycloak-angular";
 import { KeycloakProfile, KeycloakTokenParsed } from "keycloak-js";
-import { lastValueFrom, ReplaySubject, Subject } from "rxjs";
 
-import { User } from "../model/user.model";
 import { PushNotificationService } from "./push-notification.service";
 import { SessionStorageService } from "./session-storage.service";
 import { UserNotificationService } from "./user-notification.service";
 import { BaseService } from "./base.service";
+import { ReplaySubject, Subject } from "rxjs";
 
 @Injectable()
 export class AuthService extends BaseService {
@@ -17,7 +15,6 @@ export class AuthService extends BaseService {
 	constructor(
 		private readonly keycloakService: KeycloakService,
 		private readonly sessionStorageService: SessionStorageService,
-		private readonly http: HttpClient,
 		private readonly userNotificationService: UserNotificationService,
 		private readonly pushNotificationService: PushNotificationService,
 	) {
@@ -53,13 +50,11 @@ export class AuthService extends BaseService {
 	}
 
 	public async saveUser() {
-		let user: User = new User();
-		user.username = (await this.loadUserProfile()).username ?? "";
-		user = await lastValueFrom(this.http.get<User>(`${this.baseUrl}/user/${user.username}`));
+		let userProfile: KeycloakProfile = await this.loadUserProfile();
 
-		this.sessionStorageService.setUser(user);
+		this.sessionStorageService.setUser(userProfile);
 
-		this.userNotificationService.getPreferences(user.username ?? "").subscribe((preference) => {
+		this.userNotificationService.getPreferences(userProfile.username ?? "").subscribe((preference) => {
 			if (preference.pushNotificationEnabled) {
 				this.pushNotificationService.generateSubscription().then((result) => result.subscribe());
 			}

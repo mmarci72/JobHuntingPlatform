@@ -1,17 +1,16 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
+import { EventEmitter, Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 
-import { User } from '../model/user.model';
+import { KeycloakProfile } from "keycloak-js";
 
 @Injectable({
-	providedIn: 'root'
+	providedIn: "root",
 })
 export class SessionStorageService {
+	userSetEvent = new EventEmitter<void>();
 
-	userSetEvent = new EventEmitter<void>
-
-	setUser(user: User) {
-		sessionStorage.setItem('user', JSON.stringify(user));
+	setUser(user: KeycloakProfile) {
+		sessionStorage.setItem("user", JSON.stringify(user));
 		this.userSetEvent.emit();
 	}
 
@@ -19,25 +18,22 @@ export class SessionStorageService {
 		return this.userSetEvent;
 	}
 
-	async getUser(): Promise<User> {
-		if (!sessionStorage.getItem('user')) {
-			await firstValueFrom(this.userSetEvent)
+	async getUser(): Promise<KeycloakProfile> {
+		if (!sessionStorage.getItem("user")) {
+			await firstValueFrom(this.userSetEvent);
 
-			const userStr = sessionStorage.getItem('user');
+			const userStr = sessionStorage.getItem("user");
 			if (userStr) {
 				return JSON.parse(userStr);
+			} else {
+				throw new Error(`User can't be retrieved`);
 			}
-			else {
-				throw new Error(`User can't be retrieved`)
-			}
-		}
-		else {
-			const userStr = sessionStorage.getItem('user');
+		} else {
+			const userStr = sessionStorage.getItem("user");
 			if (userStr) {
 				return JSON.parse(userStr);
-			}
-			else {
-				throw new Error(`User can't be retrieved`)
+			} else {
+				throw new Error(`User can't be retrieved`);
 			}
 		}
 	}

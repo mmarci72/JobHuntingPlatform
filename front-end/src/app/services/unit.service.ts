@@ -9,10 +9,10 @@ import { BaseService } from "./base.service";
 })
 export class UnitService extends BaseService {
 	constructor(private readonly http: HttpClient) {
-		super();
+		super("units");
 	}
 
 	getAllUnits() {
-		return this.http.get<Unit[]>(`${this.baseUrl}/units`);
+		return this.http.get<Unit[]>(`${this.baseUrl}`);
 	}
 }

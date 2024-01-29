@@ -3,16 +3,16 @@ import { SwPush } from "@angular/service-worker";
 import { catchError } from "rxjs";
 
 import { Subscription } from "../model/subscription.model";
-import { User } from "../model/user.model";
 import { SessionStorageService } from "./session-storage.service";
 import { SubscriptionService } from "./subscription.service";
+import { KeycloakProfile } from "keycloak-js";
 
 @Injectable({
 	providedIn: "root",
 })
 export class PushNotificationService {
 	readonly VAPID_PUBLIC_KEY = "BIBNay01p51hwUeeGIwIhvQhQS_J9t1eP4iiFMjTyCTFdo1PwgikZ6JxJydpHaXXQ9MntT_K6eLJx2nOd6Bkb-4";
-	user!: User;
+	user!: KeycloakProfile;
 
 	constructor(
 		private readonly swPush: SwPush,

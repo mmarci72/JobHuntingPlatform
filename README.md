@@ -31,7 +31,7 @@ The project uses the following technology stack:
 - Mailhog for intercepting email messages
 - Keycloak for authentication and authorization management
 - Docker for containerizing the above services
-  
+
 ## Steps for building the project
 
 To build the project, Docker and Java 19 have to be previously installed.

@@ -10,18 +10,18 @@ import {BaseService} from "./base.service";
 export class PreferenceService extends BaseService {
 
 	constructor(private readonly http: HttpClient) {
-		super()
+		super("preferences");
 	}
 
 	getPreferencesForUser(username: string) {
-		return this.http.get<Preference>(`${this.baseUrl}/preferences/${username}`)
+		return this.http.get<Preference>(`${this.baseUrl}/${username}`);
 	}
 
 	postPreference(preference: Preference) {
-		return this.http.post(`${this.baseUrl}/preferences`, preference)
+		return this.http.post(`${this.baseUrl}`, preference);
 	}
 
 	updatePreference(preference: Preference, username: string) {
-		return this.http.patch(`${this.baseUrl}/preferences/${username}`, preference);
+		return this.http.patch(`${this.baseUrl}/${username}`, preference);
 	}
 }

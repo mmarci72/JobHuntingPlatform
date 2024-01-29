@@ -1,15 +1,15 @@
 html {
-	font-family: 'Inter-Regular', Arial, sans-serif;
+	font-family: "Inter-Regular", Arial, sans-serif;
 }
 
 .logo-img {
 	margin-bottom: 50px;
 }
 
-.kc-login, .kc-register {
+.kc-login,
+.kc-register {
 	background-color: #003246;
 }
-
 
 .login-pf body {
 	background: none;
@@ -19,9 +19,13 @@ html {
 	color: black;
 }
 
-#username {
-	background-image: url("../img/Login.svg");
+#username,
+#firstName,
+#lastName {
+	background-image: url("../img/User.svg");
 	background-repeat: no-repeat;
+	background-position: 0%;
+	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
 	border-width: 0 0 1px 0;
@@ -29,9 +33,11 @@ html {
 	height: 52px;
 }
 
-#password, #password-confirm {
-	background-image: url("../img/Pass.svg");
+#email {
+	background-image: url("../img/Email.svg");
 	background-repeat: no-repeat;
+	background-position: 0%;
+	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
 	border-width: 0 0 1px 0;
@@ -39,6 +45,20 @@ html {
 	height: 52px;
 }
 
-#kc-login, #kc-register {
+#password,
+#password-confirm {
+	background-image: url("../img/Password.svg");
+	background-repeat: no-repeat;
+	background-position: 0%;
+	background-size: 48px;
+	padding: 6px 12px 6px 60px;
+	border: solid #668490;
+	border-width: 0 0 1px 0;
+	border-radius: 0;
+	height: 52px;
+}
+
+#kc-login,
+#kc-register {
 	border-radius: 10px;
 }
