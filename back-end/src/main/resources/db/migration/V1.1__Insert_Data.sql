@@ -1,25 +1,3 @@
-INSERT INTO seniority (name)
-values ('INTERN');
-INSERT INTO seniority (name)
-values ('JUNIOR');
-INSERT INTO seniority (name)
-values ('SENIOR');
-INSERT INTO seniority (name)
-values ('PROFESSIONAL');
-INSERT INTO seniority (name)
-values ('ANY');
-
-INSERT INTO role (name)
-VALUES ('SOFTWARE_ENGINEER');
-INSERT INTO role (name)
-VALUES ('TESTER');
-INSERT INTO role (name)
-VALUES ('PROJECT_MANAGER');
-INSERT INTO role (name)
-VALUES ('SOLUTION_ARCHITECT');
-INSERT INTO role (name)
-VALUES ('REQUIREMENT_ENGINEER');
-
 INSERT INTO unit (name)
 values ('BANKING');
 INSERT INTO unit (name)
