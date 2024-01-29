@@ -1,14 +1,3 @@
-INSERT INTO unit (name)
-values ('BANKING');
-INSERT INTO unit (name)
-values ('GROWTH_MARKETS');
-INSERT INTO unit (name)
-values ('T_AND_I');
-INSERT INTO unit (name)
-values ('PUBLIC_SECTOR');
-INSERT INTO unit (name)
-values ('INSURANCE');
-
 INSERT INTO project (name, description, creation_date, technologies, unit_name)
 VALUES ('Project 1',
 		'Desc 1',
