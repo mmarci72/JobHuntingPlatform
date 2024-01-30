@@ -1,6 +1,6 @@
 CREATE TYPE seniority as ENUM
 (
-    'INTERN'
+    'INTERN',
 	'JUNIOR',
 	'SENIOR',
 	'PROFESSIONAL',
