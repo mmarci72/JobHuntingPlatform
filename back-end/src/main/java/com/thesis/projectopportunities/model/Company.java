@@ -40,7 +40,7 @@ public class Company {
 	private int sizeMax;
 
 	@Enumerated(EnumType.STRING)
-	private IndustryDomainEnum industryDomain;
+	private IndustryDomainEnum industryDomainName;
 
 	private LocalDateTime creationDate;
 

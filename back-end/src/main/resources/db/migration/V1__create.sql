@@ -32,15 +32,15 @@ CREATE CAST (varchar AS industry_domain) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE company
 (
-	id              serial PRIMARY KEY,
-	name            VARCHAR(255),
-	description     VARCHAR(255),
-	founded         DATE,
-	location        VARCHAR(255),
-	size_min        INT,
-	size_max        INT,
-	industry_domain industry_domain,
-	creation_date   DATE DEFAULT now()
+	id                   serial PRIMARY KEY,
+	name                 VARCHAR(255),
+	description          VARCHAR(255),
+	founded              DATE,
+	location             VARCHAR(255),
+	size_min             INT,
+	size_max             INT,
+	industry_domain_name industry_domain,
+	creation_date        DATE DEFAULT now()
 );
 
 
@@ -50,8 +50,8 @@ CREATE TABLE position
 	company_id                   INT          NOT NULL,
 	position_name                varchar(255) NOT NULL,
 	start_date                   DATE,
-	seniority                    seniority NOT NULL,
-	role                         role NOT NULL,
+	seniority_name               seniority NOT NULL,
+	role_name                    role NOT NULL,
 	requirements_description     varchar(255) NOT NULL,
 	offer_description		     varchar(255) NOT NULL,
 	responsibilities_description varchar(255) NOT NULL,

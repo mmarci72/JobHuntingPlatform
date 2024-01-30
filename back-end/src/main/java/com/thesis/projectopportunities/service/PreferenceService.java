@@ -38,6 +38,6 @@ public class PreferenceService {
 		return (preferences.getRoles().contains(position.getRoleName().getLiteral()) &&
 			(preferences.getSeniorities().contains(position.getSeniorityName().getLiteral()) || position.getSeniorityName()
 				.equals(SeniorityEnum.ANY)) &&
-			preferences.getUnits().stream().map(IndustryDomainEnum::toEnum).toList().contains(position.getCompany().getIndustryDomain()));
+			preferences.getUnits().stream().map(IndustryDomainEnum::toEnum).toList().contains(position.getCompany().getIndustryDomainName()));
 	}
 }
