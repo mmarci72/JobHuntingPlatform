@@ -1,7 +1,7 @@
 package com.thesis.projectopportunities.service;
 
-import com.thesis.projectopportunities.dto.ProjectPositionDto;
-import com.thesis.projectopportunities.mapping.ProjectPositionMapper;
+import com.thesis.projectopportunities.dto.PositionDto;
+import com.thesis.projectopportunities.mapping.PositionMapping;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,19 +12,19 @@ public class PositionService {
 
 	private final PositionRepo positionRepo;
 
-	private final ProjectPositionMapper positionMapper;
+	private final PositionMapping positionMapping;
 
-	public void update(ProjectPositionDto positionDto, int id) {
+	public void update(PositionDto positionDto, int id) {
 		var position =
 			positionRepo.findById(id);
 
 		if (position.isPresent()) {
-			positionMapper.update(positionDto, position.get());
+			positionMapping.update(positionDto, position.get());
 			positionRepo.save(position.get());
 
 		}
 		else {
-			positionRepo.save(positionMapper.toProjectPosition(positionDto));
+			positionRepo.save(positionMapping.toProjectPosition(positionDto));
 		}
 	}
 }

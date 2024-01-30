@@ -1,8 +1,8 @@
 package com.thesis.projectopportunities.controller;
 
-import com.thesis.projectopportunities.dto.ProjectPositionDto;
-import com.thesis.projectopportunities.mapping.ProjectPositionMapper;
-import com.thesis.projectopportunities.model.ProjectPosition;
+import com.thesis.projectopportunities.dto.PositionDto;
+import com.thesis.projectopportunities.mapping.PositionMapping;
+import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.PositionService;
 import com.thesis.projectopportunities.service.UserNotificationService;
@@ -31,21 +31,21 @@ public class PositionController {
 
 	private final UserNotificationService userNotificationService;
 
-	private final ProjectPositionMapper projectPositionMapper;
+	private final PositionMapping positionMapping;
 
 	@PostMapping("/positions")
-	public ResponseEntity<ProjectPosition> addPosition(@RequestBody ProjectPositionDto position) {
-		var savedPosition = positionRepo.save(projectPositionMapper.toProjectPosition(position));
+	public ResponseEntity<Position> addPosition(@RequestBody PositionDto position) {
+		var savedPosition = positionRepo.save(positionMapping.toProjectPosition(position));
 		var responseEntity = new ResponseEntity<>(savedPosition, HttpStatus.CREATED);
 		position.setPositionId(savedPosition.getPositionId());
-		userNotificationService.newNotification(projectPositionMapper.toProjectPosition(position));
+		userNotificationService.newNotification(positionMapping.toProjectPosition(position));
 		return responseEntity;
 	}
 
 	@GetMapping("/positions/{id}")
-	public ResponseEntity<ProjectPositionDto> getPositionById(@PathVariable int id) {
+	public ResponseEntity<PositionDto> getPositionById(@PathVariable int id) {
 		try {
-			return ResponseEntity.ok(projectPositionMapper.toProjectPosition(positionRepo.getReferenceById(id)));
+			return ResponseEntity.ok(positionMapping.toProjectPosition(positionRepo.getReferenceById(id)));
 		}
 		catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
@@ -58,7 +58,7 @@ public class PositionController {
 	}
 
 	@PatchMapping("/positions/{id}")
-	public void patchPosition(@PathVariable int id, @RequestBody ProjectPositionDto positionDto) {
+	public void patchPosition(@PathVariable int id, @RequestBody PositionDto positionDto) {
 		positionService.update(positionDto, id);
 	}
 }

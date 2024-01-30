@@ -8,10 +8,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProjectPositionDto {
+public class PositionDto {
 
 	@JsonProperty
 	private int positionId;
+
+	@JsonProperty
+	private String positionName;
 
 	@JsonProperty
 	private String roleName;
@@ -20,10 +23,19 @@ public class ProjectPositionDto {
 	private String seniorityName;
 
 	@JsonProperty
-	private int numberOfOpenPositions;
+	private String requirementsDescription;
 
 	@JsonProperty
-	private int farming;
+	private String offerDescription;
+
+	@JsonProperty
+	private String responsibilitiesDescription;
+
+	@JsonProperty
+	private int salaryMin;
+
+	@JsonProperty
+	private int salaryMax;
 
 	@JsonProperty
 	private LocalDateTime startDate;
@@ -32,5 +44,5 @@ public class ProjectPositionDto {
 	private LocalDateTime postDate;
 
 	@JsonProperty
-	private long projectId;
+	private long companyId;
 }

@@ -9,12 +9,11 @@ import com.thesis.projectopportunities.exception.EmailNotSentException;
 import com.thesis.projectopportunities.mapping.UserNotificationMapper;
 import com.thesis.projectopportunities.model.NotificationQueue;
 import com.thesis.projectopportunities.model.Preference;
-import com.thesis.projectopportunities.model.ProjectPosition;
+import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.NotificationQueueRepo;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.repo.PreferenceRepo;
 import com.thesis.projectopportunities.repo.UserNotificationRepo;
-import com.thesis.projectopportunities.repo.UserRepo;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class UserNotificationService {
 
 	private final SubscriptionService messageService;
 
-	private final UserRepo userRepo;
+//	private final UserRepo userRepo;
 
 	private final PreferenceRepo preferenceRepo;
 
@@ -56,7 +55,7 @@ public class UserNotificationService {
 		}
 	}
 
-	public void newNotification(ProjectPosition position) {
+	public void newNotification(Position position) {
 		notificationQueueRepo.save(new NotificationQueue(position.getPositionId()));
 	}
 
@@ -81,7 +80,7 @@ public class UserNotificationService {
 		messageService.sendNotifications(positions);
 	}
 
-	private void sendDetailedEmail(ProjectPosition position) {
+	private void sendDetailedEmail(Position position) {
 		var users = userNotificationRepo.findByEmailNotificationEnabledTrue();
 		String subject = "New position posted";
 		AtomicInteger successfulEmailCount = new AtomicInteger(0);
@@ -91,12 +90,12 @@ public class UserNotificationService {
 			{
 				try {
 					var preference = preferenceRepo.findById(user.getUsername());
-					if (checkPreference(preference, position)) {
+					/*if (checkPreference(preference, position)) {
 						emailsToSend.getAndIncrement();
 						emailService.sendNewDetailedPositionEmail(subject, position,
 							userRepo.findByUsername(user.getUsername()));
 						successfulEmailCount.getAndIncrement();
-					}
+					}*/
 				}
 				catch (EmailNotSentException e) {
 					LOGGER.error(e.getMessage(), e.getCause());
@@ -107,19 +106,19 @@ public class UserNotificationService {
 		LOGGER.debug(successfulEmailCount + " out of the " + emailsToSend + " email messages could be successfully sent");
 	}
 
-	private void sendSummaryEmails(List<ProjectPosition> positions) {
+	private void sendSummaryEmails(List<Position> positions) {
 		var users = userNotificationRepo.findByEmailNotificationEnabledTrue();
 		String subject = "New positions posted";
 		AtomicInteger successfulEmailCount = new AtomicInteger(0);
 
 		users.forEach(user -> {
 			var preference = preferenceRepo.findById(user.getUsername());
-			List<ProjectPosition> filteredPositions = positions.stream()
+			List<Position> filteredPositions = positions.stream()
 				.filter(position -> checkPreference(preference, position)).toList();
 			if (!filteredPositions.isEmpty()) {
 				try {
-					emailService.sendNewSummaryPositionEmail(subject, filteredPositions.size(),
-						userRepo.findByUsername(user.getUsername()));
+					/*emailService.sendNewSummaryPositionEmail(subject, filteredPositions.size(),
+						userRepo.findByUsername(user.getUsername()));*/
 					successfulEmailCount.getAndIncrement();
 				}
 				catch (EmailNotSentException e) {
@@ -131,7 +130,7 @@ public class UserNotificationService {
 		LOGGER.debug(successfulEmailCount + " out of the " + users.size() + " email messages could be successfully sent");
 	}
 
-	private static boolean checkPreference(Optional<Preference> preference, ProjectPosition position) {
+	private static boolean checkPreference(Optional<Preference> preference, Position position) {
 		return preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get());
 	}
 }

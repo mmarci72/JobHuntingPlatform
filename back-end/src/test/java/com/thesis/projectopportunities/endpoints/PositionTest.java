@@ -5,8 +5,8 @@ import static org.hamcrest.Matchers.is;
 import java.time.LocalDateTime;
 
 import com.thesis.projectopportunities.BaseSystemTest;
-import com.thesis.projectopportunities.dto.ProjectDto;
-import com.thesis.projectopportunities.dto.ProjectPositionDto;
+import com.thesis.projectopportunities.dto.CompanyDto;
+import com.thesis.projectopportunities.dto.PositionDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
@@ -18,18 +18,18 @@ class PositionTest extends BaseSystemTest {
 
 	@Test
 	void test_add_new_position() {
-		RestAssured.given().get("/projects/1").then()
+		RestAssured.given().get("/companies/1").then()
 			.statusCode(HttpStatus.SC_OK)
-			.body("projectPositions.size()", is(2));
+			.body("positions.size()", is(2));
 
 
 		RestAssured.given().header("role", "ROLE_ADMIN_CLIENT")
 			.body(constructNewPosition()).contentType(ContentType.JSON)
 			.post("/positions").then().statusCode(HttpStatus.SC_CREATED);
 
-		RestAssured.given().get("/projects/1").then()
+		RestAssured.given().get("/companies/1").then()
 			.statusCode(HttpStatus.SC_OK)
-			.body("projectPositions.size()", is(3));
+			.body("positions.size()", is(3));
 	}
 
 	@Test
@@ -39,21 +39,19 @@ class PositionTest extends BaseSystemTest {
 			.statusCode(HttpStatus.SC_FORBIDDEN);
 	}
 
-	private ProjectPositionDto constructNewPosition() {
-		ProjectPositionDto position = new ProjectPositionDto();
+	private PositionDto constructNewPosition() {
+		PositionDto position = new PositionDto();
 
 		position.setPositionId(100);
 		position.setPostDate(LocalDateTime.now());
 		position.setSeniorityName("INTERN");
 		position.setRoleName("SOFTWARE_ENGINEER");
 		position.setStartDate(LocalDateTime.now());
-		position.setFarming(100);
-		position.setNumberOfOpenPositions(2);
 
-		ProjectDto project = RestAssured.given().get("/projects/1").then()
-			.extract().jsonPath().getObject("$", ProjectDto.class);
+		CompanyDto project = RestAssured.given().get("/companies/1").then()
+			.extract().jsonPath().getObject("$", CompanyDto.class);
 
-		position.setProjectId(project.getId());
+		position.setCompanyId(project.getId());
 		return position;
 	}
 }

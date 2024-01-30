@@ -1,12 +1,7 @@
 package com.thesis.projectopportunities.service;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.Date;
-
 import com.thesis.projectopportunities.exception.EmailNotSentException;
-import com.thesis.projectopportunities.model.ProjectPosition;
+import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.model.User;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -18,6 +13,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import java.util.Date;
 
 @Service
 @Slf4j
@@ -59,14 +56,13 @@ public class EmailService {
 			messageHelper.setSubject(subject);
 			messageHelper.setTo(interestedParty.getEmail());
 			javaMailSender.send(message);
-		}
-		catch (MessagingException | MailException e) {
+		} catch (MessagingException | MailException e) {
 			throw new EmailNotSentException("Email could not be sent to " + interestedParty.getEmail(), e);
 		}
 	}
 
-	public void sendNewSummaryPositionEmail(final String subject,
-		final int numberOfNewPositions, final User interestedParty) throws EmailNotSentException {
+	public void sendNewSummaryPositionEmail(final String subject, final int numberOfNewPositions,
+											final User interestedParty) throws EmailNotSentException {
 		final Context ctx = new Context();
 
 		ctx.setVariable("newPositionsCount", numberOfNewPositions);
@@ -75,8 +71,8 @@ public class EmailService {
 
 	}
 
-	public void sendNewDetailedPositionEmail(final String subject,
-		final ProjectPosition position, final User interestedParty) throws EmailNotSentException {
+	public void sendNewDetailedPositionEmail(final String subject, final Position position,
+											 final User interestedParty) throws EmailNotSentException {
 		final Context ctx = new Context();
 
 		ctx.setVariable("position", position);
@@ -85,14 +81,14 @@ public class EmailService {
 	}
 
 	public void sendSignUpEmail(final String subject, final User toUser,
-		final ProjectPosition position, final User interestedParty) throws EmailNotSentException {
+								final Position position, final User interestedParty) throws EmailNotSentException {
 		final Context ctx = new Context();
 
 		ctx.setVariable("name", toUser.getFullName());
 		ctx.setVariable("signUpDate", new Date());
-		ctx.setVariable("projectName", position.getProject().getName());
-		ctx.setVariable("positionSeniority", position.getSeniorityName().toLowerCase());
-		ctx.setVariable("positionRoleName", position.getRoleName().toLowerCase().replace("_", " "));
+		ctx.setVariable("projectName", position.getCompany().getName());
+		ctx.setVariable("positionSeniority", position.getSeniorityName().getLiteral().toLowerCase());
+		ctx.setVariable("positionRoleName", position.getRoleName().getLiteral().toLowerCase().replace("_", " "));
 		ctx.setVariable("username", interestedParty.getUsername());
 		ctx.setVariable("userEmail", interestedParty.getEmail());
 		setUpEmail("html/email-signup-template", ctx, subject, toUser);
