@@ -10,7 +10,7 @@ public enum IndustryDomainEnum {
 	GROWTH_MARKETS("Growth Markets"),
 	T_AND_I("T&I");
 
-	final String literal;
+	private final String literal;
 
 	IndustryDomainEnum(String literal) {
 		this.literal = literal;

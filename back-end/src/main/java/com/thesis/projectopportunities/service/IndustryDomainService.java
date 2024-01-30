@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class IndustryDomainService {
 
-	public List<IndustryDomainEnum> getAllUnit() {
+	public List<IndustryDomainEnum> getAllIndustryDomain() {
 		return Arrays.stream(IndustryDomainEnum.values()).toList();
 	}
 
