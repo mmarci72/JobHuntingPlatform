@@ -1,72 +1,69 @@
-INSERT INTO seniority (name)
-values ('INTERN');
-INSERT INTO seniority (name)
-values ('JUNIOR');
-INSERT INTO seniority (name)
-values ('SENIOR');
-INSERT INTO seniority (name)
-values ('PROFESSIONAL');
-INSERT INTO seniority (name)
-values ('ANY');
+ALTER SEQUENCE application_id_seq
+RESTART WITH 1;
 
-INSERT INTO role (name)
-VALUES ('SOFTWARE_ENGINEER');
-INSERT INTO role (name)
-VALUES ('TESTER');
-INSERT INTO role (name)
-VALUES ('PROJECT_MANAGER');
-INSERT INTO role (name)
-VALUES ('SOLUTION_ARCHITECT');
-INSERT INTO role (name)
-VALUES ('REQUIREMENT_ENGINEER');
+ALTER SEQUENCE company_id_seq
+	RESTART WITH 1;
 
-INSERT INTO unit (name)
-values ('BANKING');
-INSERT INTO unit (name)
-values ('GROWTH_MARKETS');
-INSERT INTO unit (name)
-values ('T_AND_I');
-INSERT INTO unit (name)
-values ('PUBLIC_SECTOR');
-INSERT INTO unit (name)
-values ('INSURANCE');
+ALTER SEQUENCE interests_id_seq
+	RESTART WITH 1;
 
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 1',
-		'Desc 1',
-		'2022-01-01', 'Java, Angular', 'BANKING');
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 2',
-		'Desc 2',
-		'2022-04-10', 'Spring, React, OpenShift', 'GROWTH_MARKETS');
-INSERT INTO project (name, description, creation_date, technologies, unit_name)
-VALUES ('Project 3',
-		'Desc 3',
-		'2023-01-12', 'Java, Spring, Angular, Azure', 'INSURANCE');
+ALTER SEQUENCE position_position_id_seq
+	RESTART WITH 1;
 
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (1, 'SENIOR', 'SOFTWARE_ENGINEER', 1, 100, '2023-02-01', '2023-01-23');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (2, 'PROFESSIONAL', 'SOFTWARE_ENGINEER', 2, 60, '2023-02-10', '2022-01-20');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (3, 'SENIOR', 'SOLUTION_ARCHITECT', 1, 80, '2023-01-12', '2023-01-03');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (2, 'JUNIOR', 'REQUIREMENT_ENGINEER', 1, 100, '2023-02-20', '2022-01-20');
-INSERT INTO project_position(project_id, seniority_name, role_name, number_of_open_positions, farming,
-							 start_date, post_date)
-VALUES (1, 'ANY', 'SOFTWARE_ENGINEER', 1, 20, '2023-02-01', '2023-01-23');
+ALTER SEQUENCE technology_id_seq
+	RESTART WITH 1;
 
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (1, 'I can only recommend this project', '2022-02-03', 'ujvmarcell', 'Marcell Újvári');
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (2, 'This project is a little bit overwhelming, but might be for you if you are up for the challenge', '2023-04-03',
-		'user', 'Test User');
-INSERT INTO comment(position_id, data, creation_date, userName, full_name)
-VALUES (3, 'I really enjoy working on this project', '2022-08-03', 'ujvarim', 'Marcell Újvári');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
+VALUES ('Company 1', '1999-02-13', 'Budapest, Hungary', 130, 250, 'GROWTH_MARKETS');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
+VALUES ('Company 2', '2002-06-20', 'Eger, Hungary', 10, 30, 'INSURANCE');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
+VALUES ('Company 3', '2000-02-13', 'Budapest, Hungary', 1000, 1500, 'BANKING');
+
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+                     responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+        'Some description goes here that will be much longer than this',
+        'Offer description goes here..............',
+        'Write clean code ;)', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Tech Squad Lead', '2024-06-21', 'PROFESSIONAL', 'PROJECT_MANAGER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Manage team', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (2, 'Java Developer', '2024-03-10', 'JUNIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Coding', 800000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (3, 'Test Engineer', '2024-03-10', 'INTERN', 'TESTER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Test stuff', 400000);
+
+
+INSERT INTO technology(position_id, name)
+VALUES (1,'Spring');
+INSERT INTO technology(position_id, name)
+VALUES (1,'Javascript');
+INSERT INTO technology(position_id, name)
+VALUES (1,'Backend');
+INSERT INTO technology(position_id, name)
+VALUES (2,'Backend');
+INSERT INTO technology(position_id, name)
+VALUES (2,'Python');
+INSERT INTO technology(position_id, name)
+VALUES (2,'Typescript');
+INSERT INTO technology(position_id, name)
+VALUES (3,'Java');
+INSERT INTO technology(position_id, name)
+VALUES (4,'Testing');
+
+
 
 INSERT INTO interests(position_id, userName)
 values (1, 'ujvarim')

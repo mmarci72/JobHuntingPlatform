@@ -22,8 +22,6 @@ public class User {
 
 	private String email;
 
-	private String careerCoach;
-
 	private String fullName;
 
 

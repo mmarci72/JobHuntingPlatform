@@ -4,7 +4,7 @@ package com.thesis.projectopportunities.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.thesis.projectopportunities.enums.UnitEnum;
+import com.thesis.projectopportunities.enums.IndustryDomainEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,25 +21,31 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Project {
+public class Company {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Enumerated(EnumType.STRING)
-	private UnitEnum unitName;
-
 	private String name;
 
 	private String description;
 
-	private String technologies;
+	private LocalDateTime founded;
+
+	private String location;
+
+	private int sizeMin;
+
+	private int sizeMax;
+
+	@Enumerated(EnumType.STRING)
+	private IndustryDomainEnum industryDomainName;
 
 	private LocalDateTime creationDate;
 
-	@OneToMany(targetEntity = ProjectPosition.class, fetch = FetchType.EAGER, mappedBy = "project")
-	private List<ProjectPosition> projectPositions;
+	@OneToMany(targetEntity = Position.class, fetch = FetchType.EAGER, mappedBy = "company")
+	private List<Position> positions;
 
 
 }

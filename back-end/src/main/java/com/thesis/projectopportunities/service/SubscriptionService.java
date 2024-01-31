@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import com.thesis.projectopportunities.configuration.VapidProperties;
-import com.thesis.projectopportunities.model.ProjectPosition;
+import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.PreferenceRepo;
 import com.thesis.projectopportunities.repo.SubscriptionRepo;
 import com.thesis.projectopportunities.repo.UserNotificationRepo;
@@ -36,7 +36,7 @@ public class SubscriptionService {
 		{
 		             "notification": {
 		                 "title": "A new position has been posted!",
-		                 "body": "A new %s %s position has been posted for the %s project"
+		                 "body": "A new %s %s position has been posted for the %s company"
 		             }
 		}
 		             """;
@@ -70,7 +70,7 @@ public class SubscriptionService {
 		}
 	}
 
-	public void sendNotifications(List<ProjectPosition> positions) {
+	public void sendNotifications(List<Position> positions) {
 		var subscriptions = subscriptionRepo.findAll();
 
 		if (positions.size() == 1) {
@@ -100,21 +100,21 @@ public class SubscriptionService {
 	}
 
 	private void sendNotificationsForOnePosition(List<com.thesis.projectopportunities.model.Subscription> subscriptions,
-		ProjectPosition position) {
+		Position position) {
 		subscriptions.forEach(subscription -> {
 			var preference = preferenceRepo.findById(subscription.getUsername());
 			if (preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get())) {
 				var sub = setupSubscription(subscription);
 				sendNotification(sub,
-					String.format(MESSAGE_FOR_ONE_POSITION, position.getSeniorityName().toLowerCase(),
-						position.getRoleName().toLowerCase().replace('_', ' '),
-						position.getProject().getName()));
+					String.format(MESSAGE_FOR_ONE_POSITION, position.getSeniorityName().getLiteral().toLowerCase(),
+						position.getRoleName().getLiteral().toLowerCase().replace('_', ' '),
+						position.getCompany().getName()));
 			}
 		});
 	}
 
 	private void sendNotificationsForMultiplePositions(List<com.thesis.projectopportunities.model.Subscription> subscriptions,
-		List<ProjectPosition> positions) {
+		List<Position> positions) {
 
 		subscriptions.forEach(subscription -> {
 			int counter = numberOfPositionsToSend(positions, subscription);
@@ -135,7 +135,7 @@ public class SubscriptionService {
 		return newSubscription;
 	}
 
-	private int numberOfPositionsToSend(List<ProjectPosition> positions,
+	private int numberOfPositionsToSend(List<Position> positions,
 		com.thesis.projectopportunities.model.Subscription subscription) {
 		AtomicInteger counter = new AtomicInteger(0);
 

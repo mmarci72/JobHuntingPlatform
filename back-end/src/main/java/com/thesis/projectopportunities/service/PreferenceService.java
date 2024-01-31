@@ -2,10 +2,10 @@ package com.thesis.projectopportunities.service;
 
 import com.thesis.projectopportunities.dto.PreferenceDto;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
-import com.thesis.projectopportunities.enums.UnitEnum;
+import com.thesis.projectopportunities.enums.IndustryDomainEnum;
 import com.thesis.projectopportunities.mapping.PreferenceMapping;
 import com.thesis.projectopportunities.model.Preference;
-import com.thesis.projectopportunities.model.ProjectPosition;
+import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.PreferenceRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,12 +32,12 @@ public class PreferenceService {
 		}
 	}
 
-	public static boolean checkPreferences(ProjectPosition position, Preference preference) {
+	public static boolean checkPreferences(Position position, Preference preference) {
 		var preferences = preference.getPreferences();
 
-		return (preferences.getRoles().contains(position.getRoleName()) &&
-			(preferences.getSeniorities().contains(position.getSeniorityName()) || position.getSeniorityName()
-				.equals(SeniorityEnum.ANY.toString())) &&
-			preferences.getUnits().stream().map(UnitEnum::toEnum).toList().contains(position.getProject().getUnitName()));
+		return (preferences.getRoles().contains(position.getRoleName().getLiteral()) &&
+			(preferences.getSeniorities().contains(position.getSeniorityName().getLiteral()) || position.getSeniorityName()
+				.equals(SeniorityEnum.ANY)) &&
+			preferences.getUnits().stream().map(IndustryDomainEnum::toEnum).toList().contains(position.getCompany().getIndustryDomainName()));
 	}
 }

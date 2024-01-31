@@ -1,27 +1,90 @@
-CREATE TABLE seniority
+CREATE TYPE seniority as ENUM
 (
-	name VARCHAR(255) PRIMARY KEY
+    'INTERN',
+	'JUNIOR',
+	'SENIOR',
+	'PROFESSIONAL',
+	'ANY'
 );
 
-CREATE TABLE role
+CREATE TYPE role as ENUM
 (
-	name VARCHAR(255) PRIMARY KEY
+	'SOFTWARE_ENGINEER',
+	'TESTER',
+	'PROJECT_MANAGER',
+	'SOLUTION_ARCHITECT',
+	'REQUIREMENT_ENGINEER'
 );
 
-CREATE TABLE unit
+CREATE TYPE industry_domain as ENUM
 (
-	name varchar(255) PRIMARY KEY
+	'BANKING',
+	'GROWTH_MARKETS',
+	'T_AND_I',
+	'PUBLIC_SECTOR',
+	'INSURANCE'
 );
 
-CREATE TABLE project
+CREATE CAST (varchar AS seniority) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS role) WITH INOUT AS IMPLICIT;
+CREATE CAST (varchar AS industry_domain) WITH INOUT AS IMPLICIT;
+
+
+CREATE TABLE company
 (
-	id            serial PRIMARY KEY,
-	name          VARCHAR(255),
-	description   VARCHAR(255),
-	technologies  VARCHAR(255),
-	creation_date DATE,
-	unit_name     varchar(255),
-	FOREIGN KEY (unit_name) REFERENCES unit (name)
+	id                   serial PRIMARY KEY,
+	name                 VARCHAR(255),
+	description          VARCHAR(255),
+	founded              DATE,
+	location             VARCHAR(255),
+	size_min             INT,
+	size_max             INT,
+	industry_domain_name industry_domain,
+	creation_date        DATE DEFAULT now()
+);
+
+
+CREATE TABLE position
+(
+	position_id                  serial       PRIMARY KEY,
+	company_id                   INT          NOT NULL,
+	position_name                varchar(255) NOT NULL,
+	start_date                   DATE,
+	seniority_name               seniority NOT NULL,
+	role_name                    role NOT NULL,
+	requirements_description     varchar(255) NOT NULL,
+	offer_description		     varchar(255) NOT NULL,
+	responsibilities_description varchar(255) NOT NULL,
+	salary_min					 INT NOT NULL,
+	salary_max					 INT,
+	post_date                    DATE DEFAULT now(),
+	FOREIGN KEY (company_id) REFERENCES company (id)
+);
+
+CREATE TABLE technology
+(
+    id          serial PRIMARY KEY,
+	position_id INT,
+	name		varchar(255),
+	FOREIGN KEY (position_id) REFERENCES position (position_id)
+
+);
+
+CREATE TABLE application
+(
+	id                serial       PRIMARY KEY,
+	position_id       INT          NOT NULL,
+	first_name	      varchar(255) NOT NULL,
+	last_name	      varchar(255) NOT NULL,
+	username          varchar(255) NOT NULL,
+	email             varchar(255) NOT NULL,
+	phone_number	  varchar(255) NOT NULL,
+	linkedin	      varchar(255),
+	github		      varchar(255),
+	resume_path       varchar(255) NOT NULL,
+	cover_letter_path varchar(255) NOT NULL,
+	application_date  varchar(255) DEFAULT now(),
+	FOREIGN KEY (position_id) REFERENCES position (position_id)
 );
 
 CREATE TABLE preference
@@ -30,35 +93,10 @@ CREATE TABLE preference
 	preferences jsonb
 );
 
-CREATE TABLE project_position
-(
-	position_id              serial PRIMARY KEY,
-	project_id               INT          NOT NULL,
-	seniority_name           varchar(255) NOT NULL,
-	role_name                varchar(255) NOT NULL,
-	number_of_open_positions INT,
-	farming                  INT,
-	start_date               DATE,
-	post_date                DATE,
-	FOREIGN KEY (project_id) REFERENCES project (id),
-	FOREIGN KEY (seniority_name) REFERENCES seniority (name),
-	FOREIGN KEY (role_name) REFERENCES role (name)
-);
-
-CREATE TABLE comment
-(
-	id            serial PRIMARY KEY,
-	position_id   INT          NOT NULL,
-	data          varchar(255) NOT NULL,
-	creation_date varchar(255) NOT NULL,
-	username      varchar(255) NOT NULL,
-	full_name     varchar(255) NOT NULL,
-	FOREIGN KEY (position_id) REFERENCES project_position (position_id)
-);
 
 CREATE TABLE interests
 (
-	id          serial PRIMARY KEY,
+	id          serial       PRIMARY KEY,
 	position_id INT          NOT NULL,
 	username    varchar(255) NOT NULL,
 	unique (position_id, username)
