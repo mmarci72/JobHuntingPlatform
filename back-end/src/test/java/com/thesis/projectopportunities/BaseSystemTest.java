@@ -54,9 +54,6 @@ public abstract class BaseSystemTest {
 	protected SubscriptionService messageService;
 
 	@MockBean
-	protected UserRepo userRepo;
-
-	@MockBean
 	protected JwtDecoder jwtDecoder;
 
 	@Setter(onMethod_ = @Autowired)

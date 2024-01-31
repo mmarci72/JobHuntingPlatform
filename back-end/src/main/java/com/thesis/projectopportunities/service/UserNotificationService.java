@@ -33,8 +33,6 @@ public class UserNotificationService {
 
 	private final SubscriptionService messageService;
 
-//	private final UserRepo userRepo;
-
 	private final PreferenceRepo preferenceRepo;
 
 	private final NotificationQueueRepo notificationQueueRepo;
@@ -90,12 +88,6 @@ public class UserNotificationService {
 			{
 				try {
 					var preference = preferenceRepo.findById(user.getUsername());
-					/*if (checkPreference(preference, position)) {
-						emailsToSend.getAndIncrement();
-						emailService.sendNewDetailedPositionEmail(subject, position,
-							userRepo.findByUsername(user.getUsername()));
-						successfulEmailCount.getAndIncrement();
-					}*/
 				}
 				catch (EmailNotSentException e) {
 					LOGGER.error(e.getMessage(), e.getCause());
@@ -117,8 +109,6 @@ public class UserNotificationService {
 				.filter(position -> checkPreference(preference, position)).toList();
 			if (!filteredPositions.isEmpty()) {
 				try {
-					/*emailService.sendNewSummaryPositionEmail(subject, filteredPositions.size(),
-						userRepo.findByUsername(user.getUsername()));*/
 					successfulEmailCount.getAndIncrement();
 				}
 				catch (EmailNotSentException e) {

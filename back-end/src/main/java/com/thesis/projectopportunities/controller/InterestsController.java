@@ -9,7 +9,6 @@ import com.thesis.projectopportunities.repo.InterestsRepo;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.EmailService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +24,6 @@ public class InterestsController {
 	private final InterestsRepo interestsRepo;
 
 	private final InterestsMapping interestsMapping;
-
-	//private final UserRepo userRepo;
 
 	private final PositionRepo positionRepo;
 
@@ -45,16 +42,6 @@ public class InterestsController {
 
 	@PostMapping("/interests")
 	public InterestsDto addNewInterest(@RequestBody InterestsDto interestsDto) {
-//		var careerCoach =
-//			userRepo.findByFullName(
-//				userRepo.findByUsername(interestsDto.getUsername()).getCareerCoach().split(",")[0].substring(3));
-		var projectPosition =
-			positionRepo.findById(interestsDto.getPositionId()).orElseThrow(() -> new ResourceNotFoundException("The requested "
-				+ "position could not be found!"));
-
-//		emailService.sendSignUpEmail("New interest in the " + projectPosition.getProject().getName() +
-//				" project", careerCoach, projectPosition,
-//			userRepo.findByUsername(interestsDto.getUsername()));
 		return interestsMapping.toInterests(interestsRepo.save(interestsMapping.toInterests(interestsDto)));
 	}
 }

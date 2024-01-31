@@ -48,20 +48,6 @@ class InterestsTest extends BaseSystemTest {
 			.statusCode(HttpStatus.SC_OK);
 	}
 
-	@BeforeEach
-	void setUpUserRepo() {
-		User user = new User();
-		//TODO: Replace with real value
-		user.setCareerCoach("un=Test User,ou=contacts,o=company,c=ch");
-
-		User careerCoach = new User();
-		careerCoach.setEmail("test@asd.com");
-		careerCoach.setFullName("Test User");
-
-		Mockito.when(userRepo.findByUsername("ujvarim")).thenReturn(user);
-		Mockito.when(userRepo.findByFullName("Test User")).thenReturn(careerCoach);
-	}
-
 	private Interests constructNewInterest() {
 		Interests interest = new Interests();
 
