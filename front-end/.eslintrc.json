@@ -4,7 +4,7 @@
     "projects/**/*"
   ],
   "env": {
-    "es2018": true
+    "es2022": true
   },
   "overrides": [
     {
@@ -18,7 +18,8 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:jsdoc/recommended-typescript",
         "plugin:import/recommended",
-        "plugin:import/typescript"
+        "plugin:import/typescript",
+        "plugin:prettier/recommended"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -29,7 +30,6 @@
             "style": "camelCase"
           }
         ],
-        "import/no-unresolved": "error",
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -71,6 +71,26 @@
         "plugin:@angular-eslint/template/accessibility"
       ],
       "rules": {}
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "excludedFiles": [
+        "*inline-template-*.component.html"
+      ],
+      "extends": [
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular",
+            "endOfLine": "auto"
+          }
+        ]
+      }
     }
   ]
 }

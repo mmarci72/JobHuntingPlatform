@@ -1,20 +1,4 @@
-$green: #00E6A0;
+/* You can add global styles to this file, and also import other style files */
 
-html, body {
-	height: 100%;
-	margin: 0;
-	font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
-}
-
-.border-green {
-	border: 2px solid $green;
-}
-
-button:active {
-	background-color: #00E6A0;
-}
-
-button:hover {
-	background-color: #99F5D9;
-}
-
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
