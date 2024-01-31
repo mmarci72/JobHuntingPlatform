@@ -1,7 +1,0 @@
-apply plugin: 'base'
-apply plugin: 'com.github.node-gradle.node'
-
-node {
-  version = '18.16.1'
-  npmVersion = '9.5.1'
-}
