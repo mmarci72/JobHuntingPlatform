@@ -1,0 +1,62 @@
+nav {
+  background-color: #003246;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: white;
+  margin-left: 1rem;
+}
+
+img {
+  max-height: 50px;
+  width: auto;
+  margin: 2px;
+}
+
+p {
+  color: white
+}
+
+li {
+  margin: 0.1px;
+}
+
+.center {
+  display: flex;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome {
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.appName {
+  font-size: 15px;
+}
+
+a:visited {
+  color: white;
+}
+
+a:hover {
+  color: #99F5D9;
+}
+
+.settings {
+  font-size: 30px;
+}
+
+.settings-container {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
