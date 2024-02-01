@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json package.json
 RUN npm install
 COPY . .
-RUN npm run build
+RUN env NG_BUILD_MANGLE=false npm run build
 
 # Serve Application using Nginx Server
 FROM nginx:alpine
