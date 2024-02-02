@@ -12,7 +12,7 @@ export class BaseService<ServiceType, IdType = number> {
   private readonly PORT = 8081;
   private readonly BASE_ADDRESS = "http://localhost";
   private readonly BASE_URL = `${this.BASE_ADDRESS}:${this.PORT}`;
-  private _fullURL;
+  private readonly _fullURL;
 
   constructor(
     baseEndpoint: string,

@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import {
   HttpClientTestingModule,
   HttpTestingController,
+  TestRequest,
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
 
@@ -36,123 +37,100 @@ describe("BaseService", () => {
       expect(service).toBeTruthy();
     });
     it("should have it's url set", () => {
-      expect(fullUrl.endsWith("/test")).toBeTrue();
+      expect(fullUrl.endsWith(baseEndpoint)).toBeTrue();
     });
   });
-  describe("http requests", () => {
-    afterEach(() => {
-      httpTestingController.verify();
-    });
+  describe("successful http requests", () => {
     const testData: MockModel = {
       id: 10,
       name: "test",
     };
 
+    let request: TestRequest;
+
+    afterEach(() => {
+      request.flush(testData);
+      httpTestingController.verify();
+    });
+
     describe("get requests", () => {
+      afterEach(() => {
+        expect(request.request.method).toEqual("GET");
+      });
       it("should return dummy data when using default parameter", () => {
         service
           .getResource("")
           .subscribe(data => expect(data).toEqual(testData));
-        const request = httpTestingController.expectOne(`${fullUrl}`);
-
-        expect(request.request.method).toEqual("GET");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(`${fullUrl}`);
       });
       it("should return dummy data when using additional endpoint", () => {
         service
           .getResource(additionalEndpoint)
           .subscribe(data => expect(data).toEqual(testData));
-        const request = httpTestingController.expectOne(
-          urlWithAdditionalEndpoint
-        );
-
-        expect(request.request.method).toEqual("GET");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(urlWithAdditionalEndpoint);
       });
     });
 
     describe("post requests", () => {
+      afterEach(() => {
+        expect(request.request.method).toEqual("POST");
+      });
       it("should return supplied resource with no additional endpoint", () => {
         service
           .postResource(testData)
           .subscribe(data => expect(data).toEqual(testData));
-        const request = httpTestingController.expectOne(`${fullUrl}`);
-
-        expect(request.request.method).toEqual("POST");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(`${fullUrl}`);
       });
       it("should return supplied resource with additional endpoint", () => {
         service
           .postResource(testData, additionalEndpoint)
           .subscribe(data => expect(data).toEqual(testData));
 
-        const request = httpTestingController.expectOne(
-          urlWithAdditionalEndpoint
-        );
-
-        expect(request.request.method).toEqual("POST");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(urlWithAdditionalEndpoint);
       });
     });
 
     describe("delete requests", () => {
+      afterEach(() => {
+        expect(request.request.method).toEqual("DELETE");
+      });
       it("should return the deleted resource's id when called with no additional endpoint", () => {
         service
           .deleteResource(testData.id)
           .subscribe(data => expect(data).toEqual(testData));
-        const request = httpTestingController.expectOne(
-          `${fullUrl}/${testData.id}`
-        );
-
-        expect(request.request.method).toEqual("DELETE");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(`${fullUrl}/${testData.id}`);
       });
       it("should return supplied resourceId with additional endpoint", () => {
         service
           .deleteResource(testData.id, additionalEndpoint)
           .subscribe(data => expect(data).toEqual(testData));
 
-        const request = httpTestingController.expectOne(
+        request = httpTestingController.expectOne(
           `${urlWithAdditionalEndpoint}/${testData.id}`
         );
-
-        expect(request.request.method).toEqual("DELETE");
-
-        request.flush(testData);
       });
     });
 
     describe("update requests", () => {
+      afterEach(() => {
+        expect(request.request.method).toEqual("PUT");
+      });
       it("should return supplied resource with no additional endpoint", () => {
         service
           .updateResource(testData)
           .subscribe(data => expect(data).toEqual(testData));
-        const request = httpTestingController.expectOne(`${fullUrl}`);
-
-        expect(request.request.method).toEqual("PUT");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(`${fullUrl}`);
       });
       it("should return supplied resource with additional endpoint", () => {
         service
           .updateResource(testData, additionalEndpoint)
           .subscribe(data => expect(data).toEqual(testData));
 
-        const request = httpTestingController.expectOne(
-          urlWithAdditionalEndpoint
-        );
-
-        expect(request.request.method).toEqual("PUT");
-
-        request.flush(testData);
+        request = httpTestingController.expectOne(urlWithAdditionalEndpoint);
       });
     });
-
+  });
+  describe("unsuccessful http request", () => {
     it("should fail with network error", done => {
       const mockError = new ProgressEvent("error");
 
