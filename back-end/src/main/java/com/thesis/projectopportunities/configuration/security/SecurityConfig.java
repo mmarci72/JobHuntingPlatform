@@ -7,7 +7,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -33,8 +32,7 @@ public class SecurityConfig {
 				configuration.setAllowedHeaders(List.of("*"));
 				return configuration;
 			})).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-				authorize -> authorize.requestMatchers(HttpMethod.POST, "/projects").hasRole("ADMIN_CLIENT")
-					.requestMatchers("/positions").hasRole("ADMIN_CLIENT").anyRequest().authenticated())
+				authorize -> authorize.anyRequest().permitAll())
 			.oauth2ResourceServer(o -> o.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthConverter)));
 		return http.build();
 	}
