@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost")
@@ -46,6 +48,16 @@ public class PositionController {
 	public ResponseEntity<PositionDto> getPositionById(@PathVariable int id) {
 		try {
 			return ResponseEntity.ok(positionMapping.toProjectPosition(positionRepo.getReferenceById(id)));
+		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException();
+		}
+	}
+
+	@GetMapping("/positions")
+	public ResponseEntity<List<PositionDto>> getPositions() {
+		try {
+			return ResponseEntity.ok((positionRepo.findAll().stream().map(positionMapping::toProjectPosition).toList()));
 		}
 		catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
