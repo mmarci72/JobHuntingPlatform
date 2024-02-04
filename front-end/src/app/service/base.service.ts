@@ -20,8 +20,17 @@ export class BaseService<ServiceType, IdType = number> {
   ) {
     this._fullURL = `${this.BASE_URL}${baseEndpoint}`;
   }
-  public getResource(additionalEndpoint: string = "") {
-    return this.http.get<ServiceType>(`${this._fullURL}${additionalEndpoint}`);
+
+  public getAllResource(additionalEndpoint: string = "") {
+    return this.http.get<ServiceType[]>(
+      `${this._fullURL}${additionalEndpoint}`
+    );
+  }
+
+  public getResource(resourceId: IdType, additionalEndpoint: string = "") {
+    return this.http.get<ServiceType>(
+      `${this._fullURL}${additionalEndpoint}/${resourceId}`
+    );
   }
 
   public postResource(resource: ServiceType, additionalEndpoint: string = "") {
