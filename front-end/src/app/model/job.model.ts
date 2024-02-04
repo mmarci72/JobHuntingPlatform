@@ -1,11 +1,11 @@
 import { Company } from "./company.model";
 
 export type Position = {
-  id: number;
-  name: string;
+  positionId: number;
+  positionName: string;
   startDate: Date;
-  role: string;
-  seniority: string;
+  roleName: string;
+  seniorityName: string;
   salaryMin: number;
   salaryMax: number;
   postDate: Date;

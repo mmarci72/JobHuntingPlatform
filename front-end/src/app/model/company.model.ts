@@ -8,7 +8,7 @@ export type Company = {
   location: string;
   sizeMin: number;
   sizeMax: number;
-  industryDomain: string;
+  industryDomainName: string;
   creationDate: Date;
   positions: Position[];
 };
