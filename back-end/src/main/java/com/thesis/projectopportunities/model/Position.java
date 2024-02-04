@@ -5,14 +5,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.projectopportunities.enums.RoleEnum;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,8 +25,10 @@ public class Position {
 
 	private LocalDateTime startDate;
 
+	@Enumerated(EnumType.STRING)
 	private RoleEnum roleName;
 
+	@Enumerated(EnumType.STRING)
 	private SeniorityEnum seniorityName;
 
 	private String requirementsDescription;
