@@ -1,9 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
 
-@Injectable({
-  providedIn: "root",
-})
 export class BaseService<ServiceType, IdType = number> {
   get fullURL() {
     return this._fullURL;
@@ -14,11 +10,11 @@ export class BaseService<ServiceType, IdType = number> {
   private readonly BASE_URL = `${this.BASE_ADDRESS}:${this.PORT}`;
   private readonly _fullURL;
 
-  constructor(
-    baseEndpoint: string,
-    private http: HttpClient
-  ) {
+  private readonly http: HttpClient;
+
+  constructor(baseEndpoint: string, http: HttpClient) {
     this._fullURL = `${this.BASE_URL}${baseEndpoint}`;
+    this.http = http;
   }
 
   public getAllResource(additionalEndpoint: string = "") {
