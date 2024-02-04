@@ -54,18 +54,19 @@ describe("BaseService", () => {
     });
 
     describe("get requests", () => {
+      beforeEach(() => {});
       afterEach(() => {
         expect(request.request.method).toEqual("GET");
       });
       it("should return dummy data when using default parameter", () => {
         service
-          .getResource("")
+          .getResource(testData.id, "")
           .subscribe(data => expect(data).toEqual(testData));
         request = httpTestingController.expectOne(`${fullUrl}`);
       });
       it("should return dummy data when using additional endpoint", () => {
         service
-          .getResource(additionalEndpoint)
+          .getResource(testData.id, additionalEndpoint)
           .subscribe(data => expect(data).toEqual(testData));
         request = httpTestingController.expectOne(urlWithAdditionalEndpoint);
       });
@@ -134,7 +135,7 @@ describe("BaseService", () => {
     it("should fail with network error", done => {
       const mockError = new ProgressEvent("error");
 
-      service.getResource().subscribe({
+      service.getAllResource().subscribe({
         next: () => fail("should have failed with the network error"),
         error: (error: HttpErrorResponse) => {
           expect(error.error).toBe(mockError);
