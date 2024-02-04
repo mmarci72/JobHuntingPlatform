@@ -37,9 +37,9 @@ public class Position {
 
 	private String responsibilitiesDescription;
 
-	private int salaryMin;
+	private Integer salaryMin;
 
-	private int salaryMax;
+	private Integer salaryMax;
 
 	private LocalDateTime postDate;
 
