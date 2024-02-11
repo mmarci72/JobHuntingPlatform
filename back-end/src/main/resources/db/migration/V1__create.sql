@@ -40,6 +40,7 @@ CREATE TABLE company
 	size_min             INT,
 	size_max             INT,
 	industry_domain_name industry_domain,
+	logo_file_name       varchar(255),
 	creation_date        DATE DEFAULT now()
 );
 

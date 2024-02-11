@@ -44,6 +44,8 @@ public class Company {
 
 	private LocalDateTime creationDate;
 
+	private String logoFileName;
+
 	@OneToMany(targetEntity = Position.class, fetch = FetchType.EAGER, mappedBy = "company")
 	private List<Position> positions;
 
