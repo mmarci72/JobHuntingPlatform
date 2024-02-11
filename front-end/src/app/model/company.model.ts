@@ -14,4 +14,10 @@ export type Company = {
   logoFileName: string;
 };
 
+export type CompanyWithLogo = { logo: string } & Company;
+
+export const isCompanyWithLogo = (
+  company: Company | CompanyWithLogo
+): company is CompanyWithLogo => {
+  return (company as CompanyWithLogo).logo !== undefined;
 };
