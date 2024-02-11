@@ -27,7 +27,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.cors(cors -> cors.configurationSource(request -> {
 				CorsConfiguration configuration = new CorsConfiguration();
-				configuration.setAllowedOriginPatterns(List.of("http://localhost"));
+				configuration.setAllowedOriginPatterns(List.of("http://localhost:[*]/"));
 				configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PATCH"));
 				configuration.setAllowedHeaders(List.of("*"));
 				return configuration;
