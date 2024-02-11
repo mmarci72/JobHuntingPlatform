@@ -10,7 +10,7 @@ export class BaseService<ServiceType, IdType = number> {
   private readonly BASE_URL = `${this.BASE_ADDRESS}:${this.PORT}`;
   private readonly _fullURL;
 
-  private readonly http: HttpClient;
+  protected readonly http: HttpClient;
 
   constructor(baseEndpoint: string, http: HttpClient) {
     this._fullURL = `${this.BASE_URL}${baseEndpoint}`;
