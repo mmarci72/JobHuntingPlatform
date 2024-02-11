@@ -11,4 +11,7 @@ export type Company = {
   industryDomainName: string;
   creationDate: Date;
   positions: Position[];
+  logoFileName: string;
+};
+
 };
