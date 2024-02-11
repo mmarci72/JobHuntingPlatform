@@ -1,4 +1,4 @@
-import { Company } from "./company.model";
+import { Company, CompanyWithLogo } from "./company.model";
 
 export type Position = {
   positionId: number;
@@ -9,7 +9,8 @@ export type Position = {
   salaryMin: number;
   salaryMax: number;
   postDate: Date;
-  company: Company;
+  companyId: number;
+  company?: Company | CompanyWithLogo;
   requirementsDescription: string;
   offerDescription: string;
   responsibilitiesDescription: string;
