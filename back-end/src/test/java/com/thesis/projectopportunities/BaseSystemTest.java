@@ -8,7 +8,6 @@ import java.util.HashSet;
 import java.util.Map;
 
 import com.thesis.projectopportunities.configuration.keycloak.KeycloakConfiguration;
-import com.thesis.projectopportunities.repo.UserRepo;
 import com.thesis.projectopportunities.service.EmailService;
 import com.thesis.projectopportunities.service.SubscriptionService;
 import io.restassured.RestAssured;
