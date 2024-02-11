@@ -38,6 +38,9 @@ public class CompanyDto {
 	private IndustryDomainEnum industryDomain;
 
 	@JsonProperty
+	private String logoFileName;
+
+	@JsonProperty
 	private LocalDateTime creationDate;
 
 	@JsonProperty
