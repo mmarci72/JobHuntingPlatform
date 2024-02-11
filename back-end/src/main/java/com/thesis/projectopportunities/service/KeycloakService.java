@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,7 +27,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class KeycloakService {
 
-	private static final String SERVER = "http://keycloak:8090/";
+	@Value("${keycloak.server.url}")
+	private String server;
 
 	private static final String REALM = "project-opportunities";
 
@@ -78,7 +80,7 @@ public class KeycloakService {
 		String clientId = getClientId();
 
 		ResponseEntity<String> responseEntity =
-			restTemplate.exchange(SERVER + PREFIX + REALM + USER_ENDPOINT + userId + "/role-mappings/clients/" + clientId,
+			restTemplate.exchange(server + PREFIX + REALM + USER_ENDPOINT + userId + "/role-mappings/clients/" + clientId,
 				HttpMethod.GET,
 				httpEntity,
 				String.class);
@@ -101,12 +103,12 @@ public class KeycloakService {
 
 		String userId = getUserId(user.getUsername());
 		String clientId = getClientId();
-		restTemplate.postForEntity(SERVER + PREFIX + REALM + USER_ENDPOINT + userId +
+		restTemplate.postForEntity(server + PREFIX + REALM + USER_ENDPOINT + userId +
 			"/role-mappings/clients/" + clientId, httpEntity, String.class);
 
 		httpEntity = new HttpEntity<>(ADMIN, headers);
 
-		restTemplate.postForEntity(SERVER + PREFIX + REALM + USER_ENDPOINT + userId +
+		restTemplate.postForEntity(server + PREFIX + REALM + USER_ENDPOINT + userId +
 			"/role-mappings/realm", httpEntity, String.class);
 	}
 
@@ -115,7 +117,7 @@ public class KeycloakService {
 		HttpEntity<Object> httpEntity = new HttpEntity<>("body", headers);
 
 		ResponseEntity<String> responseEntity =
-			restTemplate.exchange(SERVER + PREFIX + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
+			restTemplate.exchange(server + PREFIX + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
 				httpEntity,
 				String.class);
 		JsonNode jsonNode = new ObjectMapper().readTree(responseEntity.getBody());
@@ -127,7 +129,7 @@ public class KeycloakService {
 		HttpEntity<Object> httpEntity = new HttpEntity<>("body", headers);
 
 		ResponseEntity<String> responseEntity =
-			restTemplate.exchange(SERVER + PREFIX + REALM + "/users?username=" + username, HttpMethod.GET,
+			restTemplate.exchange(server + PREFIX + REALM + "/users?username=" + username, HttpMethod.GET,
 				httpEntity,
 				String.class);
 		JsonNode jsonNode = new ObjectMapper().readTree(responseEntity.getBody());
@@ -136,7 +138,7 @@ public class KeycloakService {
 
 	public String authAdmin() throws IOException {
 		UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
-		builder.uri(URI.create(SERVER));
+		builder.uri(URI.create(server));
 		builder.path("realms/master/protocol/openid-connect/token");
 		HttpHeaders headers = new HttpHeaders();
 

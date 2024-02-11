@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpEntity;
@@ -25,7 +26,8 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class KeycloakConfiguration {
 
-	private static final String SERVER = "http://keycloak:8090/";
+	@Value("${keycloak.server.url}")
+	private String server;
 
 	private static final String REALM = "project-opportunities";
 
@@ -46,7 +48,7 @@ public class KeycloakConfiguration {
 		HttpEntity<Object> httpEntity = new HttpEntity<>("body", headers);
 
 		try {
-			restTemplate.exchange(SERVER + "admin/realms/" + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
+			restTemplate.exchange(server + "admin/realms/" + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
 				httpEntity,
 				String.class);
 		}
@@ -72,6 +74,6 @@ public class KeycloakConfiguration {
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Object> httpEntity = new HttpEntity<>(json.toPrettyString(), headers);
 
-		restTemplate.postForEntity(SERVER + "/admin/realms", httpEntity, String.class);
+		restTemplate.postForEntity(server + "/admin/realms", httpEntity, String.class);
 	}
 }
