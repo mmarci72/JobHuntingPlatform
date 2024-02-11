@@ -24,6 +24,20 @@ export class PositionService extends BaseService<Position> {
       toArray()
     );
   }
+
+  public getPositionsWithCompanyLogo() {
+    return this.getAllResource().pipe(
+      mergeMap(positions => from(positions)),
+      mergeMap(position => this.populatePositionWithCompanyAndLogo(position)),
+      toArray()
+    );
+  }
+
+  private populatePositionWithCompany = (position: Position) =>
+    this.companyService
+      .getCompanyById(position.companyId)
+      .pipe(map(company => ({ ...position, company })));
+
   private populatePositionWithCompanyAndLogo = (position: Position) =>
     this.companyService
       .getCompanyWithLogos(position.companyId)
