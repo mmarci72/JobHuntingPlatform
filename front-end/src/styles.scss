@@ -1,8 +1,12 @@
+:root {
+  --back-color: rgb(15, 31, 39);
+}
+
 html, body {
   height: 100%;
   margin: 0;
   font-family: Inter, Roboto, "Helvetica Neue", sans-serif;
-  background-color: rgb(15, 31, 39);
+  background-color: var(--back-color);
   color: white;
 }
 
