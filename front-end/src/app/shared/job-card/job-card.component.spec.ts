@@ -9,7 +9,7 @@ describe("JobCardComponent", () => {
   const testPosition: Position = {
     id: 10,
     name: "test",
-  } as Position;
+  } as unknown as Position;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
