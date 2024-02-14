@@ -85,6 +85,8 @@ services:
         condition: service_healthy
       mailhog:
         condition: service_started
+    volumes:
+      - ./assets:/usr/share/assets
 
   front-end:
     container_name: front-end

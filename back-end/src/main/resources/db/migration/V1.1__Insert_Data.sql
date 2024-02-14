@@ -13,12 +13,12 @@ ALTER SEQUENCE position_position_id_seq
 ALTER SEQUENCE technology_id_seq
 	RESTART WITH 1;
 
-INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
-VALUES ('Company 1', '1999-02-13', 'Budapest, Hungary', 130, 250, 'GROWTH_MARKETS');
-INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
-VALUES ('Company 2', '2002-06-20', 'Eger, Hungary', 10, 30, 'INSURANCE');
-INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name)
-VALUES ('Company 3', '2000-02-13', 'Budapest, Hungary', 1000, 1500, 'BANKING');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name, logo_file_name)
+VALUES ('Company 1', '1999-02-13', 'Budapest, Hungary', 130, 250, 'GROWTH_MARKETS', 'ing-logo.webp');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name, logo_file_name)
+VALUES ('Company 2', '2002-06-20', 'Eger, Hungary', 10, 30, 'INSURANCE', 'mbh-logo.webp');
+INSERT INTO company (name, founded, location, size_min , size_max, industry_domain_name, logo_file_name)
+VALUES ('Company 3', '2000-02-13', 'Budapest, Hungary', 1000, 1500, 'BANKING', 'metro-logo.webp');
 
 INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
                      responsibilities_description, salary_min, salary_max)

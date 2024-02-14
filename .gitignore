@@ -25,4 +25,5 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
-front-end-old
+assets
+**/.env.*
