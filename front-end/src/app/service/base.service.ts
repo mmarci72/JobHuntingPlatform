@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
 export class BaseService<ServiceType, IdType = number> {
   get fullURL() {
@@ -17,19 +18,27 @@ export class BaseService<ServiceType, IdType = number> {
     this.http = http;
   }
 
-  public getAllResource(additionalEndpoint: string = "") {
+  public getAllResource(
+    additionalEndpoint: string = ""
+  ): Observable<ServiceType[]> {
     return this.http.get<ServiceType[]>(
       `${this._fullURL}${additionalEndpoint}`
     );
   }
 
-  public getResource(resourceId: IdType, additionalEndpoint: string = "") {
+  public getResource(
+    resourceId: IdType,
+    additionalEndpoint: string = ""
+  ): Observable<ServiceType> {
     return this.http.get<ServiceType>(
       `${this._fullURL}${additionalEndpoint}/${resourceId}`
     );
   }
 
-  public postResource(resource: ServiceType, additionalEndpoint: string = "") {
+  public postResource(
+    resource: ServiceType,
+    additionalEndpoint: string = ""
+  ): Observable<ServiceType> {
     return this.http.post<ServiceType>(
       `${this._fullURL}${additionalEndpoint}`,
       resource
@@ -38,13 +47,16 @@ export class BaseService<ServiceType, IdType = number> {
   public updateResource(
     resource: ServiceType,
     additionalEndpoint: string = ""
-  ) {
+  ): Observable<ServiceType> {
     return this.http.put<ServiceType>(
       `${this._fullURL}${additionalEndpoint}`,
       resource
     );
   }
-  public deleteResource(resourceId: IdType, additionalEndpoint: string = "") {
+  public deleteResource(
+    resourceId: IdType,
+    additionalEndpoint: string = ""
+  ): Observable<ServiceType> {
     return this.http.delete<ServiceType>(
       `${this._fullURL}${additionalEndpoint}/${resourceId}`
     );

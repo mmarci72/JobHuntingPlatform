@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { from, map, mergeMap, toArray } from "rxjs";
+import { from, map, mergeMap, Observable, toArray } from "rxjs";
 
 import { Position } from "../model/job.model";
 import { BaseService } from "./base.service";
@@ -17,7 +17,7 @@ export class PositionService extends BaseService<Position> {
     super("/positions", http);
   }
 
-  public getPositions() {
+  public getPositions(): Observable<Position[]> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
       mergeMap(position => this.populatePositionWithCompany(position)),
@@ -25,7 +25,7 @@ export class PositionService extends BaseService<Position> {
     );
   }
 
-  public getPositionsWithCompanyLogo() {
+  public getPositionsWithCompanyLogo(): Observable<Position[]> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
       mergeMap(position => this.populatePositionWithCompanyAndLogo(position)),
@@ -33,12 +33,16 @@ export class PositionService extends BaseService<Position> {
     );
   }
 
-  private populatePositionWithCompany = (position: Position) =>
+  private populatePositionWithCompany = (
+    position: Position
+  ): Observable<Position> =>
     this.companyService
       .getCompanyById(position.companyId)
       .pipe(map(company => ({ ...position, company })));
 
-  private populatePositionWithCompanyAndLogo = (position: Position) =>
+  private populatePositionWithCompanyAndLogo = (
+    position: Position
+  ): Observable<Position> =>
     this.companyService
       .getCompanyWithLogos(position.companyId)
       .pipe(map(company => ({ ...position, company })));

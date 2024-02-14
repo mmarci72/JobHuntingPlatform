@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, mergeMap } from "rxjs";
+import { map, mergeMap, Observable } from "rxjs";
 
 import { Company, CompanyWithLogo } from "../model/company.model";
 import { AssetService } from "./asset.service";
@@ -17,11 +17,11 @@ export class CompanyService extends BaseService<Company> {
     super("/companies", http);
   }
 
-  public getCompanyById(companyId: number) {
+  public getCompanyById(companyId: number): Observable<Company> {
     return this.getResource(companyId);
   }
 
-  public getCompanyWithLogos(companyId: number) {
+  public getCompanyWithLogos(companyId: number): Observable<CompanyWithLogo> {
     return this.getResource(companyId).pipe(
       mergeMap(company =>
         this.assetService.getCompanyLogo(company.logoFileName).pipe(
