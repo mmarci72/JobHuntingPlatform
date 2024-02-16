@@ -37,19 +37,18 @@ public class PositionController {
 
 	@PostMapping("/positions")
 	public ResponseEntity<Position> addPosition(@RequestBody PositionDto position) {
-		var savedPosition = positionRepo.save(positionMapping.toProjectPosition(position));
+		var savedPosition = positionRepo.save(positionMapping.toPosition(position));
 		var responseEntity = new ResponseEntity<>(savedPosition, HttpStatus.CREATED);
 		position.setPositionId(savedPosition.getPositionId());
-		userNotificationService.newNotification(positionMapping.toProjectPosition(position));
+		userNotificationService.newNotification(positionMapping.toPosition(position));
 		return responseEntity;
 	}
 
 	@GetMapping("/positions/{id}")
 	public ResponseEntity<PositionDto> getPositionById(@PathVariable int id) {
 		try {
-			return ResponseEntity.ok(positionMapping.toProjectPosition(positionRepo.getReferenceById(id)));
-		}
-		catch (EntityNotFoundException e) {
+			return ResponseEntity.ok(positionMapping.toPosition(positionRepo.getReferenceById(id)));
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
 		}
 	}
@@ -57,9 +56,8 @@ public class PositionController {
 	@GetMapping("/positions")
 	public ResponseEntity<List<PositionDto>> getPositions() {
 		try {
-			return ResponseEntity.ok((positionRepo.findAll().stream().map(positionMapping::toProjectPosition).toList()));
-		}
-		catch (EntityNotFoundException e) {
+			return ResponseEntity.ok((positionRepo.findAll().stream().map(positionMapping::toPosition).toList()));
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
 		}
 	}
