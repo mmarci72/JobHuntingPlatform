@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -56,7 +57,9 @@ public class PositionController {
 	@GetMapping("/positions")
 	public ResponseEntity<List<PositionDto>> getPositions() {
 		try {
-			return ResponseEntity.ok((positionRepo.findAll().stream().map(positionMapping::toPosition).toList()));
+			List<PositionDto> positions =
+				positionRepo.findAll().stream().sorted(Comparator.comparing(Position::getPostDate)).map(positionMapping::toPosition).toList();
+			return ResponseEntity.ok(positions);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
 		}

@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, map, mergeMap, Observable, toArray } from "rxjs";
 
-import { Position } from "../model/job.model";
+import { comparePositions, Position } from "../model/job.model";
 import { BaseService } from "./base.service";
 import { CompanyService } from "./company.service";
 
@@ -21,7 +21,14 @@ export class PositionService extends BaseService<Position> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
       mergeMap(position => this.populatePositionWithCompany(position)),
-      toArray()
+      map(position => {
+        position.postDate = new Date(position.postDate);
+        return position;
+      }),
+      toArray(),
+      map(positions =>
+        [...positions].sort((p1, p2) => comparePositions(p1, p2))
+      )
     );
   }
 
@@ -29,7 +36,14 @@ export class PositionService extends BaseService<Position> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
       mergeMap(position => this.populatePositionWithCompanyAndLogo(position)),
-      toArray()
+      map(position => {
+        position.postDate = new Date(position.postDate);
+        return position;
+      }),
+      toArray(),
+      map(positions =>
+        [...positions].sort((p1, p2) => comparePositions(p1, p2))
+      )
     );
   }
 

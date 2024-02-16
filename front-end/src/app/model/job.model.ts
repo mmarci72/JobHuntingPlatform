@@ -16,3 +16,11 @@ export type Position = {
   responsibilitiesDescription: string;
   language: string;
 };
+
+export const comparePositions = (position1: Position, position2: Position) => {
+  if (position1.postDate.getTime() === position2.postDate.getTime()) {
+    return position1.positionName.localeCompare(position2.positionName);
+  }
+
+  return position1.postDate.getTime() - position2.postDate.getTime();
+};
