@@ -1,0 +1,31 @@
+<h2 class="recent-jobs-header">Recent jobs</h2>
+<div class="new-listings">
+  @if (!leftDisabled) {
+    <div>
+      <img ngSrc="./assets/left-arrow.svg" alt="left navigational arrow" height="30" width="30"
+           class="navigation-arrow"
+           (click)="scrollLeft()" />
+    </div>
+  }
+  <div class="listings-wrapper text-center text-md-left" [scrollLeft]="leftOffset" #cards (scroll)="onScroll()"
+       [ngClass]="this.rightDisabled || this.leftDisabled ? 'width': ''">
+    <div class="listings">
+      @for (position of _positions; track position.positionId) {
+        <app-job-card [position]="position" />
+      }
+    </div>
+  </div>
+  @if (!rightDisabled) {
+    <div>
+      <img ngSrc="./assets/right-arrow.svg" alt="right navigational arrow" height="30" width="30"
+           class="navigation-arrow"
+           (click)="scrollRight()" />
+    </div>
+  }
+
+</div>
+<div class="navigation-buttons">
+  @for (button of [].constructor(numberOfButtons); track button; let idx = $index) {
+    <button class="navigation-button" [ngClass]="idx == activeButtonIndex ? 'active' : ''" (click)="scrollTo(idx)"></button>
+  }
+</div>
