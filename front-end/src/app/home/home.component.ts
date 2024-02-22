@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
   protected positions: Position[] = [];
   protected newPositions: Position[] = [];
 
+  private readonly MAX_RECENT_JOBS = 10;
+
   constructor(
     private readonly positionService: PositionService,
     private readonly cd: ChangeDetectorRef
@@ -25,7 +27,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.positionService.getPositionsWithCompanyLogo().subscribe(positions => {
       this.positions = positions;
-      this.newPositions = positions.slice(0, 10);
+      this.newPositions = positions.slice(0, this.MAX_RECENT_JOBS);
 
       this.cd.detach();
       this.cd.detectChanges();
