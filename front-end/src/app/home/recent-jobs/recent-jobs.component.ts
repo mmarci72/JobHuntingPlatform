@@ -49,7 +49,7 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit(): void {
-    console.assert(this.cards !== undefined, "cannot find html element cards");
+    console.assert(this.cards === undefined, "cannot find html element cards");
   }
   protected scrollLeft() {
     this.leftOffset -= this.offsetBy;
@@ -63,11 +63,11 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
     }
 
     if (index < this.activeButtonIndex) {
-      let scrollBy = this.activeButtonIndex - index;
+      const scrollBy = this.activeButtonIndex - index;
       this.leftOffset -= this.offsetBy * scrollBy;
       this.activeButtonIndex -= scrollBy;
     } else {
-      let scrollBy = index - this.activeButtonIndex;
+      const scrollBy = index - this.activeButtonIndex;
       this.leftOffset += this.offsetBy * scrollBy;
       this.activeButtonIndex += scrollBy;
     }
@@ -88,8 +88,8 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
     this.leftDisabled = this.leftOffset === 0;
 
     if (this.cards) {
-      let width = this.cards.nativeElement.clientWidth;
-      let scrollWidth = this.cards.nativeElement.scrollWidth;
+      const width = this.cards.nativeElement.clientWidth;
+      const scrollWidth = this.cards.nativeElement.scrollWidth;
       this.rightDisabled = scrollWidth - (this.leftOffset + width) <= 0;
     }
   }
@@ -97,8 +97,8 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
   private computeNumberOfNavigationalButtons() {
     if (this.cards && this._positions.length > 0) {
       let offset = this.leftOffset;
-      let width = this.cards.nativeElement.clientWidth;
-      let scrollWidth = this.cards.nativeElement.scrollWidth;
+      const width = this.cards.nativeElement.clientWidth;
+      const scrollWidth = this.cards.nativeElement.scrollWidth;
 
       while (scrollWidth - (offset + width) > 0) {
         offset += this.offsetBy;

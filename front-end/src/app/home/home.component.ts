@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.positionService.getPositionsWithCompanyLogo().subscribe(positions => {
+    this.positionService.getPositions(true).subscribe(positions => {
       this.positions = positions;
       this.newPositions = positions.slice(0, this.MAX_RECENT_JOBS);
 

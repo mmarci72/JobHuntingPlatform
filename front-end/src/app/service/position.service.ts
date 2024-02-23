@@ -17,25 +17,12 @@ export class PositionService extends BaseService<Position> {
     super("/positions", http);
   }
 
-  public getPositions(): Observable<Position[]> {
+  public getPositions(withLogo: boolean = false): Observable<Position[]> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
-      mergeMap(position => this.populatePositionWithCompany(position)),
-      map(position => {
-        position.postDate = new Date(position.postDate);
-        return position;
-      }),
-      toArray(),
-      map(positions =>
-        [...positions].sort((p1, p2) => comparePositions(p1, p2))
-      )
-    );
-  }
-
-  public getPositionsWithCompanyLogo(): Observable<Position[]> {
-    return this.getAllResource().pipe(
-      mergeMap(positions => from(positions)),
-      mergeMap(position => this.populatePositionWithCompanyAndLogo(position)),
+      mergeMap(position =>
+        this.populatePositionWithCompany(position, withLogo)
+      ),
       map(position => {
         position.postDate = new Date(position.postDate);
         return position;
@@ -48,16 +35,17 @@ export class PositionService extends BaseService<Position> {
   }
 
   private populatePositionWithCompany = (
-    position: Position
-  ): Observable<Position> =>
-    this.companyService
-      .getCompanyById(position.companyId)
-      .pipe(map(company => ({ ...position, company })));
-
-  private populatePositionWithCompanyAndLogo = (
-    position: Position
-  ): Observable<Position> =>
-    this.companyService
-      .getCompanyWithLogos(position.companyId)
-      .pipe(map(company => ({ ...position, company })));
+    position: Position,
+    withLogo: boolean
+  ): Observable<Position> => {
+    if (withLogo) {
+      return this.companyService
+        .getCompanyWithLogos(position.companyId)
+        .pipe(map(company => ({ ...position, company })));
+    } else {
+      return this.companyService
+        .getCompanyById(position.companyId)
+        .pipe(map(company => ({ ...position, company })));
+    }
+  };
 }
