@@ -10,7 +10,7 @@
   <div class="listings-wrapper text-center text-md-left" [scrollLeft]="leftOffset" #cards (scroll)="onScroll()"
        [ngClass]="this.rightDisabled || this.leftDisabled ? 'width': ''">
     <div class="listings">
-      @for (position of _positions; track position.positionId) {
+      @for (position of _positions?.entities; track position.positionId) {
         <app-job-card [position]="position" />
       }
     </div>

@@ -1,1 +1,18 @@
 <app-recent-jobs [positions]="newPositions"></app-recent-jobs>
+<form class="filter-jobs">
+  <mat-form-field class="searchbar w-50 m-3">
+    <input type="tel" matInput placeholder="Search jobs" name="searchbar" >
+  </mat-form-field>
+</form>
+
+<div class="all-jobs">
+  @for(position of positions?.entities ?? [] | paginate: {
+    itemsPerPage: PAGE_SIZE,
+    currentPage: current_job_page,
+    totalItems: positions?.totalItems
+  }; track position.positionId) {
+    <app-job-card [position]="position"></app-job-card>
+  }
+</div>
+
+<pagination-controls (pageChange)="handlePageChange($event)"></pagination-controls>

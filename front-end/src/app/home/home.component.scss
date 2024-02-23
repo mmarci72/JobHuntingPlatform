@@ -1,2 +1,19 @@
+.filter-jobs {
+  display: flex;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
 
+.all-jobs {
+  margin-left: 6rem;
+  margin-right: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
 
+.more-jobs-button {
+  margin:0 auto;
+  display:block;
+}
