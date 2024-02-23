@@ -2,13 +2,14 @@ package com.thesis.projectopportunities.controller;
 
 import com.thesis.projectopportunities.dto.PositionDto;
 import com.thesis.projectopportunities.mapping.PositionMapping;
+import com.thesis.projectopportunities.model.PaginatedModel;
 import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.PositionService;
 import com.thesis.projectopportunities.service.UserNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +49,22 @@ public class PositionController {
 	}
 
 	@GetMapping("/positions")
-	public ResponseEntity<List<PositionDto>> getPositions() {
+	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(defaultValue = "0") int page,
+																	@RequestParam(defaultValue = "10") int size) {
 		try {
-			List<PositionDto> positions =
-				positionRepo.findAll(Sort.by("postDate")).stream().map(positionMapping::toPosition).toList();
-			return ResponseEntity.ok(positions);
+			PaginatedModel<PositionDto> response = new PaginatedModel<>();
+
+			Pageable paging = PageRequest.of(page, size, Sort.by("postDate").and(Sort.by("positionName")));
+
+			Page<PositionDto> pageTuts =
+				new PageImpl<>(positionRepo.findAll(paging).stream().map(positionMapping::toPosition).toList());
+
+			response.setEntities(pageTuts.getContent());
+			response.setCurrentPage(pageTuts.getNumber());
+			response.setTotalItems(pageTuts.getTotalElements());
+			response.setTotalPages(pageTuts.getTotalPages());
+
+			return ResponseEntity.ok(response);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
 		}
