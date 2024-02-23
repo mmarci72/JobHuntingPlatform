@@ -44,6 +44,42 @@ VALUES (3, 'Test Engineer', '2024-03-10', 'INTERN', 'TESTER',
 		'Some description goes here that will be much longer than this',
 		'Offer description goes here..............',
 		'Test stuff', 400000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (3, 'Test Engineer', '2024-03-10', 'INTERN', 'TESTER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Test stuff', 400000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min)
+VALUES (3, 'Test Engineer', '2024-03-10', 'INTERN', 'TESTER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Test stuff', 400000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Write clean code ;)', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Write clean code ;)', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Write clean code ;)', 1500000, 1700000);
+INSERT INTO position(company_id, position_name, start_date, seniority_name, role_name, requirements_description, offer_description,
+					 responsibilities_description, salary_min, salary_max)
+VALUES (1, 'Expert Backend Engineer', '2024-05-20', 'SENIOR', 'SOFTWARE_ENGINEER',
+		'Some description goes here that will be much longer than this',
+		'Offer description goes here..............',
+		'Write clean code ;)', 1500000, 1700000);
 
 
 INSERT INTO technology(position_id, name)

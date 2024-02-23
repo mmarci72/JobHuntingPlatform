@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { from, map, mergeMap, Observable, toArray } from "rxjs";
 
-import { Position } from "../model/job.model";
+import { comparePositions, Position } from "../model/job.model";
 import { BaseService } from "./base.service";
 import { CompanyService } from "./company.service";
 
@@ -17,33 +17,35 @@ export class PositionService extends BaseService<Position> {
     super("/positions", http);
   }
 
-  public getPositions(): Observable<Position[]> {
+  public getPositions(withLogo: boolean = false): Observable<Position[]> {
     return this.getAllResource().pipe(
       mergeMap(positions => from(positions)),
-      mergeMap(position => this.populatePositionWithCompany(position)),
-      toArray()
-    );
-  }
-
-  public getPositionsWithCompanyLogo(): Observable<Position[]> {
-    return this.getAllResource().pipe(
-      mergeMap(positions => from(positions)),
-      mergeMap(position => this.populatePositionWithCompanyAndLogo(position)),
-      toArray()
+      mergeMap(position =>
+        this.populatePositionWithCompany(position, withLogo)
+      ),
+      map(position => {
+        position.postDate = new Date(position.postDate);
+        return position;
+      }),
+      toArray(),
+      map(positions =>
+        [...positions].sort((p1, p2) => comparePositions(p1, p2))
+      )
     );
   }
 
   private populatePositionWithCompany = (
-    position: Position
-  ): Observable<Position> =>
-    this.companyService
-      .getCompanyById(position.companyId)
-      .pipe(map(company => ({ ...position, company })));
-
-  private populatePositionWithCompanyAndLogo = (
-    position: Position
-  ): Observable<Position> =>
-    this.companyService
-      .getCompanyWithLogos(position.companyId)
-      .pipe(map(company => ({ ...position, company })));
+    position: Position,
+    withLogo: boolean
+  ): Observable<Position> => {
+    if (withLogo) {
+      return this.companyService
+        .getCompanyWithLogos(position.companyId)
+        .pipe(map(company => ({ ...position, company })));
+    } else {
+      return this.companyService
+        .getCompanyById(position.companyId)
+        .pipe(map(company => ({ ...position, company })));
+    }
+  };
 }

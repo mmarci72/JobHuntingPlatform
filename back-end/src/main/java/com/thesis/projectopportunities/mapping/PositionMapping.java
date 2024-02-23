@@ -10,15 +10,16 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring", uses = CompanyRepo.class, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
+@Mapper(componentModel = "spring", uses = CompanyRepo.class, nullValuePropertyMappingStrategy =
+	NullValuePropertyMappingStrategy.IGNORE,
 	nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
 public interface PositionMapping {
 
 	@Mapping(expression = "java(position.getCompany().getId())", target = "companyId")
-	PositionDto toProjectPosition(Position position);
+	PositionDto toPosition(Position position);
 
 	@Mapping(source = "companyId", target = "company", qualifiedByName = "getReferenceById")
-	Position toProjectPosition(PositionDto positionDto);
+	Position toPosition(PositionDto positionDto);
 
 	@InheritConfiguration
 	void update(PositionDto positionDto, @MappingTarget Position position);

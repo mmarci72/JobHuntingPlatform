@@ -22,9 +22,8 @@ public class PositionService {
 			positionMapping.update(positionDto, position.get());
 			positionRepo.save(position.get());
 
-		}
-		else {
-			positionRepo.save(positionMapping.toProjectPosition(positionDto));
+		} else {
+			positionRepo.save(positionMapping.toPosition(positionDto));
 		}
 	}
 }

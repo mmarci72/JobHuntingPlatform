@@ -1,7 +1,1 @@
-<div class="listings-wrapper text-center text-md-left">
-  <div class="listings">
-    @for (position of positions; track position.positionId) {
-      <app-job-card [position]="position" />
-    }
-  </div>
-</div>
+<app-recent-jobs [positions]="newPositions"></app-recent-jobs>
