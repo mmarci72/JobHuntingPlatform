@@ -56,8 +56,11 @@ public class PositionController {
 
 			Pageable paging = PageRequest.of(page, size, Sort.by("postDate").and(Sort.by("positionName")));
 
+			var allPositions = positionRepo.findAll(paging);
+
 			Page<PositionDto> pageTuts =
-				new PageImpl<>(positionRepo.findAll(paging).stream().map(positionMapping::toPosition).toList());
+				new PageImpl<>(allPositions.stream().map(positionMapping::toPosition).toList(), paging,
+					allPositions.getTotalElements());
 
 			response.setEntities(pageTuts.getContent());
 			response.setCurrentPage(pageTuts.getNumber());
