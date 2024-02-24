@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   protected newPositions?: PaginatedPosition;
 
   protected readonly PAGE_SIZE = 8;
-  protected current_job_page = 0;
+  protected current_job_page = 1;
 
   constructor(
     private readonly positionService: PositionService,
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.positionService
-      .getPositions(true, this.current_job_page, this.PAGE_SIZE)
+      .getPositions(this.current_job_page - 1, this.PAGE_SIZE)
       .subscribe(positions => {
         this.positions = positions;
         this.newPositions = positions;
@@ -53,5 +53,13 @@ export class HomeComponent implements OnInit {
 
   protected handlePageChange(event: number) {
     this.current_job_page = event;
+
+    this.positionService
+      .getPositions(this.current_job_page - 1, this.PAGE_SIZE)
+      .subscribe(positions => {
+        if (this.positions) {
+          this.positions = positions;
+        }
+      });
   }
 }
