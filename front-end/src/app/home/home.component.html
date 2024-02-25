@@ -1,20 +1,21 @@
 <app-recent-jobs [positions]="newPositions"></app-recent-jobs>
-<form class="filter-jobs">
-  <mat-form-field class="searchbar w-50 m-3">
-    <input type="tel" matInput placeholder="Search jobs" name="searchbar" >
-  </mat-form-field>
-</form>
 
-<div class="all-jobs">
-  @for(position of positions?.entities ?? [] | paginate: {
-    itemsPerPage: PAGE_SIZE,
-    currentPage: current_job_page,
-    totalItems: positions?.totalItems
-  }; track position.positionId) {
-    <app-job-card [position]="position"></app-job-card>
-  }
-</div>
 
-<div  class="page-control-wrapper">
-  <pagination-controls class="page-control" (pageChange)="handlePageChange($event)"></pagination-controls>
-</div>
+@if(positions$ | async; as positions) {
+  <div class="filter-jobs">
+    <app-search-input class="searchbar w-50 h-100 m-3" (textChange)="onInputChange($event)"></app-search-input>
+  </div>
+  <div class="all-jobs">
+    @for(position of positions?.entities ?? [] | paginate: {
+      itemsPerPage: PAGE_SIZE,
+      currentPage: current_job_page,
+      totalItems: positions?.totalItems
+    }; track position.positionId) {
+      <app-job-card [position]="position"></app-job-card>
+    }
+  </div>
+  <div  class="page-control-wrapper">
+    <pagination-controls class="page-control" (pageChange)="handlePageChange($event)"></pagination-controls>
+  </div>
+}
+

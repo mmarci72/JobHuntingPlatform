@@ -1,5 +1,5 @@
 import { Company, CompanyWithLogo } from "./company.model";
-import { PaginatedModel } from "./paginated-model.model";
+import { PaginatedModel } from "./paginated.model";
 
 export type Position = {
   positionId: number;

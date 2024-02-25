@@ -18,7 +18,7 @@ describe("JobCardComponent", () => {
 
     fixture = TestBed.createComponent(JobCardComponent);
     component = fixture.componentInstance;
-    component.position = testPosition;
+    component._position = testPosition;
     fixture.detectChanges();
   });
 

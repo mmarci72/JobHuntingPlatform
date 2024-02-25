@@ -15,12 +15,14 @@ export class PositionService extends BaseService<PaginatedPosition> {
 
   public getPositions(
     page: number,
-    pageSize: number
+    pageSize: number,
+    filter: string = ""
   ): Observable<PaginatedPosition> {
     let queryParams = new HttpParams();
 
     queryParams = queryParams.append("page", page);
     queryParams = queryParams.append("size", pageSize);
+    queryParams = queryParams.append("filter", filter);
 
     return this.http
       .get<PaginatedPosition>(this.fullURL, { params: queryParams })
