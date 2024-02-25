@@ -49,24 +49,11 @@ public class PositionController {
 	}
 
 	@GetMapping("/positions")
-	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(defaultValue = "0") int page,
+	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(required = false) String filter,
+																	@RequestParam(defaultValue = "0") int page,
 																	@RequestParam(defaultValue = "10") int size) {
 		try {
-			PaginatedModel<PositionDto> response = new PaginatedModel<>();
-
-			Pageable paging = PageRequest.of(page, size, Sort.by("postDate").and(Sort.by("positionName")));
-
-			var allPositions = positionRepo.findAll(paging);
-
-			Page<PositionDto> pageTuts =
-				new PageImpl<>(allPositions.stream().map(positionMapping::toPosition).toList(), paging,
-					allPositions.getTotalElements());
-
-			response.setEntities(pageTuts.getContent());
-			response.setCurrentPage(pageTuts.getNumber());
-			response.setTotalItems(pageTuts.getTotalElements());
-			response.setTotalPages(pageTuts.getTotalPages());
-
+			PaginatedModel<PositionDto> response = positionService.getPaginatedPositions(filter, page, size);
 			return ResponseEntity.ok(response);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
