@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component } from "@angular/core";
+import { AfterViewInit, Component } from "@angular/core";
 
 import { PositionService } from "../service/position.service";
 import { JobCardComponent } from "../shared/job-card/job-card.component";
@@ -47,10 +47,7 @@ export class HomeComponent implements AfterViewInit {
     })
   );
 
-  constructor(
-    private readonly positionService: PositionService,
-    private readonly cd: ChangeDetectorRef
-  ) {}
+  constructor(private readonly positionService: PositionService) {}
 
   ngAfterViewInit() {
     let newPositions$ = this.positions$.subscribe(positions => {

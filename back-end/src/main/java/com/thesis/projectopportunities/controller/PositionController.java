@@ -9,7 +9,6 @@ import com.thesis.projectopportunities.service.PositionService;
 import com.thesis.projectopportunities.service.UserNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
