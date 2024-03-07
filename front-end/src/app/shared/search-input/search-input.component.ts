@@ -6,13 +6,13 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import {
   debounceTime,
   distinctUntilChanged,
   Subject,
   Subscription,
 } from "rxjs";
-import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: "app-search-input",

@@ -1,14 +1,15 @@
-import { AfterViewInit, Component, Input } from "@angular/core";
-import { JobFiltersComponent } from "../job-filters/job-filters.component";
-import { JobFilter } from "../job-filter";
-import { Subject, switchMap } from "rxjs";
-import { PositionService } from "../../service/position.service";
-import { MatDialog } from "@angular/material/dialog";
-import { SearchInputComponent } from "../../shared/search-input/search-input.component";
-import { MatButton } from "@angular/material/button";
 import { AsyncPipe } from "@angular/common";
+import { AfterViewInit, Component, Input } from "@angular/core";
+import { MatButton } from "@angular/material/button";
+import { MatDialog } from "@angular/material/dialog";
 import { NgxPaginationModule } from "ngx-pagination";
+import { Subject, switchMap } from "rxjs";
+
+import { PositionService } from "../../service/position.service";
 import { JobCardComponent } from "../../shared/job-card/job-card.component";
+import { SearchInputComponent } from "../../shared/search-input/search-input.component";
+import { JobFilter } from "../job-filter";
+import { JobFiltersComponent } from "../job-filters/job-filters.component";
 
 @Component({
   selector: "app-all-jobs",
@@ -67,12 +68,15 @@ export class AllJobsComponent implements AfterViewInit {
   }
 
   protected showFilters() {
-    let jobFiltersDialogRef = this.jobFiltersDialog.open(JobFiltersComponent, {
-      width: "40rem",
-      data: {
-        filters: this.filters,
-      },
-    });
+    const jobFiltersDialogRef = this.jobFiltersDialog.open(
+      JobFiltersComponent,
+      {
+        width: "40rem",
+        data: {
+          filters: this.filters,
+        },
+      }
+    );
 
     jobFiltersDialogRef.afterClosed().subscribe(() => {
       this.current_job_page = 1;

@@ -1,3 +1,5 @@
+import { NgIf } from "@angular/common";
+import { Component, Inject } from "@angular/core";
 import {
   AbstractControl,
   FormArray,
@@ -8,19 +10,18 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from "@angular/forms";
-import { SeniorityService } from "../../service/seniority.service";
+import { MatButton } from "@angular/material/button";
+import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import {
   MatExpansionPanel,
   MatExpansionPanelHeader,
   MatExpansionPanelTitle,
 } from "@angular/material/expansion";
-import { Component, Inject } from "@angular/core";
-import { JobFilter } from "../job-filter";
-import { MatCheckbox, MatCheckboxChange } from "@angular/material/checkbox";
-import { MatButton } from "@angular/material/button";
 import { MatError } from "@angular/material/form-field";
-import { NgIf } from "@angular/common";
+
+import { SeniorityService } from "../../service/seniority.service";
+import { JobFilter } from "../job-filter";
 
 type SeniorityControl = { isChecked: boolean; seniority: string };
 
@@ -97,8 +98,8 @@ export class JobFiltersComponent {
   private salaryValidator: ValidatorFn = (
     control: AbstractControl
   ): ValidationErrors | null => {
-    let minSalary: number = control.get("minSalary")?.getRawValue() ?? 0;
-    let maxSalary: number = control.get("maxSalary")?.getRawValue() ?? 0;
+    const minSalary: number = control.get("minSalary")?.getRawValue() ?? 0;
+    const maxSalary: number = control.get("maxSalary")?.getRawValue() ?? 0;
 
     if (minSalary > maxSalary && maxSalary !== 0 && minSalary !== 0) {
       return { salary: true };
@@ -128,7 +129,7 @@ export class JobFiltersComponent {
   }
 
   onSeniorityChange(e: MatCheckboxChange) {
-    let seniorityControl: SeniorityControl = this.seniorities
+    const seniorityControl: SeniorityControl = this.seniorities
       .get(e.source.id)
       ?.getRawValue();
 

@@ -1,5 +1,4 @@
 <div class="filters">
-
   <div class="header">
     <h1>Filters</h1>
   </div>
@@ -12,22 +11,21 @@
       <div class="salary-filter">
         <div class="salary-wrapper">
           <label for="min-salary">min</label>
-          <input id="min-salary" type="number" formControlName="minSalary">
+          <input id="min-salary" type="number" formControlName="minSalary" />
         </div>
         <span class="mx-3">-</span>
         <div class="salary-wrapper">
           <label for="max-salary">max</label>
-          <input id="max-salary" type="number" formControlName="maxSalary">
+          <input id="max-salary" type="number" formControlName="maxSalary" />
         </div>
       </div>
 
       <div
         *ngIf="
-           jobFilters.errors?.['salary'] &&
-           (jobFilters.touched || jobFilters.dirty)
-         "
-        class="cross-validation-error-message alert alert-danger"
-      >
+          jobFilters.errors?.['salary'] &&
+          (jobFilters.touched || jobFilters.dirty)
+        "
+        class="cross-validation-error-message alert alert-danger">
         Invalid salary values
       </div>
     </mat-expansion-panel>
@@ -37,18 +35,34 @@
         <mat-panel-title>Seniority</mat-panel-title>
       </mat-expansion-panel-header>
       <div class="seniority-filter" formArrayName="seniorities">
-        @for (seniorityFilter of seniorities.controls; track seniorityFilter; let i = $index) {
+        @for (
+          seniorityFilter of seniorities.controls;
+          track seniorityFilter;
+          let i = $index
+        ) {
           <div class="seniority-wrapper">
-            <mat-checkbox color="primary" [id]="String(i)" (change)="onSeniorityChange($event)" [checked]="seniorityFilter.getRawValue()?.isChecked"> </mat-checkbox>
-            <label [for]="String(i)">{{ seniorityFilter.getRawValue()?.seniority }}</label>
+            <mat-checkbox
+              color="primary"
+              [id]="String(i)"
+              (change)="onSeniorityChange($event)"
+              [checked]="seniorityFilter.getRawValue()?.isChecked">
+            </mat-checkbox>
+            <label [for]="String(i)">{{
+              seniorityFilter.getRawValue()?.seniority
+            }}</label>
           </div>
         }
       </div>
     </mat-expansion-panel>
 
     <div class="submit-button-wrapper">
-      <button class="submit-filter" mat-raised-button type="submit" color="primary"> Filter </button>
+      <button
+        class="submit-filter"
+        mat-raised-button
+        type="submit"
+        color="primary">
+        Filter
+      </button>
     </div>
   </form>
-
 </div>

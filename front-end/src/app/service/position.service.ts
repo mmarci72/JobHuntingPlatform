@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 
+import { JobFilter } from "../home/job-filter";
 import { comparePositions, PaginatedPosition } from "../model/job.model";
 import { BaseService } from "./base.service";
-import { JobFilter } from "../home/job-filter";
 
 @Injectable({
   providedIn: "root",
