@@ -17,24 +17,24 @@ public enum SeniorityEnum {
 	}
 
 	public static SeniorityEnum toEnum(String literal) {
-		switch (literal) {
-			case "Intern" -> {
+		switch (literal.toLowerCase()) {
+			case "intern" -> {
 				return SeniorityEnum.INTERN;
 			}
-			case "Junior" -> {
+			case "junior" -> {
 				return SeniorityEnum.JUNIOR;
 			}
-			case "Professional" -> {
+			case "professional" -> {
 				return SeniorityEnum.PROFESSIONAL;
 			}
-			case "Senior" -> {
+			case "senior" -> {
 				return SeniorityEnum.SENIOR;
 			}
-			case ("Any") -> {
+			case "any" -> {
 				return SeniorityEnum.ANY;
 			}
 			default -> throw new IllegalArgumentException("Non existent seniority");
-
+ 
 		}
 	}
 }
