@@ -30,7 +30,7 @@ export class AllJobsComponent implements AfterViewInit {
 
   private filterJobs = new Subject<void>();
   protected positions$ = this.filterJobs.pipe(
-    switchMap(searchTerm => {
+    switchMap(() => {
       return this.positionService.getPositions(
         this.current_job_page - 1,
         this.page_size ?? 12,
