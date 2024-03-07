@@ -5,7 +5,6 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { JobCardComponent } from "../../shared/job-card/job-card.component";
@@ -26,9 +25,7 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
   public set positions(positions: PaginatedPosition | undefined) {
     this._positions = positions;
 
-    this.cd.detach();
     this.cd.detectChanges();
-    this.cd.reattach();
   }
 
   protected leftOffset = 0;
@@ -44,7 +41,7 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
 
   constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.computeNumberOfNavigationalButtons();
   }
 
