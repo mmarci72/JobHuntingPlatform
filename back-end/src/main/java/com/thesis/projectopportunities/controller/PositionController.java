@@ -50,9 +50,13 @@ public class PositionController {
 	@GetMapping("/positions")
 	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(required = false) String filter,
 																	@RequestParam(defaultValue = "0") int page,
-																	@RequestParam(defaultValue = "10") int size) {
+																	@RequestParam(defaultValue = "10") int size,
+																	@RequestParam(required = false) String[] seniorities,
+																	@RequestParam(defaultValue = "0") int minSalary,
+																	@RequestParam(defaultValue = "0") int maxSalary) {
 		try {
-			PaginatedModel<PositionDto> response = positionService.getPaginatedPositions(filter, page, size);
+			PaginatedModel<PositionDto> response = positionService.getPaginatedPositions(filter, page, size, seniorities,
+				minSalary, maxSalary);
 			return ResponseEntity.ok(response);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
