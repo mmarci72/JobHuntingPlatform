@@ -4,6 +4,7 @@ import { map, Observable } from "rxjs";
 
 import { comparePositions, PaginatedPosition } from "../model/job.model";
 import { BaseService } from "./base.service";
+import { JobFilter } from "../home/job-filter";
 
 @Injectable({
   providedIn: "root",
@@ -16,13 +17,21 @@ export class PositionService extends BaseService<PaginatedPosition> {
   public getPositions(
     page: number,
     pageSize: number,
-    filter: string = ""
+    filters?: JobFilter
   ): Observable<PaginatedPosition> {
     let queryParams = new HttpParams();
 
     queryParams = queryParams.append("page", page);
     queryParams = queryParams.append("size", pageSize);
-    queryParams = queryParams.append("filter", filter);
+    if (filters) {
+      queryParams = queryParams.append("filter", filters.searchString);
+      queryParams = queryParams.append("minSalary", filters.minSalary);
+      queryParams = queryParams.append("maxSalary", filters.maxSalary);
+      queryParams = queryParams.append(
+        "seniorities",
+        filters.seniorities.join(",")
+      );
+    }
 
     return this.http
       .get<PaginatedPosition>(this.fullURL, { params: queryParams })
