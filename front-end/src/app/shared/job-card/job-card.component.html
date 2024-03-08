@@ -1,29 +1,29 @@
-@if (position) {
+@if (_position) {
   <div class="listing">
     <div class="cover">
-      @if (position.company && isCompanyWithLogo(position.company)) {
+      @if (_position.company && isCompanyWithLogo(_position.company)) {
         <div class="cover-wrapper">
-          <img [src]="position.company.logo" alt="company logo" />
+          <img [src]="_position.company.logo" alt="company logo" />
         </div>
       }
     </div>
     <div class="info">
-      <h5>{{ position.company?.name }}</h5>
-      <h3>{{ position.positionName }}</h3>
+      <h5>{{ _position.company?.name }}</h5>
+      <h3>{{ _position.positionName }}</h3>
     </div>
     <div class="details">
       <div class="salary">
         <small>salary</small>
         <p>
-          {{ position.salaryMin }} Ft <br />
-          {{ position.salaryMax === 0 ? "" : "-" }}
+          {{ _position.salaryMin }} Ft <br />
+          {{ _position.salaryMax === 0 ? "" : "-" }}
           <br />
-          {{ position.salaryMax === 0 ? "" : position.salaryMax + " Ft"}}
+          {{ _position.salaryMax === 0 ? "" : _position.salaryMax + " Ft"}}
         </p>
       </div>
       <div class="seniority">
         <small>seniority</small>
-        <p>{{ position.seniorityName }}</p>
+        <p>{{ _position.seniorityName }}</p>
       </div>
     </div>
     <div class="bottom-location">
@@ -42,7 +42,7 @@
           class=""
           data-darkreader-inline-fill=""></path>
       </svg>
-      {{ position.company?.location }}
+      {{ _position.company?.location }}
     </div>
   </div>
 }

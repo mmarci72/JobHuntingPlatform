@@ -1,0 +1,30 @@
+@if (positions$ | async; as positions) {
+  <div class="filter-jobs">
+    <app-search-input
+      class="searchbar w-50 m-3"
+      (textChange)="onInputChange($event)"></app-search-input>
+    <button mat-raised-button color="primary" (click)="showFilters()">
+      Filters
+    </button>
+  </div>
+  <div class="all-jobs">
+    @for (
+      position of positions?.entities ?? []
+        | paginate
+          : {
+              itemsPerPage: page_size,
+              currentPage: current_job_page,
+              totalItems: positions?.totalItems
+            };
+      track position.positionId
+    ) {
+      <app-job-card [position]="position"></app-job-card>
+    }
+  </div>
+  <div class="page-control-wrapper">
+    <pagination-controls
+      class="page-control"
+      (pageChange)="handlePageChange($event)"
+      [responsive]="true"></pagination-controls>
+  </div>
+}

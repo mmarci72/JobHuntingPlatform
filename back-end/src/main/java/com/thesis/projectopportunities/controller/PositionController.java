@@ -2,13 +2,13 @@ package com.thesis.projectopportunities.controller;
 
 import com.thesis.projectopportunities.dto.PositionDto;
 import com.thesis.projectopportunities.mapping.PositionMapping;
+import com.thesis.projectopportunities.model.PaginatedModel;
 import com.thesis.projectopportunities.model.Position;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.PositionService;
 import com.thesis.projectopportunities.service.UserNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,11 +48,16 @@ public class PositionController {
 	}
 
 	@GetMapping("/positions")
-	public ResponseEntity<List<PositionDto>> getPositions() {
+	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(required = false) String filter,
+																	@RequestParam(defaultValue = "0") int page,
+																	@RequestParam(defaultValue = "10") int size,
+																	@RequestParam(required = false) String[] seniorities,
+																	@RequestParam(defaultValue = "0") int minSalary,
+																	@RequestParam(defaultValue = "0") int maxSalary) {
 		try {
-			List<PositionDto> positions =
-				positionRepo.findAll(Sort.by("postDate")).stream().map(positionMapping::toPosition).toList();
-			return ResponseEntity.ok(positions);
+			PaginatedModel<PositionDto> response = positionService.getPaginatedPositions(filter, page, size, seniorities,
+				minSalary, maxSalary);
+			return ResponseEntity.ok(response);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException();
 		}

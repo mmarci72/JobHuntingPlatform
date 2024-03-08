@@ -5,12 +5,11 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { JobCardComponent } from "../../shared/job-card/job-card.component";
 import { NgClass, NgOptimizedImage } from "@angular/common";
-import { Position } from "../../model/job.model";
+import { PaginatedPosition } from "../../model/job.model";
 
 @Component({
   selector: "app-recent-jobs",
@@ -20,15 +19,13 @@ import { Position } from "../../model/job.model";
   styleUrl: "./recent-jobs.component.scss",
 })
 export class RecentJobsComponent implements AfterViewInit, OnChanges {
-  protected _positions: Position[] = [];
+  protected _positions?: PaginatedPosition;
 
   @Input()
-  public set positions(positions: Position[]) {
+  public set positions(positions: PaginatedPosition | undefined) {
     this._positions = positions;
 
-    this.cd.detach();
     this.cd.detectChanges();
-    this.cd.reattach();
   }
 
   protected leftOffset = 0;
@@ -44,7 +41,7 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
 
   constructor(private cd: ChangeDetectorRef) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.computeNumberOfNavigationalButtons();
   }
 
@@ -95,7 +92,7 @@ export class RecentJobsComponent implements AfterViewInit, OnChanges {
   }
 
   private computeNumberOfNavigationalButtons() {
-    if (this.cards && this._positions.length > 0) {
+    if (this.cards && this._positions && this._positions.entities.length > 0) {
       let offset = this.leftOffset;
       const width = this.cards.nativeElement.clientWidth;
       const scrollWidth = this.cards.nativeElement.scrollWidth;

@@ -1,0 +1,81 @@
+.filter-jobs {
+  display: flex;
+  margin: 2rem auto auto;
+  align-items: center;
+  justify-content: center;
+  height: 10rem;
+  flex-direction: column;
+}
+.filters {
+  display: flex;
+  align-items: flex-start;
+}
+
+.salary-filter p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3rem;
+}
+
+textarea {
+  text-align: center;
+  height: 1.5rem;
+}
+
+.all-jobs {
+  margin-left: 6rem;
+  margin-right: 6rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+}
+
+.page-control-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.searchbar {
+  height: 4rem;
+}
+
+.filter, .filter-tag {
+  display: inline-block;
+}
+
+.filter {
+  position: relative;
+}
+
+.filter-tag.filter-tag-open {
+  background: rgb(89, 46, 114) initial;
+  border-color: rgb(121, 52, 162);
+  color: rgb(237, 235, 232);
+}
+
+.filter-panel {
+  visibility: hidden;
+  top: 39px;
+  position: absolute;
+  background: rgb(19, 21, 22) initial;
+  border: 1px solid rgb(51, 56, 59);
+  box-shadow: rgba(0, 0, 0, 0.15) 0 14px 36px 2px;
+  width: 260px;
+  border-radius: 0 0 5px 5px;
+  padding-top: 16px;
+  z-index: 2;
+}
+
+.checkbox-group {
+  max-height: calc(100vh - 360px);
+  overflow-y: auto;
+  max-width: 100%;
+  min-height: 40px;
+}
+
+label {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+}

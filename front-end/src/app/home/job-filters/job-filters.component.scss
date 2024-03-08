@@ -1,0 +1,84 @@
+.filters, .header, .filter, input, mat-panel-title {
+  color: white;
+  background-color: RGB(54, 69, 79);
+}
+
+mat-panel-title {
+  font-size: 1rem;
+}
+
+.header {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.filter {
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+}
+
+.salary-wrapper {
+  position: relative;
+}
+
+.salary-wrapper input {
+  border: 1px solid gray;
+  border-radius: 6px;
+  position: relative;
+  width: 200px;
+  margin: 10px;
+  line-height: 6ex;
+}
+
+.salary-filter label {
+  border: none;
+  position: absolute;
+  top: 0.2ex;
+  z-index: 1;
+  left: 2em;
+  padding: 0 5px;
+  background-color: RGB(54, 69, 79);
+}
+
+.salary-filter, .seniority-filter {
+  display: flex;
+  align-items: center;
+}
+
+.seniority-filter {
+  display: flex;
+  flex-direction:column;
+  align-items: flex-start;
+}
+
+.seniority-wrapper input {
+  margin: 10px;
+}
+
+.seniority-wrapper  {
+  margin-right: 2rem;
+}
+
+.submit-button-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.cross-validation-error input {
+  border-left: 5px solid red;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[matinput]::-webkit-outer-spin-button,
+input[matinput]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[matinput][type=number] {
+  -moz-appearance: textfield;
+}

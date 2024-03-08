@@ -17,3 +17,11 @@ button:active {
 button:hover {
   background-color: #99F5D9;
 }
+
+.page-control .ngx-pagination a {
+  color: white;
+}
+
+.page-control .ngx-pagination a:hover {
+  background-color: RGB(54, 69, 79)
+}

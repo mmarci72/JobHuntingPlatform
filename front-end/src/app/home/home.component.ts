@@ -1,37 +1,48 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { AsyncPipe, NgClass, NgOptimizedImage } from "@angular/common";
+import { AfterViewInit, Component } from "@angular/core";
+import { MatButton } from "@angular/material/button";
+import { MatFormField } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { NgxPaginationModule } from "ngx-pagination";
 
-import { Position } from "../model/job.model";
+import { PaginatedPosition } from "../model/job.model";
 import { PositionService } from "../service/position.service";
 import { JobCardComponent } from "../shared/job-card/job-card.component";
-import { NgClass, NgOptimizedImage } from "@angular/common";
+import { SearchInputComponent } from "../shared/search-input/search-input.component";
+import { AllJobsComponent } from "./all-jobs/all-jobs.component";
 import { RecentJobsComponent } from "./recent-jobs/recent-jobs.component";
 
 @Component({
   selector: "app-home",
   standalone: true,
-  imports: [JobCardComponent, NgOptimizedImage, NgClass, RecentJobsComponent],
+  imports: [
+    JobCardComponent,
+    NgOptimizedImage,
+    NgClass,
+    RecentJobsComponent,
+    MatFormField,
+    MatInput,
+    MatButton,
+    NgxPaginationModule,
+    SearchInputComponent,
+    AsyncPipe,
+    AllJobsComponent,
+  ],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss",
 })
-export class HomeComponent implements OnInit {
-  protected positions: Position[] = [];
-  protected newPositions: Position[] = [];
+export class HomeComponent implements AfterViewInit {
+  protected readonly PAGE_SIZE = 8;
 
-  private readonly MAX_RECENT_JOBS = 10;
+  protected newPositions?: PaginatedPosition;
 
-  constructor(
-    private readonly positionService: PositionService,
-    private readonly cd: ChangeDetectorRef
-  ) {}
+  constructor(private readonly positionService: PositionService) {}
 
-  ngOnInit() {
-    this.positionService.getPositions(true).subscribe(positions => {
-      this.positions = positions;
-      this.newPositions = positions.slice(0, this.MAX_RECENT_JOBS);
-
-      this.cd.detach();
-      this.cd.detectChanges();
-      this.cd.reattach();
-    });
+  ngAfterViewInit() {
+    this.positionService
+      .getPositions(0, this.PAGE_SIZE)
+      .subscribe(positions => {
+        this.newPositions = positions;
+      });
   }
 }

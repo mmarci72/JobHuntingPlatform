@@ -1,4 +1,5 @@
 import { Company, CompanyWithLogo } from "./company.model";
+import { PaginatedModel } from "./paginated.model";
 
 export type Position = {
   positionId: number;
@@ -16,6 +17,8 @@ export type Position = {
   responsibilitiesDescription: string;
   language: string;
 };
+
+export type PaginatedPosition = PaginatedModel<Position>;
 
 export const comparePositions = (position1: Position, position2: Position) => {
   if (position1.postDate.getTime() === position2.postDate.getTime()) {
