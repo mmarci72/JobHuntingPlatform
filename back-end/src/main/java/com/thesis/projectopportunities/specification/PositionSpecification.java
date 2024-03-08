@@ -79,7 +79,7 @@ public class PositionSpecification {
 			predicates.add(criteriaBuilder.or(salaryRange, doesMaxSalaryExist));
 		}
 
-		return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+		return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 	}
 }
 
