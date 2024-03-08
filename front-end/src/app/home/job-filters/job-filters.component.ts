@@ -22,6 +22,7 @@ import { MatError } from "@angular/material/form-field";
 
 import { SeniorityService } from "../../service/seniority.service";
 import { JobFilter } from "../job-filter";
+import { MatInput } from "@angular/material/input";
 
 type SeniorityControl = { isChecked: boolean; seniority: string };
 
@@ -37,6 +38,7 @@ type SeniorityControl = { isChecked: boolean; seniority: string };
     MatButton,
     MatError,
     NgIf,
+    MatInput,
   ],
   templateUrl: "./job-filters.component.html",
   styleUrl: "./job-filters.component.scss",
