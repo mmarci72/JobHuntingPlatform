@@ -38,7 +38,7 @@ export class SearchInputComponent implements OnInit, OnDestroy {
     distinctUntilChanged()
   );
 
-  subscriptions: Subscription[] = [];
+  private subscriptions: Subscription[] = [];
 
   ngOnInit() {
     const subscription = this.trigger$.subscribe(currentValue => {
