@@ -19,10 +19,10 @@ import {
   MatExpansionPanelTitle,
 } from "@angular/material/expansion";
 import { MatError } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
 
 import { SeniorityService } from "../../service/seniority.service";
 import { JobFilter } from "../job-filter";
-import { MatInput } from "@angular/material/input";
 
 type SeniorityControl = { isChecked: boolean; seniority: string };
 
@@ -47,14 +47,6 @@ export class JobFiltersComponent {
   protected jobFilters: FormGroup;
   protected get seniorities(): FormArray<FormControl<SeniorityControl | null>> {
     return this.jobFilters.get("seniorities") as FormArray;
-  }
-
-  private get minSalary(): number {
-    return (this.jobFilters.get("minSalary") as FormControl).getRawValue();
-  }
-
-  private get maxSalary(): number {
-    return (this.jobFilters.get("maxSalary") as FormControl).getRawValue();
   }
 
   private get filters() {

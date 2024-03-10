@@ -1,3 +1,4 @@
+import { NgClass, NgOptimizedImage } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -7,9 +8,9 @@ import {
   OnChanges,
   ViewChild,
 } from "@angular/core";
-import { JobCardComponent } from "../../shared/job-card/job-card.component";
-import { NgClass, NgOptimizedImage } from "@angular/common";
+
 import { PaginatedPosition } from "../../model/job.model";
+import { JobCardComponent } from "../../shared/job-card/job-card.component";
 
 @Component({
   selector: "app-recent-jobs",

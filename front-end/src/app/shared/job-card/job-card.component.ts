@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { catchError, EMPTY, Observable, Subject, switchMap } from "rxjs";
 
 import { CompanyWithLogo, isCompanyWithLogo } from "../../model/company.model";
 import { Position } from "../../model/job.model";
 import { CompanyService } from "../../service/company.service";
-import { catchError, EMPTY, Observable, Subject, switchMap } from "rxjs";
 
 @Component({
   selector: "app-job-card",

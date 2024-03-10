@@ -11,12 +11,22 @@
       <div class="salary-filter">
         <div class="salary-wrapper">
           <label for="min-salary">min</label>
-          <input id="min-salary" type="number" matInput formControlName="minSalary" (wheel)="$event.preventDefault()"/>
+          <input
+            id="min-salary"
+            type="number"
+            matInput
+            formControlName="minSalary"
+            (wheel)="$event.preventDefault()" />
         </div>
         <span class="mx-3">-</span>
         <div class="salary-wrapper">
           <label for="max-salary">max</label>
-          <input id="max-salary" type="number" matInput formControlName="maxSalary" (wheel)="$event.preventDefault()"/>
+          <input
+            id="max-salary"
+            type="number"
+            matInput
+            formControlName="maxSalary"
+            (wheel)="$event.preventDefault()" />
         </div>
       </div>
 
