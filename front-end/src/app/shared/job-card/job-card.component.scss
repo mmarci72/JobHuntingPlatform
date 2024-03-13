@@ -39,7 +39,7 @@
   border-style: none;
 }
 
-img, svg {
+img {
   vertical-align: middle;
 }
 
@@ -100,18 +100,6 @@ img, svg {
   white-space: nowrap;
 }
 
-.listing.job-listing .bottom-location svg {
+.listing.job-listing .bottom-location {
   margin-right: 5px;
-}
-
-svg:not(:root).svg-inline--fa {
-  overflow: visible;
-}
-
-.svg-inline--fa {
-  display: inline-block;
-  font-size: inherit;
-  height: 1em;
-  overflow: visible;
-  vertical-align: -0.125em;
 }
