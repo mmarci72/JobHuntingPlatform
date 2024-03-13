@@ -1,0 +1,89 @@
+@if (position) {
+  <div class="details-container">
+    <div class="nav-wrapper">
+      <button [routerLink]="'/home'" class="back-button">← Back to Home</button>
+    </div>
+    <div class="details-wrapper">
+      <div class="content">
+        <div class="details-header">
+          <div class="cover-image">
+            @if (position.company && isCompanyWithLogo(position.company)) {
+              <div class="cover">
+                <img
+                  [src]="position.company.logo"
+                  alt="company logo"
+                  height="280px"
+                  width="100%" />
+              </div>
+            }
+          </div>
+          <div class="title">
+            @if (position.company) {
+              <h3 class="company-name">{{ position.company.name }}</h3>
+            }
+            <h2 class="position">{{ position.positionName }}</h2>
+            @if (position.company) {
+              <p class="location">
+                <app-location-svg></app-location-svg>
+                {{ position.company?.location }}
+              </p>
+            }
+          </div>
+        </div>
+        <div class="details">
+          <h2 class="tag-header">Technologies</h2>
+          <div class="tag-wrapper">
+            @for (
+              technology of position.technologies;
+              track position.positionId
+            ) {
+              <p class="technology tag">{{ technology }}</p>
+            }
+          </div>
+          <h2 class="tag-header">Languages</h2>
+          <div class="tag-wrapper">
+            @for (language of position.languages; track position.positionId) {
+              <p class="technology tag">{{ language }}</p>
+            }
+          </div>
+          <h2 class="description-header">Requirements</h2>
+          <div class="description">
+            <markdown [data]="position.requirementsDescription"></markdown>
+          </div>
+          <h2 class="description-header">Short description</h2>
+          <div class="description">
+            <markdown>{{ position.positionDescription }}</markdown>
+          </div>
+          <div class="description">
+            <h2 class="description-header">Responsibilities</h2>
+            <markdown>{{ position.responsibilitiesDescription }}</markdown>
+          </div>
+        </div>
+      </div>
+      <div class="apply-wrapper">
+        <div class="salary">
+          <p class="salary-text">
+            {{ position.salaryMin | salary }}
+            {{ position.salaryMax === 0 ? "" : "-" }}
+            {{ position.salaryMax === 0 ? "" : (position.salaryMax | salary) }}
+            HUF
+          </p>
+          <p class="salary-subtext">monthly salary</p>
+        </div>
+        <div class="apply">
+          <button (click)="apply()" class="apply-button">Apply</button>
+
+          <p>
+            <img
+              alt="calendar icon"
+              ngSrc="./assets/calendar-symbol.svg"
+              height="20"
+              width="20" />
+            Post Date:
+            {{ position.postDate | date }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+}

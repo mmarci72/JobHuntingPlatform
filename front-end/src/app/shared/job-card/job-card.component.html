@@ -1,5 +1,9 @@
 @if (_position) {
-  <div class="listing">
+  <div
+    class="listing"
+    (click)="openJobDetails()"
+    (keyup.tab)="openJobDetails()"
+    [tabindex]="0">
     <div class="cover">
       @if (_position.company && isCompanyWithLogo(_position.company)) {
         <div class="cover-wrapper">
@@ -15,10 +19,10 @@
       <div class="salary">
         <small>salary</small>
         <p>
-          {{ _position.salaryMin }} Ft <br />
+          {{ _position.salaryMin }} <br />
           {{ _position.salaryMax === 0 ? "" : "-" }}
           <br />
-          {{ _position.salaryMax === 0 ? "" : _position.salaryMax + " Ft" }}
+          {{ _position.salaryMax === 0 ? "" : _position.salaryMax }}
         </p>
       </div>
       <div class="seniority">

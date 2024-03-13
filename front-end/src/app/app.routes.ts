@@ -12,6 +12,13 @@ export const routes: Routes = [
       import("./home/home.component").then(home => home.HomeComponent),
   },
   {
+    path: "details",
+    loadComponent: () =>
+      import("./job-details/job-details.component").then(
+        details => details.JobDetailsComponent
+      ),
+  },
+  {
     path: "**",
     loadComponent: () =>
       import("./page-not-found/page-not-found.component").then(
