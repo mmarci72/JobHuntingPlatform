@@ -1,6 +1,7 @@
 package com.thesis.projectopportunities.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class PositionDto {
 	private String requirementsDescription;
 
 	@JsonProperty
-	private String offerDescription;
+	private String positionDescription;
 
 	@JsonProperty
 	private String responsibilitiesDescription;
@@ -45,4 +46,10 @@ public class PositionDto {
 
 	@JsonProperty
 	private long companyId;
+
+	@JsonProperty
+	private List<String> technologies;
+
+	@JsonProperty
+	private List<String> languages;
 }
