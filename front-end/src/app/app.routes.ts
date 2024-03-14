@@ -1,5 +1,10 @@
 import { Routes } from "@angular/router";
 
+import { AuthGuard } from "./auth/auth-guard";
+import { HomeComponent } from "./home/home.component";
+import { JobDetailsComponent } from "./job-details/job-details.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+
 export const routes: Routes = [
   {
     path: "",
@@ -8,21 +13,16 @@ export const routes: Routes = [
   },
   {
     path: "home",
-    loadComponent: () =>
-      import("./home/home.component").then(home => home.HomeComponent),
+    component: HomeComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "details",
-    loadComponent: () =>
-      import("./job-details/job-details.component").then(
-        details => details.JobDetailsComponent
-      ),
+    component: JobDetailsComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: "**",
-    loadComponent: () =>
-      import("./page-not-found/page-not-found.component").then(
-        notFound => notFound.PageNotFoundComponent
-      ),
+    component: PageNotFoundComponent,
   },
 ];
