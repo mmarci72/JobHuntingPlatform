@@ -1,5 +1,5 @@
 gradle
-rootProject.name = 'project-opportunities'
+rootProject.name = 'job-portal'
 include 'back-end'
 include 'front-end'
 
