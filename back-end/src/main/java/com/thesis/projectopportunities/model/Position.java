@@ -1,6 +1,7 @@
 package com.thesis.projectopportunities.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thesis.projectopportunities.enums.RoleEnum;
@@ -33,7 +34,7 @@ public class Position {
 
 	private String requirementsDescription;
 
-	private String offerDescription;
+	private String positionDescription;
 
 	private String responsibilitiesDescription;
 
@@ -47,4 +48,15 @@ public class Position {
 	@JoinColumn(name = "company_id")
 	@JsonIgnore
 	private Company company;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "position_technologies", joinColumns = @JoinColumn(name = "position_id"))
+	@Column(name = "name")
+	private List<String> technologies;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "position_languages", joinColumns = @JoinColumn(name = "position_id"))
+	@Column(name = "name")
+	private List<String> languages;
 }
+

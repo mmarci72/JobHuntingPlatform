@@ -1,0 +1,121 @@
+.details-container {
+  background-color: var(--back-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+}
+
+.nav-wrapper {
+  width: 55%;
+  margin-bottom: 0.4rem;
+}
+
+.details-wrapper {
+  width: 55%;
+  display: flex;
+}
+
+.content {
+  border: RGB(54, 69, 79) 1px solid;
+  background-color: rgb(55, 77, 89);
+  width: 70%;
+}
+
+.apply-wrapper {
+  border: RGB(54, 69, 79) 1px solid;
+  margin-left: 0.3rem;
+  background-color: transparent;
+  height: fit-content;
+  width: 30%;
+  position: sticky;
+  top: 1rem;
+}
+
+.cover-image {
+  width: 100%;
+}
+
+.title {
+  margin-top: 0.7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.company-name {
+  margin: 0;
+  color: lightslategrey;
+}
+
+.tag-header {
+  margin-left: 0.8rem;
+}
+
+.tag-wrapper {
+  display: flex;
+  margin-left: 0.8rem;
+}
+
+.tag {
+  color: rgb(93, 236, 225);
+  border: rgb(21, 174, 162) 0.2rem solid;
+  margin-right: 0.5rem;
+  padding: 0.3rem;
+}
+
+.description-header {
+  margin-left: 0.7rem;
+}
+
+.description {
+  margin-left: 0.7rem;
+}
+
+.back-button {
+  background-color: transparent;
+  color: white;
+  padding: 0.3rem;
+  border: grey 0.1rem solid;
+}
+
+.salary-subtext {
+  color: rgb(160, 151, 137);
+  font-size: 14px;
+}
+
+.salary-text {
+  margin: 0;
+}
+
+.salary {
+  padding: 0.7rem 0.3rem 0.3rem 0.5rem;
+  border: 0.1rem #726a5c solid;
+}
+
+.apply {
+  padding: 0.3rem;
+  border: 0.1rem #726a5c solid;
+  border-top: none;
+  text-align: center;
+}
+
+.apply-button {
+  width: 10rem;
+  height: 2rem;
+  background-color: rgb(8, 88, 193);
+  color: white;
+  border: rgb(7, 77, 168) 0.1rem solid;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.location {
+  font-size: 12px;
+}
+
+.position {
+  margin: 0;
+}

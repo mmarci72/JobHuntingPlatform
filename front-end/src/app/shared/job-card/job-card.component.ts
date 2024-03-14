@@ -1,14 +1,17 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { catchError, EMPTY, Observable, Subject, switchMap } from "rxjs";
 
 import { CompanyWithLogo, isCompanyWithLogo } from "../../model/company.model";
 import { Position } from "../../model/job.model";
 import { CompanyService } from "../../service/company.service";
+import { LocationSvgComponent } from "../location-svg/location-svg.component";
+import { SalaryPipe } from "../../pipe/salary.pipe";
 
 @Component({
   selector: "app-job-card",
   standalone: true,
-  imports: [],
+  imports: [LocationSvgComponent, SalaryPipe],
   templateUrl: "./job-card.component.html",
   styleUrl: "./job-card.component.scss",
 })
@@ -35,7 +38,10 @@ export class JobCardComponent implements OnInit {
     }
   }
 
-  constructor(private readonly companyService: CompanyService) {}
+  constructor(
+    private readonly companyService: CompanyService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.updateCompanyInfo$.subscribe(company => {
@@ -49,4 +55,10 @@ export class JobCardComponent implements OnInit {
   }
 
   protected readonly isCompanyWithLogo = isCompanyWithLogo;
+
+  openJobDetails() {
+    this.router
+      .navigate(["/details", { positionId: this._position?.positionId }])
+      .then();
+  }
 }

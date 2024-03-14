@@ -47,19 +47,33 @@ CREATE TABLE company
 
 CREATE TABLE position
 (
-	position_id                  serial       PRIMARY KEY,
-	company_id                   INT          NOT NULL,
-	position_name                varchar(255) NOT NULL,
+	position_id                  serial    PRIMARY KEY,
+	company_id                   INT       NOT NULL,
+	position_name                text 	   NOT NULL,
 	start_date                   DATE,
 	seniority_name               seniority NOT NULL,
-	role_name                    role NOT NULL,
-	requirements_description     varchar(255) NOT NULL,
-	offer_description		     varchar(255) NOT NULL,
-	responsibilities_description varchar(255) NOT NULL,
-	salary_min					 INT NOT NULL,
+	role_name                    role 	   NOT NULL,
+	requirements_description     text 	   NOT NULL,
+	position_description		     text 	   NOT NULL,
+	responsibilities_description text 	   NOT NULL,
+	salary_min					 INT 	   NOT NULL,
 	salary_max					 INT,
-	post_date                    DATE DEFAULT now(),
+	post_date                    DATE 	   DEFAULT now(),
 	FOREIGN KEY (company_id) REFERENCES company (id)
+);
+
+CREATE TABLE position_technologies
+(
+	technology_id 	serial 		 PRIMARY KEY,
+	position_id   	INT    		 NOT NULL,
+	name 			varchar(255) NOT NULL
+);
+
+CREATE TABLE position_languages
+(
+	language_id 	serial 		 PRIMARY KEY,
+	position_id   	INT    		 NOT NULL,
+	name 			varchar(255) NOT NULL
 );
 
 CREATE TABLE technology

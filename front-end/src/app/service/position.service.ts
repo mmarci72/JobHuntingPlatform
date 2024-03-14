@@ -3,7 +3,11 @@ import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 
 import { JobFilter } from "../home/job-filter";
-import { comparePositions, PaginatedPosition } from "../model/job.model";
+import {
+  comparePositions,
+  PaginatedPosition,
+  Position,
+} from "../model/job.model";
 import { BaseService } from "./base.service";
 
 @Injectable({
@@ -50,5 +54,9 @@ export class PositionService extends BaseService<PaginatedPosition> {
           return positions;
         })
       );
+  }
+
+  public getPosition(positionId: number) {
+    return this.http.get<Position>(`${this.fullURL}/${positionId}`);
   }
 }

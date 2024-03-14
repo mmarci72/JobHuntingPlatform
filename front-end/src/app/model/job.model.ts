@@ -13,9 +13,11 @@ export type Position = {
   companyId: number;
   company?: Company | CompanyWithLogo;
   requirementsDescription: string;
-  offerDescription: string;
+  positionDescription: string;
   responsibilitiesDescription: string;
   language: string;
+  technologies: string[];
+  languages: string[];
 };
 
 export type PaginatedPosition = PaginatedModel<Position>;
