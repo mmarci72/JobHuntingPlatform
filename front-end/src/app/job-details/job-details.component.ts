@@ -47,6 +47,8 @@ export class JobDetailsComponent {
       })
     );
 
+  protected readonly isCompanyWithLogo = isCompanyWithLogo;
+
   constructor(
     private route: ActivatedRoute,
     private positionService: PositionService,
@@ -63,7 +65,7 @@ export class JobDetailsComponent {
     });
   }
 
-  protected readonly isCompanyWithLogo = isCompanyWithLogo;
-
-  apply() {}
+  apply() {
+    console.log("WORK IN PROGRESS");
+  }
 }

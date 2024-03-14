@@ -19,10 +19,10 @@
       <div class="salary">
         <small>salary</small>
         <p>
-          {{ _position.salaryMin }} <br />
+          {{ _position.salaryMin | salary }} <br />
           {{ _position.salaryMax === 0 ? "" : "-" }}
           <br />
-          {{ _position.salaryMax === 0 ? "" : _position.salaryMax }}
+          {{ _position.salaryMax === 0 ? "" : (_position.salaryMax | salary) }}
         </p>
       </div>
       <div class="seniority">

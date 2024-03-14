@@ -8,10 +8,6 @@ export class SalaryPipe implements PipeTransform {
   transform(input: number, args: number = 1): string | null {
     const suffixes = ["k", "M", "G", "T", "P", "E"];
 
-    if (Number.isNaN(input)) {
-      return null;
-    }
-
     if (input < 1000) {
       return input.toString();
     }

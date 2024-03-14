@@ -6,11 +6,12 @@ import { CompanyWithLogo, isCompanyWithLogo } from "../../model/company.model";
 import { Position } from "../../model/job.model";
 import { CompanyService } from "../../service/company.service";
 import { LocationSvgComponent } from "../location-svg/location-svg.component";
+import { SalaryPipe } from "../../pipe/salary.pipe";
 
 @Component({
   selector: "app-job-card",
   standalone: true,
-  imports: [LocationSvgComponent],
+  imports: [LocationSvgComponent, SalaryPipe],
   templateUrl: "./job-card.component.html",
   styleUrl: "./job-card.component.scss",
 })
