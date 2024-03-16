@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from "@angular/core";
   standalone: true,
 })
 export class SalaryPipe implements PipeTransform {
-  transform(input: number, args: number = 1): string | null {
+  transform(input: number, args: number = 0): string | null {
     const suffixes = ["k", "M", "G", "T", "P", "E"];
 
     if (input < 1000) {
