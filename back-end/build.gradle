@@ -76,6 +76,7 @@ dependencies {
 	implementation 'io.hypersistence:hypersistence-utils-hibernate-60:3.5.1'
 	implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 	implementation 'nl.martijndwars:web-push:5.1.1'
+	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
