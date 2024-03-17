@@ -52,7 +52,7 @@ services:
       flyway:
         condition: service_completed_successfully
     healthcheck:
-      test: [ "CMD-SHELL", "curl http://keycloak:8090/auth/realms/job-portal" ]
+      test: [ "CMD-SHELL", "curl http://keycloak:8090/auth/realms/master" ]
       interval: 4s
       retries: 10
     volumes:
