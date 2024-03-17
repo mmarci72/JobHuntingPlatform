@@ -1,26 +1,46 @@
-import { KeycloakOptions, KeycloakService } from "keycloak-angular";
+import {
+  APP_INITIALIZER,
+  type EnvironmentProviders,
+  importProvidersFrom,
+  makeEnvironmentProviders,
+} from "@angular/core";
+import {
+  KeycloakAngularModule,
+  type KeycloakOptions,
+  KeycloakService,
+} from "keycloak-angular";
 
 /**
- *
- * @param keycloak - The service for interacting with keycloak
- * @returns Promise<boolean>
+ * @returns provider for keycloak interceptor
  */
-export function keycloakInitializer(
-  keycloak: KeycloakService
-): () => Promise<boolean> {
-  return async () => {
-    const options: KeycloakOptions = {
+export function provideKeycloak(): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    importProvidersFrom(KeycloakAngularModule),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService],
+    },
+  ]);
+}
+
+/**
+ * @param keycloak keycloak service to use
+ * @returns keycloak initializer
+ */
+function initializeKeycloak(keycloak: KeycloakService) {
+  return () =>
+    keycloak.init(<KeycloakOptions>{
       config: {
         url: "http://localhost:8090",
         realm: "job-portal",
         clientId: "job-portal",
       },
       initOptions: {
-        onLoad: "check-sso",
-        silentCheckSsoRedirectUri:
-          window.location.origin + "/assets/silent-check-sso.html",
+        onLoad: "login-required",
+        silentCheckSsoRedirectUri: window.location.origin + "/assets/sso.html",
       },
-    };
-    return keycloak.init(options);
-  };
+      shouldAddToken: () => true,
+    });
 }
