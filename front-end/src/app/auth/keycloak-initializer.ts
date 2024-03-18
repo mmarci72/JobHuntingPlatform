@@ -41,6 +41,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         onLoad: "login-required",
         silentCheckSsoRedirectUri: window.location.origin + "/assets/sso.html",
       },
+      loadUserProfileAtStartUp: true,
       shouldAddToken: () => true,
     });
 }
