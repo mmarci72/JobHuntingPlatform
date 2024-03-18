@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -32,11 +32,11 @@ public class SecurityConfig {
 				configuration.setAllowedHeaders(List.of("*"));
 				return configuration;
 			})).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-				authorize -> authorize.anyRequest().permitAll())
+				authorize -> authorize.requestMatchers(HttpMethod.POST, "/companies").hasRole("ADMIN_CLIENT")
+					.requestMatchers(HttpMethod.POST, "/positions").hasRole("ADMIN_CLIENT").anyRequest().authenticated())
 			.oauth2ResourceServer(o -> o.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthConverter)));
 		return http.build();
 	}
-
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
