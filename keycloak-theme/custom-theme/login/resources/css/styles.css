@@ -27,7 +27,7 @@ body {
 #lastName {
 	background-image: url("../img/User.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
@@ -39,7 +39,7 @@ body {
 #email {
 	background-image: url("../img/Email.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
@@ -52,7 +52,7 @@ body {
 #password-confirm {
 	background-image: url("../img/Password.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
