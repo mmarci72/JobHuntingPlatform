@@ -2,10 +2,8 @@
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('username','password') displayInfo=realm.password && realm.registrationAllowed && !registrationDisabled??; section>
     <#if section = "header">
 		<#--TODO: replace removed file-->
-		<img class="logo-img" alt="logo" src="${url.resourcesPath}/img/">
-		<span id="header-project_name">
-			${msg("loginAccountTitle")}
-		</span>
+		<img class="logo-img" alt="logo" src="${url.resourcesPath}/img/logo.svg">
+		${msg("loginAccountTitle")}
     <#elseif section = "form">
 		<div id="kc-form">
 			<div id="kc-form-wrapper">

@@ -7,7 +7,9 @@ html {
 }
 
 .kc-login,
-.kc-register {
+.kc-register,
+.login-pf,
+body {
 	background-color: #003246;
 }
 
@@ -16,7 +18,8 @@ html {
 }
 
 #kc-header {
-	color: black;
+	background-color: #003246;
+	color: white;
 }
 
 #username,
@@ -61,4 +64,8 @@ html {
 #kc-login,
 #kc-register {
 	border-radius: 10px;
+}
+
+#header-project_name, .logo-img {
+	margin: 0;
 }

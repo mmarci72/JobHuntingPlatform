@@ -2,7 +2,7 @@
 <@layout.registrationLayout displayMessage=!messagesPerField.existsError('firstName','lastName','email','username','password','password-confirm'); section>
     <#if section = "header">
 		<#--TODO: Replace removed image-->
-		<img class="logo-img" alt="logo" src="${url.resourcesPath}/img/">
+		<img class="logo-img" alt="logo" src="${url.resourcesPath}/img/logo.svg">
         ${msg("registerTitle")}
     <#elseif section = "form">
 		<form id="kc-register-form" class="${properties.kcFormClass!}" action="${url.registrationAction}" method="post">
