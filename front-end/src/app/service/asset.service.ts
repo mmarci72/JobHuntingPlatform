@@ -8,6 +8,9 @@ import { BaseService } from "./base.service";
   providedIn: "root",
 })
 export class AssetService extends BaseService<Blob, string> {
+  private resumeEndpoint = "resume";
+  private companyLogoEndpoint = "company-logo";
+
   constructor(
     http: HttpClient,
     private keycloakService: KeycloakService
@@ -17,7 +20,15 @@ export class AssetService extends BaseService<Blob, string> {
 
   public getCompanyLogo(fileName: string): Observable<string> {
     return this.http
-      .get(`${this.fullURL}/company-logo/${fileName}`, {
+      .get(`${this.fullURL}/${this.companyLogoEndpoint}/${fileName}`, {
+        responseType: "blob",
+      })
+      .pipe(map(image => URL.createObjectURL(image)));
+  }
+
+  public getResume(userName: string): Observable<string> {
+    return this.http
+      .get(`${this.fullURL}/${this.resumeEndpoint}/${userName}`, {
         responseType: "blob",
       })
       .pipe(map(image => URL.createObjectURL(image)));
@@ -30,7 +41,7 @@ export class AssetService extends BaseService<Blob, string> {
 
     queryParams = queryParams.append("userName", userName);
 
-    return this.http.post(`${this.fullURL}/resume`, file, {
+    return this.http.post(`${this.fullURL}/${this.resumeEndpoint}`, file, {
       params: queryParams,
       responseType: "text",
     });

@@ -27,6 +27,14 @@ public class AssetService {
 		return getImageAsByte(path);
 	}
 
+	public byte[] getResumeAsByte(String userName) throws IOException {
+		return getImageAsByte(getResumeFileNameFromUserName(userName));
+	}
+
+	private String getResumeFileNameFromUserName(String userName) {
+		return userName + ".pdf";
+	}
+
 	private byte[] getImageAsByte(String path) throws IOException {
 		String fullPath = assetsFolder + path;
 

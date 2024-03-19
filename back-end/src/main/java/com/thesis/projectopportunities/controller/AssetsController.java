@@ -37,6 +37,20 @@ public class AssetsController {
 		return new ResponseEntity<>(image, headers, HttpStatus.OK);
 	}
 
+	@GetMapping("/assets/resume/{userName}")
+	public ResponseEntity<byte[]> getResume(@PathVariable String userName) throws IOException {
+		byte[] resume;
+		try {
+			resume = assetService.getResumeAsByte(userName);
+		} catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException();
+		}
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_PDF);
+		return new ResponseEntity<>(resume, headers, HttpStatus.OK);
+	}
+
 
 	@PostMapping("/assets/resume")
 	public ResponseEntity<String> postResume(@RequestParam String userName,
