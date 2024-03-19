@@ -51,6 +51,11 @@ public class AssetsController {
 		return new ResponseEntity<>(resume, headers, HttpStatus.OK);
 	}
 
+	@GetMapping("/assets/resume/exists/{userName}")
+	public ResponseEntity<Boolean> doesResumeExist(@PathVariable String userName) {
+		return ResponseEntity.ok(assetService.doesResumeExist(userName));
+	}
+
 
 	@PostMapping("/assets/resume")
 	public ResponseEntity<String> postResume(@RequestParam String userName,

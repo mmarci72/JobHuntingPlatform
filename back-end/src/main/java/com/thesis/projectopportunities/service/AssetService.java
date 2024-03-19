@@ -31,6 +31,11 @@ public class AssetService {
 		return getImageAsByte(getResumeFileNameFromUserName(userName));
 	}
 
+	public boolean doesResumeExist(String userName) {
+		String path = assetsFolder + resumeFolderName + getResumeFileNameFromUserName(userName);
+		return Files.exists(Paths.get(path));
+	}
+
 	private String getResumeFileNameFromUserName(String userName) {
 		return userName + ".pdf";
 	}

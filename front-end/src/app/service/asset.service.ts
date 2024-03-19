@@ -9,6 +9,7 @@ import { BaseService } from "./base.service";
 })
 export class AssetService extends BaseService<Blob, string> {
   private resumeEndpoint = "resume";
+  private resumeExistsEndpoint = this.resumeEndpoint + "/exists";
   private companyLogoEndpoint = "company-logo";
 
   constructor(
@@ -32,6 +33,11 @@ export class AssetService extends BaseService<Blob, string> {
         responseType: "blob",
       })
       .pipe(map(image => URL.createObjectURL(image)));
+  }
+  public doesResumeExist(userName: string) {
+    return this.http.get<boolean>(
+      `${this.fullURL}/${this.resumeExistsEndpoint}/${userName}`
+    );
   }
 
   public postResume(file: Blob) {
