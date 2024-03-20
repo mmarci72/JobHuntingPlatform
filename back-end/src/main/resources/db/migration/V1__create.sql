@@ -96,7 +96,6 @@ CREATE TABLE application
 	phone_number	  varchar(255) NOT NULL,
 	linkedin	      varchar(255),
 	github		      varchar(255),
-	resume_path       varchar(255) NOT NULL,
 	cover_letter_path varchar(255) NOT NULL,
 	application_date  varchar(255) DEFAULT now(),
 	FOREIGN KEY (position_id) REFERENCES position (position_id)
@@ -108,6 +107,11 @@ CREATE TABLE preference
 	preferences jsonb
 );
 
+CREATE TABLE resume (
+	id       serial PRIMARY KEY,
+	username text	NOT NULL,
+	resume_name  text NOT NULL
+);
 
 CREATE TABLE interests
 (

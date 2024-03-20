@@ -21,13 +21,10 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-2">
         <p class="appName mt-2 mb-0">Job Hunting Platform</p>
-        <p class="welcome" #welcome>Welcome, Foo Bar!</p>
+        <p class="welcome" #welcome>Welcome, {{ username }}!</p>
       </li>
       <li class="nav-item active center">
         <a class="nav-link" id="home-link" [routerLink]="['/home']">Home</a>
-      </li>
-      <li class="nav-item active center">
-        <a class="nav-link" id="jobs-link" [routerLink]="['/jobs']">Jobs</a>
       </li>
       <li class="nav-item center settings-container">
         <a

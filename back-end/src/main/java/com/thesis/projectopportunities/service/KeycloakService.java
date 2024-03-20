@@ -30,7 +30,7 @@ public class KeycloakService {
 	@Value("${keycloak.server.url}")
 	private String server;
 
-	private static final String REALM = "project-opportunities";
+	private static final String REALM = "job-portal";
 
 	private static final String ADMIN_CLIENT = """
 		[
@@ -117,7 +117,7 @@ public class KeycloakService {
 		HttpEntity<Object> httpEntity = new HttpEntity<>("body", headers);
 
 		ResponseEntity<String> responseEntity =
-			restTemplate.exchange(server + PREFIX + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
+			restTemplate.exchange(server + PREFIX + REALM + "/clients?clientId=job-portal", HttpMethod.GET,
 				httpEntity,
 				String.class);
 		JsonNode jsonNode = new ObjectMapper().readTree(responseEntity.getBody());

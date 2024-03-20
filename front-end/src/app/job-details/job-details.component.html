@@ -25,7 +25,7 @@
             @if (position.company) {
               <p class="location">
                 <app-location-svg></app-location-svg>
-                {{ position.company?.location }}
+                {{ position.company.location }}
               </p>
             }
           </div>
@@ -71,7 +71,11 @@
           <p class="salary-subtext">monthly salary</p>
         </div>
         <div class="apply">
-          <button (click)="apply()" class="apply-button">Apply</button>
+          @if (isResumeUploaded) {
+            <button (click)="apply()" class="apply-button">Apply</button>
+          } @else {
+            <p>Upload your resume in the settings to apply</p>
+          }
           <p>
             <img
               alt="calendar icon"

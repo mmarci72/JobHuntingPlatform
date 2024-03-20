@@ -52,7 +52,7 @@ services:
       flyway:
         condition: service_completed_successfully
     healthcheck:
-      test: [ "CMD-SHELL", "curl http://keycloak:8090/auth/realms/project-opportunities" ]
+      test: [ "CMD-SHELL", "curl http://keycloak:8090/auth/realms/master" ]
       interval: 4s
       retries: 10
     volumes:
@@ -79,8 +79,8 @@ services:
       SPRING_FLYWAY_URL: jdbc:postgresql://db:5432/
       KEYCLOAK_HOST: keycloak
       KEYCLOAK_PORT: 8090
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8090/realms/project-opportunities/protocol/openid-connect/certs
-      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8090/realms/project-opportunities
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK-SET-URI: http://keycloak:8090/realms/job-portal/protocol/openid-connect/certs
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER-URI: http://localhost:8090/realms/job-portal
       SPRING_MAIL_HOST: mailhog
     depends_on:
       keycloak:

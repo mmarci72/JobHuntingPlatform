@@ -1,0 +1,26 @@
+<div class="settings pt-2">
+  <mat-checkbox color="primary" class="center">
+    <p>Enable email notifications when a new position is added</p>
+  </mat-checkbox>
+  <mat-checkbox color="primary" class="center">
+    <p>Enable push notifications when a new position is added</p>
+  </mat-checkbox>
+
+  <ng-container>
+    <app-settings-preferences></app-settings-preferences>
+  </ng-container>
+
+  <button
+    class="center"
+    mat-raised-button
+    color="primary"
+    (click)="fileUpload.click()">
+    Upload resume
+  </button>
+
+  <input
+    type="file"
+    class="file-input"
+    (change)="uploadResume($event)"
+    #fileUpload />
+</div>

@@ -29,7 +29,7 @@ public class KeycloakConfiguration {
 	@Value("${keycloak.server.url}")
 	private String server;
 
-	private static final String REALM = "project-opportunities";
+	private static final String REALM = "job-portal";
 
 	private String accessToken;
 
@@ -48,11 +48,10 @@ public class KeycloakConfiguration {
 		HttpEntity<Object> httpEntity = new HttpEntity<>("body", headers);
 
 		try {
-			restTemplate.exchange(server + "admin/realms/" + REALM + "/clients?clientId=project-opportunities", HttpMethod.GET,
+			restTemplate.exchange(server + "admin/realms/" + REALM + "/clients?clientId=job-portal", HttpMethod.GET,
 				httpEntity,
 				String.class);
-		}
-		catch (HttpClientErrorException e) {
+		} catch (HttpClientErrorException e) {
 			createRealm();
 		}
 	}

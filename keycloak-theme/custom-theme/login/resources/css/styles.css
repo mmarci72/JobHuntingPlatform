@@ -7,7 +7,9 @@ html {
 }
 
 .kc-login,
-.kc-register {
+.kc-register,
+.login-pf,
+body {
 	background-color: #003246;
 }
 
@@ -16,7 +18,8 @@ html {
 }
 
 #kc-header {
-	color: black;
+	background-color: #003246;
+	color: white;
 }
 
 #username,
@@ -24,7 +27,7 @@ html {
 #lastName {
 	background-image: url("../img/User.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
@@ -36,7 +39,7 @@ html {
 #email {
 	background-image: url("../img/Email.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
@@ -49,7 +52,7 @@ html {
 #password-confirm {
 	background-image: url("../img/Password.svg");
 	background-repeat: no-repeat;
-	background-position: 0%;
+	background-position: 0;
 	background-size: 48px;
 	padding: 6px 12px 6px 60px;
 	border: solid #668490;
@@ -61,4 +64,8 @@ html {
 #kc-login,
 #kc-register {
 	border-radius: 10px;
+}
+
+#header-project_name, .logo-img {
+	margin: 0;
 }
