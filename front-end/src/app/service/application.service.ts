@@ -13,7 +13,9 @@ export class ApplicationService extends BaseService<Application> {
     super("/application", http);
   }
 
-  public postApplication(application: Application): Observable<Application> {
-    return this.postResource(application);
+  public postApplication(application: Application): Observable<string> {
+    return this.http.post(this.fullURL, application, {
+      responseType: "text",
+    });
   }
 }

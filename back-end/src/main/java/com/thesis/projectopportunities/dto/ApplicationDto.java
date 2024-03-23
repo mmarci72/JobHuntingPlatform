@@ -14,7 +14,7 @@ public class ApplicationDto {
 	private int id;
 
 	@JsonProperty
-	private PositionDto position;
+	private int positionId;
 
 	@JsonProperty
 	private String firstName;
@@ -27,9 +27,6 @@ public class ApplicationDto {
 
 	@JsonProperty
 	private String email;
-
-	@JsonProperty
-	private String resumePath;
 
 	@JsonProperty
 	private LocalDateTime applicationDate;

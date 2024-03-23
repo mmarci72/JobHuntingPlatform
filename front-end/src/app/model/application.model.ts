@@ -1,12 +1,9 @@
-import { Position } from "./job.model";
-
 export type Application = {
-  id: number;
-  position: Position;
+  id?: number;
+  positionId: number;
   firstName: string;
   lastName: string;
   username: string;
   email: string;
-  resumePath: string;
-  applicationDate: Date;
+  applicationDate?: Date;
 };
