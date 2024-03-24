@@ -72,6 +72,17 @@ export class JobDetailsComponent {
   private userName = this.keycloakService.getUsername();
   private resumeExists$ = this.assetService.doesResumeExist(this.userName);
 
+  protected didApply = new ReplaySubject<void>();
+
+  protected didApply$ = this.didApply.pipe(
+    mergeMap(() =>
+      this.applicationService.didApply(
+        this.position?.positionId,
+        this?.userName
+      )
+    )
+  );
+
   protected readonly isCompanyWithLogo = isCompanyWithLogo;
 
   constructor(
@@ -96,9 +107,10 @@ export class JobDetailsComponent {
       this.isResumeUploaded = isResume;
     });
 
-    this.newApplication$.subscribe(() =>
-      this.snackBar.open("Application submitted", "OK", { duration: 3000 })
-    );
+    this.newApplication$.subscribe(() => {
+      this.snackBar.open("Application submitted", "OK", { duration: 3000 });
+      this.didApply.next();
+    });
   }
 
   apply() {
@@ -109,6 +121,7 @@ export class JobDetailsComponent {
 
       this.newApplication.next(application);
     });
+    this.didApply.next();
   }
 
   private getApplication(): Observable<Application | undefined> {

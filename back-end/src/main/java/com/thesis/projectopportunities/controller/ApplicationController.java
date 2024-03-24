@@ -23,6 +23,11 @@ public class ApplicationController {
 		return ResponseEntity.ok(mapping.toApplication(applicationRepo.getByPosition_PositionId(positionId)));
 	}
 
+	@GetMapping("/application/exists")
+	public ResponseEntity<Boolean> getApplicationByPositionId(@RequestParam int positionId, @RequestParam String username) {
+		return ResponseEntity.ok(applicationRepo.existsByPosition_PositionIdAndUsername(positionId, username));
+	}
+
 	@PostMapping("/application")
 	public ResponseEntity<String> postApplication(@RequestBody ApplicationDto applicationDto) {
 		Application application = mapping.toApplication(applicationDto);
