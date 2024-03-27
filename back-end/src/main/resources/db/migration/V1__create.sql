@@ -93,10 +93,10 @@ CREATE TABLE application
 	last_name	      varchar(255) NOT NULL,
 	username          varchar(255) NOT NULL,
 	email             varchar(255) NOT NULL,
-	phone_number	  varchar(255) NOT NULL,
+	phone_number	  varchar(255),
 	linkedin	      varchar(255),
 	github		      varchar(255),
-	cover_letter_path varchar(255) NOT NULL,
+	cover_letter_path varchar(255),
 	application_date  varchar(255) DEFAULT now(),
 	FOREIGN KEY (position_id) REFERENCES position (position_id)
 );
@@ -105,12 +105,6 @@ CREATE TABLE preference
 (
 	username    varchar(255) PRIMARY KEY,
 	preferences jsonb
-);
-
-CREATE TABLE resume (
-	id       serial PRIMARY KEY,
-	username text	NOT NULL,
-	resume_name  text NOT NULL
 );
 
 CREATE TABLE interests

@@ -4,9 +4,9 @@ import { catchError, EMPTY, Observable, Subject, switchMap } from "rxjs";
 
 import { CompanyWithLogo, isCompanyWithLogo } from "../../model/company.model";
 import { Position } from "../../model/job.model";
+import { SalaryPipe } from "../../pipe/salary.pipe";
 import { CompanyService } from "../../service/company.service";
 import { LocationSvgComponent } from "../location-svg/location-svg.component";
-import { SalaryPipe } from "../../pipe/salary.pipe";
 
 @Component({
   selector: "app-job-card",

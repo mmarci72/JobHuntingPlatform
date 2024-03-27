@@ -49,6 +49,6 @@ export class SettingsComponent {
   }
 
   private openSnackBar(message: string) {
-    this.snackBar.open(message, "OK");
+    this.snackBar.open(message, "OK", { duration: 3000 });
   }
 }

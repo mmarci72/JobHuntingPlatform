@@ -71,10 +71,12 @@
           <p class="salary-subtext">monthly salary</p>
         </div>
         <div class="apply">
-          @if (isResumeUploaded) {
-            <button (click)="apply()" class="apply-button">Apply</button>
-          } @else {
+          @if (!isResumeUploaded) {
             <p>Upload your resume in the settings to apply</p>
+          } @else if (didApply$ | async) {
+            <p>You have applied for this position</p>
+          } @else {
+            <button (click)="apply()" class="apply-button">Apply</button>
           }
           <p>
             <img

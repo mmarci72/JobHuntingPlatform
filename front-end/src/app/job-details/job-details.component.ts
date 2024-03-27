@@ -1,13 +1,25 @@
 import { AsyncPipe, DatePipe, NgOptimizedImage } from "@angular/common";
 import { Component } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
 import { MarkdownComponent } from "ngx-markdown";
-import { catchError, EMPTY, Observable, Subject, switchMap } from "rxjs";
+import {
+  catchError,
+  EMPTY,
+  from,
+  mergeMap,
+  Observable,
+  ReplaySubject,
+  Subject,
+  switchMap,
+} from "rxjs";
 
+import { Application } from "../model/application.model";
 import { CompanyWithLogo, isCompanyWithLogo } from "../model/company.model";
 import { Position } from "../model/job.model";
 import { SalaryPipe } from "../pipe/salary.pipe";
+import { ApplicationService } from "../service/application.service";
 import { AssetService } from "../service/asset.service";
 import { CompanyService } from "../service/company.service";
 import { PositionService } from "../service/position.service";
@@ -49,9 +61,27 @@ export class JobDetailsComponent {
       })
     );
 
+  private newApplication = new ReplaySubject<Application>();
+  private newApplication$ = this.newApplication.pipe(
+    mergeMap(application =>
+      this.applicationService.postApplication(application)
+    )
+  );
+
   protected isResumeUploaded: boolean = true;
   private userName = this.keycloakService.getUsername();
   private resumeExists$ = this.assetService.doesResumeExist(this.userName);
+
+  protected didApply = new ReplaySubject<void>();
+
+  protected didApply$ = this.didApply.pipe(
+    mergeMap(() =>
+      this.applicationService.didApply(
+        this.position?.positionId,
+        this?.userName
+      )
+    )
+  );
 
   protected readonly isCompanyWithLogo = isCompanyWithLogo;
 
@@ -60,7 +90,9 @@ export class JobDetailsComponent {
     private positionService: PositionService,
     private companyService: CompanyService,
     private assetService: AssetService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private applicationService: ApplicationService,
+    private snackBar: MatSnackBar
   ) {
     this.position$.subscribe(position => {
       this.position = position;
@@ -74,9 +106,41 @@ export class JobDetailsComponent {
     this.resumeExists$.subscribe(isResume => {
       this.isResumeUploaded = isResume;
     });
+
+    this.newApplication$.subscribe(() => {
+      this.snackBar.open("Application submitted", "OK", { duration: 3000 });
+      this.didApply.next();
+    });
   }
 
   apply() {
-    console.log("WORK IN PROGRESS");
+    this.getApplication().subscribe(application => {
+      if (!application) {
+        return;
+      }
+
+      this.newApplication.next(application);
+    });
+    this.didApply.next();
+  }
+
+  private getApplication(): Observable<Application | undefined> {
+    return from(
+      this.keycloakService.loadUserProfile().then(userProfile => {
+        if (!this.position) {
+          return;
+        }
+
+        const application: Application = {
+          email: userProfile.email ?? "",
+          username: userProfile.username ?? "",
+          firstName: userProfile.firstName ?? "",
+          lastName: userProfile.lastName ?? "",
+          positionId: this.position?.positionId,
+        };
+
+        return application;
+      })
+    );
   }
 }
