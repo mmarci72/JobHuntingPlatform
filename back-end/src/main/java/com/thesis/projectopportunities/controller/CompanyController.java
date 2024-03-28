@@ -32,18 +32,18 @@ public class CompanyController {
 	private CompanyMapping companyMapping;
 
 	@GetMapping("/companies")
-	public Set<CompanyDto> getProjects() {
+	public Set<CompanyDto> getCompanies() {
 		return companyRepo.findAll().stream().map(company -> companyMapping.toProject(company)).collect(Collectors.toSet());
 	}
 
 	@GetMapping("/companies/{id}")
-	public CompanyDto getProject(@PathVariable Long id) {
+	public CompanyDto getCompany(@PathVariable Long id) {
 		var project = companyRepo.findById(id).orElseThrow(ResourceNotFoundException::new);
 		return companyMapping.toProject(project);
 	}
 
 	@PostMapping("/companies")
-	public ResponseEntity<CompanyDto> addProject(@RequestBody CompanyDto companyDto) {
+	public ResponseEntity<CompanyDto> addCompany(@RequestBody CompanyDto companyDto) {
 		Company company = companyMapping.toProject(companyDto);
 		return new ResponseEntity<>(companyMapping.toProject(companyRepo.save(company)),
 			HttpStatus.CREATED);
