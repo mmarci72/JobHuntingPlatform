@@ -44,6 +44,13 @@ CREATE TABLE company
 	creation_date        DATE DEFAULT now()
 );
 
+CREATE TABLE company_permission (
+	id serial PRIMARY KEY,
+	company_id INT NOT NULL,
+	username varchar(255) NOT NULL,
+
+	FOREIGN KEY (company_id) REFERENCES company (id)
+);
 
 CREATE TABLE position
 (
