@@ -36,8 +36,6 @@ public class Application {
 
 	private String github;
 
-	private String resumePath;
-
 	private String coverLetterPath;
 
 	private LocalDateTime applicationDate;

@@ -2,7 +2,6 @@ package com.thesis.projectopportunities.controller;
 
 
 import com.thesis.projectopportunities.service.AssetService;
-import com.thesis.projectopportunities.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -20,8 +19,6 @@ import java.io.IOException;
 @Slf4j
 public class AssetsController {
 	private final AssetService assetService;
-
-	private final ResumeService resumeService;
 
 	@GetMapping("/assets/company-logo/{logoName}")
 	public ResponseEntity<byte[]> getProject(@PathVariable String logoName) throws IOException {
@@ -63,7 +60,6 @@ public class AssetsController {
 
 		var fileName = userName + ".pdf";
 		if (this.assetService.writeResume(file, fileName)) {
-			this.resumeService.addResume(userName, fileName);
 			return ResponseEntity.ok("Resume saved successfully");
 		}
 
