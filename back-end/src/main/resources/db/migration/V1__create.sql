@@ -34,7 +34,6 @@ CREATE TABLE company
 (
 	id                   serial PRIMARY KEY,
 	name                 VARCHAR(255),
-	description          VARCHAR(255),
 	founded              DATE,
 	location             VARCHAR(255),
 	size_min             INT,
