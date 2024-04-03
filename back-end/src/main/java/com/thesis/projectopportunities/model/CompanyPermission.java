@@ -19,7 +19,7 @@ public class CompanyPermission {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private int companyId;
+	private Long companyId;
 
 	private String username;
 }
