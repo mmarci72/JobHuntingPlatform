@@ -69,7 +69,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server:3.1.1'
 	implementation 'org.keycloak:keycloak-spring-boot-starter:22.0.0'
 	implementation 'org.keycloak.bom:keycloak-adapter-bom:22.0.0'
-	implementation 'org.keycloak:keycloak-admin-client:22.0.5'
+	implementation 'org.keycloak:keycloak-admin-client:24.0.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail:3.1.1'
 	implementation 'org.thymeleaf:thymeleaf:3.1.1.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.1.1'
