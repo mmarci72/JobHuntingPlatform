@@ -27,6 +27,12 @@ export class AssetService extends BaseService<Blob, string> {
       .pipe(map(image => URL.createObjectURL(image)));
   }
 
+  public postCompanyLogo(file: Blob) {
+    return this.http.post(`${this.fullURL}/${this.companyLogoEndpoint}`, file, {
+      responseType: "text",
+    });
+  }
+
   public getResume(userName: string): Observable<string> {
     return this.http
       .get(`${this.fullURL}/${this.resumeEndpoint}/${userName}`, {
