@@ -32,8 +32,8 @@ public class SecurityConfig {
 				configuration.setAllowedHeaders(List.of("*"));
 				return configuration;
 			})).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-				authorize -> authorize.requestMatchers(HttpMethod.POST, "/companies").hasRole("ADMIN_CLIENT")
-					.requestMatchers(HttpMethod.POST, "/positions").hasRole("ADMIN_CLIENT").anyRequest().authenticated())
+				authorize -> authorize.requestMatchers(HttpMethod.POST, "/positions").hasRole("RECRUITER_CLIENT")
+					.anyRequest().authenticated())
 			.oauth2ResourceServer(o -> o.jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(jwtAuthConverter)));
 		return http.build();
 	}
