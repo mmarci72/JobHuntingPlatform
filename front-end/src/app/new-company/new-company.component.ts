@@ -80,7 +80,7 @@ export class NewCompanyComponent {
       })
     );
 
-    this.assetService.postCompanyLogo(this.logo);
+    this.assetService.postCompanyLogo(this.logo).subscribe();
   }
 
   onFilePicked(e: Event) {

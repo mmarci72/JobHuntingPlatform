@@ -30,7 +30,7 @@ public class AssetService {
 
 	public boolean writeCompanyLogo(byte[] file) {
 		String fileName = UUID.randomUUID().toString();
-		String path = COMPANY_LOGOS_FOLDER_NAME + fileName;
+		String path = COMPANY_LOGOS_FOLDER_NAME + fileName + ".jpg";
 
 
 		return this.saveFile(file, path);
