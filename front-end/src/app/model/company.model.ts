@@ -3,7 +3,7 @@ import { Position } from "./job.model";
 export type Company = {
   id?: number;
   name: string;
-  founded: Date;
+  founded: number;
   location: string;
   sizeMin: number;
   sizeMax: number;

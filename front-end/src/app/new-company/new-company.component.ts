@@ -67,11 +67,7 @@ export class NewCompanyComponent {
 
     const company: Company = {
       name: this.companyFormGroup.get("name")?.getRawValue(),
-      founded: new Date(
-        this.companyFormGroup.get("founded")?.getRawValue(),
-        0,
-        1
-      ),
+      founded: this.companyFormGroup.get("founded")?.getRawValue(),
       logoFileName: this.logoFileName,
       location: this.companyFormGroup.get("location")?.getRawValue(),
       sizeMax: this.companyFormGroup.get("sizeMax")?.getRawValue(),

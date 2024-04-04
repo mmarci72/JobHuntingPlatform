@@ -29,7 +29,7 @@ public class Company {
 
 	private String name;
 
-	private LocalDateTime founded;
+	private int founded;
 
 	private String location;
 
