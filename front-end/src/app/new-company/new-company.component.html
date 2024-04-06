@@ -72,11 +72,10 @@
       <div
         *ngIf="
           companyFormGroup.invalid &&
-          (companyFormGroup.dirty || companyFormGroup.touched)
+          (companyFormGroup.dirty || companyFormGroup.touched) &&
+          companyFormGroup.get('companyLogo')?.errors?.['required']
         ">
-        <div *ngIf="companyFormGroup.errors?.['required']">
-          You must upload a logo
-        </div>
+        You must upload a logo
       </div>
     </div>
 

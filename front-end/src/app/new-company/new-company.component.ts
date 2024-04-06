@@ -54,7 +54,7 @@ export class NewCompanyComponent {
     });
   }
 
-  createCompany() {
+  protected createCompany() {
     if (this.companyFormGroup.invalid) {
       this.snackBar.open("You must fill out every field", "Ok", {
         duration: 1000,
@@ -83,7 +83,7 @@ export class NewCompanyComponent {
     this.assetService.postCompanyLogo(this.logo).subscribe();
   }
 
-  onFilePicked(e: Event) {
+  protected onFilePicked(e: Event) {
     const target = e.target as HTMLInputElement;
 
     const files = target?.files;
