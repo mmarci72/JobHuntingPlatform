@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -17,14 +18,22 @@ public class AssetService {
 	@Value("${assets.path}")
 	private String assetsFolder;
 
-	private final String companyLogosFolderName = "companyLogos/";
+	private static final String COMPANY_LOGOS_FOLDER_NAME = "companyLogos/";
 
-	private final String resumeFolderName = "resume/";
+	private static final String RESUME_FOLDER_NAME = "resume/";
 
 	public byte[] getCompanyLogoAsByte(String fileName) throws IOException {
-		String path = companyLogosFolderName + fileName;
+		String path = COMPANY_LOGOS_FOLDER_NAME + fileName;
 
 		return getImageAsByte(path);
+	}
+
+	public boolean writeCompanyLogo(byte[] file) {
+		String fileName = UUID.randomUUID().toString();
+		String path = COMPANY_LOGOS_FOLDER_NAME + fileName + ".jpg";
+
+
+		return this.saveFile(file, path);
 	}
 
 	public byte[] getResumeAsByte(String userName) throws IOException {
@@ -32,7 +41,7 @@ public class AssetService {
 	}
 
 	public boolean doesResumeExist(String userName) {
-		String path = assetsFolder + resumeFolderName + getResumeFileNameFromUserName(userName);
+		String path = assetsFolder + RESUME_FOLDER_NAME + getResumeFileNameFromUserName(userName);
 		return Files.exists(Paths.get(path));
 	}
 
@@ -53,7 +62,7 @@ public class AssetService {
 	}
 
 	public boolean writeResume(byte[] file, String fileName) {
-		String path = resumeFolderName + fileName;
+		String path = RESUME_FOLDER_NAME + fileName;
 
 
 		return this.saveFile(file, path);

@@ -21,7 +21,7 @@ public class AssetsController {
 	private final AssetService assetService;
 
 	@GetMapping("/assets/company-logo/{logoName}")
-	public ResponseEntity<byte[]> getProject(@PathVariable String logoName) throws IOException {
+	public ResponseEntity<byte[]> getCompanyLogo(@PathVariable String logoName) throws IOException {
 		byte[] image;
 		try {
 			image = assetService.getCompanyLogoAsByte(logoName);
@@ -32,6 +32,16 @@ public class AssetsController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_JPEG);
 		return new ResponseEntity<>(image, headers, HttpStatus.OK);
+	}
+
+	@PostMapping("/assets/company-logo")
+	public ResponseEntity<String> postCompanyLogo(@RequestBody byte[] file) {
+
+		if (this.assetService.writeCompanyLogo(file)) {
+			return ResponseEntity.ok("Company logo saved successfully");
+		}
+
+		return ResponseEntity.internalServerError().body("Error saving company logo");
 	}
 
 	@GetMapping("/assets/resume/{userName}")

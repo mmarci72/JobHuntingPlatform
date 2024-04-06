@@ -20,10 +20,7 @@ public class CompanyDto {
 	private String name;
 
 	@JsonProperty
-	private String description;
-
-	@JsonProperty
-	private LocalDateTime founded;
+	private int founded;
 
 	@JsonProperty
 	private String location;

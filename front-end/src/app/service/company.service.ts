@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, mergeMap, Observable } from "rxjs";
 
@@ -31,5 +31,15 @@ export class CompanyService extends BaseService<Company> {
         )
       )
     );
+  }
+
+  public postCompany(company: Company, username: string) {
+    let queryParams = new HttpParams();
+
+    queryParams = queryParams.append("username", username);
+
+    return this.http.post(this.fullURL, company, {
+      params: queryParams,
+    });
   }
 }
