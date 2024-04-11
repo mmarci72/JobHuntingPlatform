@@ -14,7 +14,9 @@ import { KeycloakService } from "keycloak-angular";
 export class HeaderComponent {
   protected username;
 
-  constructor(keycloakService: KeycloakService) {
+  constructor(private readonly keycloakService: KeycloakService) {
     this.username = keycloakService.getUsername();
+  logout() {
+    this.keycloakService.logout(window.location.origin).then();
   }
 }
