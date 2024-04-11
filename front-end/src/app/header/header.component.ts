@@ -13,9 +13,13 @@ import { KeycloakService } from "keycloak-angular";
 })
 export class HeaderComponent {
   protected username;
+  protected isInRole = false;
 
   constructor(private readonly keycloakService: KeycloakService) {
     this.username = keycloakService.getUsername();
+    this.isInRole = keycloakService.isUserInRole("RECRUITER");
+  }
+
   logout() {
     this.keycloakService.logout(window.location.origin).then();
   }

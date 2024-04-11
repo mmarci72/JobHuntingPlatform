@@ -1,0 +1,24 @@
+<div class="companies-wrapper">
+  @for (company of companies; track company.id) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ company.name }}</mat-panel-title>
+        <img
+          (click)="addNewRecruiter($event, company.id)"
+          (keyup.enter)="addNewRecruiter($event, company.id)"
+          class="add-new-recruiter-img"
+          ngSrc="./assets/addRecruiter.svg"
+          alt="Add a new recruiter"
+          height="30"
+          width="30"
+          [tabindex]="0" />
+      </mat-expansion-panel-header>
+      <div class="manage-company-wrapper">
+        <h2>Edit company details</h2>
+        <app-company-form
+          (companyChanged)="companyChanged($event)"
+          [company]="company"></app-company-form>
+      </div>
+    </mat-expansion-panel>
+  }
+</div>

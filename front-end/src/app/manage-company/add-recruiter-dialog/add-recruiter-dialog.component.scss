@@ -1,0 +1,30 @@
+*{
+  color: white;
+  background-color: RGB(54, 69, 79);
+}
+
+.mat-mdc-dialog-title, .mdc-dialog__title {
+  background-color: RGB(54, 69, 79);
+  color: white;
+  margin: 0;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-form-field, button {
+  margin-right: 2rem;
+  color: white;
+}
+
+button {
+  border: 0.1rem solid gray;
+}
+
+
+h1 {
+  text-align: center;
+}

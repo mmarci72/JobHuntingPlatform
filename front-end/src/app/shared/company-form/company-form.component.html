@@ -1,0 +1,85 @@
+<div class="form-wrapper">
+  <form [formGroup]="companyFormGroup" (ngSubmit)="createCompany()">
+    <mat-form-field>
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Company name"
+        required
+        matInput />
+      @if (companyFormGroup.invalid) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        formControlName="location"
+        placeholder="Company location"
+        required
+        matInput />
+      @if (companyFormGroup.invalid) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="number"
+        formControlName="founded"
+        placeholder="Foundation year"
+        required
+        matInput />
+      @if (companyFormGroup.invalid) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    <div class="company-size">
+      <mat-form-field>
+        <input
+          type="number"
+          formControlName="sizeMin"
+          placeholder="Minimum size"
+          required
+          matInput />
+        @if (companyFormGroup.invalid) {
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+      -
+      <mat-form-field>
+        <input
+          type="number"
+          formControlName="sizeMax"
+          placeholder="Maximum size"
+          required
+          matInput />
+        @if (companyFormGroup.invalid) {
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+    </div>
+    <div class="file-picker-wrapper">
+      <label for="file">Company Logo:</label>
+      <input
+        class="file-picker"
+        id="file"
+        type="file"
+        required
+        (change)="onFilePicked($event)"
+        accept="image/*" />
+      <div
+        *ngIf="
+          (companyFormGroup.invalid &&
+            (companyFormGroup.dirty || companyFormGroup.touched) &&
+            companyFormGroup.get('companyLogo')?.errors?.['required']) ||
+          (logo && logoFileName)
+        ">
+        You must upload a logo
+      </div>
+    </div>
+
+    <button type="submit" mat-raised-button (change)="onFilePicked($event)">
+      Create
+    </button>
+  </form>
+</div>
