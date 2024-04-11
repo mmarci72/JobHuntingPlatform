@@ -35,9 +35,19 @@ public class AssetsController {
 	}
 
 	@PostMapping("/assets/company-logo")
-	public ResponseEntity<String> postCompanyLogo(@RequestBody byte[] file) {
+	public ResponseEntity<String> postCompanyLogo(@RequestBody byte[] file, @RequestParam Long companyId) {
 
-		if (this.assetService.writeCompanyLogo(file)) {
+		if (this.assetService.writeCompanyLogo(file, companyId)) {
+			return ResponseEntity.ok("Company logo saved successfully");
+		}
+
+		return ResponseEntity.internalServerError().body("Error saving company logo");
+	}
+
+	@PostMapping("/assets/company-logo/replace")
+	public ResponseEntity<String> replaceCompanyLogo(@RequestBody byte[] file, @RequestParam Long companyId) throws IOException {
+
+		if (this.assetService.replaceCompanyLogo(file, companyId)) {
 			return ResponseEntity.ok("Company logo saved successfully");
 		}
 
