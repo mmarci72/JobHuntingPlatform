@@ -22,21 +22,34 @@ public class CompanyService {
 	@Setter(onMethod_ = @Autowired)
 	private CompanyMapping companyMapping;
 
-	public boolean addNewCompany(CompanyDto companyDto, String username) {
-		Company company = companyMapping.toProject(companyDto);
+	public CompanyDto addNewCompany(CompanyDto companyDto, String username) {
+		Company company = companyMapping.toCompany(companyDto);
 		if (!keycloakService.addRecruiterRole(username)) {
-			return false;
+			return null;
 		}
 
 		var companyPermission = new CompanyPermission();
-		var companyId = companyRepo.save(company).getId();
+		var companyAdded = companyRepo.save(company);
+
+		var companyId = companyAdded.getId();
 
 		companyPermission.setCompanyId(companyId);
 		companyPermission.setUsername(username);
-
 		companyPermissionRepo.save(companyPermission);
 
+		return companyMapping.toCompany(companyAdded);
+	}
 
-		return true;
+	public void update(CompanyDto companyDto, Long id, String username) {
+		var company =
+			companyRepo.findById(id);
+
+		if (company.isPresent()) {
+			companyMapping.update(companyDto, company.get());
+			companyRepo.save(company.get());
+
+		} else {
+			addNewCompany(companyDto, username);
+		}
 	}
 }
