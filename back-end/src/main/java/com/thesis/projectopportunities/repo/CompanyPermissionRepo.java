@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CompanyPermissionRepo extends JpaRepository<CompanyPermission, Integer> {
 
-	Boolean existsByCompanyIdAndUsername(Long companyId, String username);
+	boolean existsByCompanyIdAndUsername(Long companyId, String username);
 
 	@Query("SELECT cp.companyId FROM CompanyPermission cp WHERE cp.username = :username")
 	List<Long> findCompanyIdsByUsername(String username);

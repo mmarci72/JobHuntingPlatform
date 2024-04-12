@@ -24,6 +24,7 @@ public class CompanyService {
 
 	public CompanyDto addNewCompany(CompanyDto companyDto, String username) {
 		Company company = companyMapping.toCompany(companyDto);
+
 		if (!keycloakService.addRecruiterRole(username)) {
 			return null;
 		}

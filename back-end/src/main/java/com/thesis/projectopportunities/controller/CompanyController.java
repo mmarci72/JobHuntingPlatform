@@ -7,7 +7,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.thesis.projectopportunities.dto.CompanyDto;
-import com.thesis.projectopportunities.dto.PositionDto;
 import com.thesis.projectopportunities.mapping.CompanyMapping;
 import com.thesis.projectopportunities.repo.CompanyPermissionRepo;
 import com.thesis.projectopportunities.repo.CompanyRepo;
@@ -52,7 +51,9 @@ public class CompanyController {
 
 	@PostMapping("/companies")
 	public ResponseEntity<CompanyDto> addCompany(@RequestBody CompanyDto companyDto, @RequestParam String username) {
-		var addedCompany = companyService.addNewCompany(companyDto, username);
+		CompanyDto addedCompany;
+
+		addedCompany = companyService.addNewCompany(companyDto, username);
 
 		if (addedCompany == null) {
 			return ResponseEntity.internalServerError().body(null);
@@ -65,7 +66,6 @@ public class CompanyController {
 	public ResponseEntity<CompanyDto> patchPosition(@PathVariable Long id, @RequestBody CompanyDto companyDto,
 													@RequestParam String username) {
 		companyService.update(companyDto, id, username);
-
 		return ResponseEntity.ok(companyDto);
 	}
 }
