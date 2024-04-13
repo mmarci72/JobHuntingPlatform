@@ -55,4 +55,10 @@ export class CompanyService extends BaseService<Company> {
       params: new HttpParams().append("username", username),
     });
   }
+
+  public deleteCompany(companyId: number): Observable<string> {
+    return this.http.delete(`${this.fullURL}/${companyId}`, {
+      responseType: "text",
+    });
+  }
 }

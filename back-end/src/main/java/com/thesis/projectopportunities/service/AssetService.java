@@ -63,6 +63,17 @@ public class AssetService {
 		return this.saveFile(file, path);
 	}
 
+	public void deleteCompanyLogo(Long companyId) throws IOException {
+
+		Optional<Company> company = companyRepo.findById(companyId);
+
+		if (company.isPresent()) {
+			String fileName = company.get().getLogoFileName();
+			Path path = Paths.get(assetsFolder + COMPANY_LOGOS_FOLDER_NAME + fileName);
+			Files.deleteIfExists(path);
+		}
+	}
+
 	public byte[] getResumeAsByte(String userName) throws IOException {
 		return getImageAsByte(getResumeFileNameFromUserName(userName));
 	}

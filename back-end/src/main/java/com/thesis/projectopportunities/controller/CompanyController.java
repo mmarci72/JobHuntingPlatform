@@ -63,9 +63,19 @@ public class CompanyController {
 	}
 
 	@PatchMapping("/companies/{id}")
-	public ResponseEntity<CompanyDto> patchPosition(@PathVariable Long id, @RequestBody CompanyDto companyDto,
-													@RequestParam String username) {
+	public ResponseEntity<CompanyDto> patchCompany(@PathVariable Long id, @RequestBody CompanyDto companyDto,
+												   @RequestParam String username) {
 		companyService.update(companyDto, id, username);
 		return ResponseEntity.ok(companyDto);
+	}
+
+	@DeleteMapping("/companies/{id}")
+	public ResponseEntity<String> deleteCompany(@PathVariable Long id) {
+		if (companyService.deleteCompany(id)) {
+			return ResponseEntity.ok("Company deleted successfully");
+		}
+
+		return ResponseEntity.internalServerError().body("Error while deleting company");
+
 	}
 }

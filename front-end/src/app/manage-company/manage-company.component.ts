@@ -1,5 +1,5 @@
 import { NgIf, NgOptimizedImage } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, EventEmitter } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButton } from "@angular/material/button";
 import { MatDialog } from "@angular/material/dialog";
@@ -10,6 +10,7 @@ import {
 } from "@angular/material/expansion";
 import { MatError, MatFormField } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { KeycloakService } from "keycloak-angular";
 
 import { Company } from "../model/company.model";
@@ -17,6 +18,7 @@ import { NewCompanyComponent } from "../new-company/new-company.component";
 import { CompanyService } from "../service/company.service";
 import { CompanyFormComponent } from "../shared/company-form/company-form.component";
 import { AddRecruiterDialogComponent } from "./add-recruiter-dialog/add-recruiter-dialog.component";
+import { DeleteCompanyDialogComponent } from "./delete-company-dialog/delete-company-dialog.component";
 
 @Component({
   selector: "app-manage-company",
@@ -42,13 +44,26 @@ export class ManageCompanyComponent {
   protected companies: Company[] = [];
 
   protected username: string = this.keycloakService.getUsername();
+  protected deleteEvent = new EventEmitter<void>();
 
   constructor(
-    readonly companyService: CompanyService,
+    private readonly companyService: CompanyService,
     private readonly keycloakService: KeycloakService,
-    private readonly addRecruiterDialog: MatDialog
+    private readonly matDialog: MatDialog,
+    private readonly snackBar: MatSnackBar
   ) {
-    companyService
+    this.getAccessibleCompanies();
+
+    this.deleteEvent.subscribe(() => {
+      this.snackBar.open("Company deleted successfully", "OK", {
+        duration: 1300,
+      });
+      this.getAccessibleCompanies();
+    });
+  }
+
+  private getAccessibleCompanies() {
+    this.companyService
       .getAccessibleCompanies(this.username)
       .subscribe(companies => (this.companies = companies));
   }
@@ -72,9 +87,21 @@ export class ManageCompanyComponent {
       return;
     }
 
-    this.addRecruiterDialog.open(AddRecruiterDialogComponent, {
+    this.matDialog.open(AddRecruiterDialogComponent, {
       data: { companyId },
       panelClass: "add-recruiter-dialog",
+    });
+  }
+
+  deleteCompany(e: Event, companyId: number | undefined) {
+    e.stopPropagation();
+
+    if (!companyId) {
+      return;
+    }
+
+    this.matDialog.open(DeleteCompanyDialogComponent, {
+      data: { companyId, deleteEvent: this.deleteEvent },
     });
   }
 }

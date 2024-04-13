@@ -12,6 +12,15 @@
           height="30"
           width="30"
           [tabindex]="0" />
+        <img
+          (click)="deleteCompany($event, company.id)"
+          (keyup.enter)="deleteCompany($event, company.id)"
+          class="add-new-recruiter-img"
+          ngSrc="./assets/delete.svg"
+          alt="Delete company"
+          height="30"
+          width="30"
+          [tabindex]="0" />
       </mat-expansion-panel-header>
       <div class="manage-company-wrapper">
         <h2>Edit company details</h2>
