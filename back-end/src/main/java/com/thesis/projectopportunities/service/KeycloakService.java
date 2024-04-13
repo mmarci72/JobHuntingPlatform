@@ -2,10 +2,12 @@ package com.thesis.projectopportunities.service;
 
 import java.util.List;
 
+import com.thesis.projectopportunities.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.ClientRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -44,13 +46,19 @@ public class KeycloakService {
 		try (Keycloak keycloak = getKeycloakBuilder()) {
 
 			var keycloakRealm = keycloak.realm(REALM);
+			String userId = getUserId(keycloakRealm, username);
 
-			addClientRole(keycloakRealm, username);
-			addRealmRole(keycloakRealm, username);
+			if (userId == null) {
+				throw new UserNotFoundException("Non existent user");
+			}
+
+			var userResource = keycloakRealm.users().get(userId);
+
+			addClientRole(keycloakRealm, userResource);
+			addRealmRole(keycloakRealm, userResource);
 
 			return true;
 		}
-
 	}
 
 	private Keycloak getKeycloakBuilder() {
@@ -63,12 +71,8 @@ public class KeycloakService {
 			.build();
 	}
 
-	private void addClientRole(RealmResource keycloakRealm, String username) {
-		String userId = getUserId(keycloakRealm, username);
+	private void addClientRole(RealmResource keycloakRealm, UserResource user) {
 		String clientUuid = getClientUUID(keycloakRealm);
-		UsersResource usersResource = keycloakRealm.users();
-
-		var userResource = usersResource.get(userId);
 
 		var role = keycloakRealm
 			.clients()
@@ -78,21 +82,15 @@ public class KeycloakService {
 			.toRepresentation();
 
 
-		userResource.roles()
+		user.roles()
 			.clientLevel(clientUuid)
 			.add(List.of(role));
 	}
 
-	private void addRealmRole(RealmResource keycloakRealm, String username) {
-		String userId = getUserId(keycloakRealm, username);
-
-		UsersResource usersResource = keycloakRealm.users();
-
+	private void addRealmRole(RealmResource keycloakRealm, UserResource user) {
 		var role = keycloakRealm.roles().get(REALM_ROLE).toRepresentation();
 
-		var userResource = usersResource.get(userId);
-
-		userResource.roles().realmLevel().add(List.of(role));
+		user.roles().realmLevel().add(List.of(role));
 	}
 
 	private String getClientUUID(RealmResource keycloakRealm) {

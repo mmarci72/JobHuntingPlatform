@@ -21,10 +21,34 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item mx-2">
         <p class="appName mt-2 mb-0">Job Hunting Platform</p>
-        <p class="welcome" #welcome>Welcome, {{ username }}!</p>
+        <p class="welcome">Welcome, {{ username }}!</p>
       </li>
       <li class="nav-item active center">
         <a class="nav-link" id="home-link" [routerLink]="['/home']">Home</a>
+      </li>
+      @if (isInRole) {
+        <li class="nav-item active center">
+          <a
+            class="nav-link"
+            id="manage-company-link"
+            [routerLink]="['/manageCompany']"
+            >Manage Company</a
+          >
+        </li>
+      }
+      <li class="nav-item center logout-container">
+        <a
+          class="nav-link logout"
+          (click)="logout()"
+          (keyup.enter)="logout()"
+          tabindex="0"
+          id="logout">
+          <img
+            ngSrc="./assets/signout.svg"
+            alt="logout"
+            height="30"
+            width="30" />
+        </a>
       </li>
       <li class="nav-item center settings-container">
         <a

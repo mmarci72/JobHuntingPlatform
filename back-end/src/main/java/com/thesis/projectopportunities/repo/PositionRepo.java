@@ -13,4 +13,7 @@ public interface PositionRepo extends JpaRepository<Position, Integer>, JpaSpeci
 	@Named("getReferenceById")
 	@NonNull
 	Position getReferenceById(@NonNull Integer positionId);
+
+
+	void deleteAllByCompanyId(@NonNull Long companyId);
 }

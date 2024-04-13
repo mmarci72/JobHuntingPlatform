@@ -1,0 +1,26 @@
+mat-expansion-panel, mat-panel-title, .mat-expansion-indicator::after {
+  color: white;
+  background-color: RGB(54, 69, 79);
+}
+
+mat-expansion-panel {
+  width: 50%;
+  margin: 0.4rem;
+}
+
+.add-new-recruiter-img {
+  margin-right: 2rem;
+}
+
+.companies-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.manage-company-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

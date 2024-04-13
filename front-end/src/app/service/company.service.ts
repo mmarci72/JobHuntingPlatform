@@ -24,7 +24,7 @@ export class CompanyService extends BaseService<Company> {
   public getCompanyWithLogos(companyId: number): Observable<CompanyWithLogo> {
     return this.getResource(companyId).pipe(
       mergeMap(company =>
-        this.assetService.getCompanyLogo(company.logoFileName).pipe(
+        this.assetService.getCompanyLogoURL(company.logoFileName).pipe(
           map<string, CompanyWithLogo>(logo => {
             return { ...company, logo };
           })
@@ -33,13 +33,32 @@ export class CompanyService extends BaseService<Company> {
     );
   }
 
-  public postCompany(company: Company, username: string) {
+  public getAccessibleCompanies(username: string): Observable<Company[]> {
+    return this.http.get<Company[]>(this.fullURL + "/permissions/" + username);
+  }
+
+  public postCompany(company: Company, username: string): Observable<Company> {
     let queryParams = new HttpParams();
 
     queryParams = queryParams.append("username", username);
 
-    return this.http.post(this.fullURL, company, {
+    return this.http.post<Company>(this.fullURL, company, {
       params: queryParams,
+    });
+  }
+
+  public updateCompany(
+    company: Company,
+    username: string
+  ): Observable<Company> {
+    return this.http.patch<Company>(`${this.fullURL}/${company.id}`, company, {
+      params: new HttpParams().append("username", username),
+    });
+  }
+
+  public deleteCompany(companyId: number): Observable<string> {
+    return this.http.delete(`${this.fullURL}/${companyId}`, {
+      responseType: "text",
     });
   }
 }

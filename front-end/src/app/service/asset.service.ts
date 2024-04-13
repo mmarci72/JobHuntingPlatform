@@ -19,18 +19,37 @@ export class AssetService extends BaseService<Blob, string> {
     super("/assets", http);
   }
 
-  public getCompanyLogo(fileName: string): Observable<string> {
-    return this.http
-      .get(`${this.fullURL}/${this.companyLogoEndpoint}/${fileName}`, {
-        responseType: "blob",
-      })
-      .pipe(map(image => URL.createObjectURL(image)));
+  public getCompanyLogoURL(fileName: string): Observable<string> {
+    return this.getCompanyLogo(fileName).pipe(
+      map(image => URL.createObjectURL(image))
+    );
   }
 
-  public postCompanyLogo(file: Blob): Observable<string> {
+  public getCompanyLogo(fileName: string): Observable<Blob> {
+    return this.http.get(
+      `${this.fullURL}/${this.companyLogoEndpoint}/${fileName}`,
+      {
+        responseType: "blob",
+      }
+    );
+  }
+
+  public postCompanyLogo(file: Blob, companyId: number): Observable<string> {
     return this.http.post(`${this.fullURL}/${this.companyLogoEndpoint}`, file, {
       responseType: "text",
+      params: new HttpParams().append("companyId", companyId),
     });
+  }
+
+  public replaceCompanyLogo(file: Blob, companyId: number): Observable<string> {
+    return this.http.post(
+      `${this.fullURL}/${this.companyLogoEndpoint}/replace`,
+      file,
+      {
+        responseType: "text",
+        params: new HttpParams().append("companyId", companyId),
+      }
+    );
   }
 
   public getResume(userName: string): Observable<string> {
