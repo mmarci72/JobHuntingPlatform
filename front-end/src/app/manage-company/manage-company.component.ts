@@ -11,6 +11,7 @@ import {
 import { MatError, MatFormField } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { RouterLink } from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
 
 import { Company } from "../model/company.model";
@@ -36,6 +37,7 @@ import { DeleteCompanyDialogComponent } from "./delete-company-dialog/delete-com
     NewCompanyComponent,
     CompanyFormComponent,
     NgOptimizedImage,
+    RouterLink,
   ],
   templateUrl: "./manage-company.component.html",
   styleUrl: "./manage-company.component.scss",

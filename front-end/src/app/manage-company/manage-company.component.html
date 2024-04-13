@@ -1,4 +1,7 @@
 <div class="companies-wrapper">
+  <button mat-raised-button color="primary" [routerLink]="['/newCompany']">
+    Add company
+  </button>
   @for (company of companies; track company.id) {
     <mat-expansion-panel>
       <mat-expansion-panel-header>
