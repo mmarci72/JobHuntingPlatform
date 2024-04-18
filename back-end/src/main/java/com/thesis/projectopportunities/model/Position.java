@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.thesis.projectopportunities.enums.RoleEnum;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,8 +25,7 @@ public class Position {
 
 	private LocalDateTime startDate;
 
-	@Enumerated(EnumType.STRING)
-	private RoleEnum roleName;
+	private String roleName;
 
 	@Enumerated(EnumType.STRING)
 	private SeniorityEnum seniorityName;

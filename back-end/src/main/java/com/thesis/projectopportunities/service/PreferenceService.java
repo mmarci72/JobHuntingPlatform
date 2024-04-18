@@ -26,8 +26,7 @@ public class PreferenceService {
 			preferenceMapper.update(preferenceDto, preference.get());
 			preferenceRepo.save(preference.get());
 
-		}
-		else {
+		} else {
 			preferenceRepo.save(preferenceMapper.toPreference(preferenceDto));
 		}
 	}
@@ -35,7 +34,7 @@ public class PreferenceService {
 	public static boolean checkPreferences(Position position, Preference preference) {
 		var preferences = preference.getPreferences();
 
-		return (preferences.getRoles().contains(position.getRoleName().getLiteral()) &&
+		return (preferences.getRoles().contains(position.getRoleName()) &&
 			(preferences.getSeniorities().contains(position.getSeniorityName().getLiteral()) || position.getSeniorityName()
 				.equals(SeniorityEnum.ANY)) &&
 			preferences.getUnits().stream().map(IndustryDomainEnum::toEnum).toList().contains(position.getCompany().getIndustryDomainName()));
