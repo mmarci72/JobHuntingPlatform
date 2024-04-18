@@ -1,0 +1,31 @@
+form, .form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.submit-button, form {
+  margin-top: 2rem;
+}
+
+.seniority-filter {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.seniority-wrapper input {
+  margin: 10px;
+}
+
+.seniority-wrapper  {
+  margin-right: 2rem;
+}
+
+app-tags, app-md-editor {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+

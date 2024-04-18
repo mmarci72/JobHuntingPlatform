@@ -1,0 +1,19 @@
+@if (positionFormGroup) {
+  <div class="editor" [formGroup]="positionFormGroup">
+    <h2>Responsibilities Description:</h2>
+    <angular-markdown-editor
+      ngDefaultControl
+      [textareaId]="formControlName"
+      [options]="editorOptions"
+      [rows]="12"
+      [formControlName]="formControlName">
+    </angular-markdown-editor>
+    @if (
+      positionFormGroup?.get(formControlName)?.invalid &&
+      (positionFormGroup?.get(formControlName)?.dirty ||
+        positionFormGroup?.get(formControlName)?.touched)
+    ) {
+      <mat-error>This field is required</mat-error>
+    }
+  </div>
+}
