@@ -18,6 +18,10 @@ export class PositionService extends BaseService<PaginatedPosition> {
     super("/positions", http);
   }
 
+  public addPosition(position: Position): Observable<Position> {
+    return this.http.post<Position>(this.fullURL, position);
+  }
+
   public getPositions(
     page: number,
     pageSize: number,
@@ -42,7 +46,9 @@ export class PositionService extends BaseService<PaginatedPosition> {
       .pipe(
         map(positions => {
           positions.entities = positions.entities.map(position => {
-            position.postDate = new Date(position.postDate);
+            position.postDate = position.postDate
+              ? new Date(position.postDate)
+              : undefined;
             return position;
           });
           return positions;
@@ -54,6 +60,10 @@ export class PositionService extends BaseService<PaginatedPosition> {
           return positions;
         })
       );
+  }
+
+  public getPositionsByCompanyId(companyId: number): Observable<Position[]> {
+    return this.http.get<Position[]>(`${this.fullURL}/company/${companyId}`);
   }
 
   public getPosition(positionId: number) {

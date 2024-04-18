@@ -47,6 +47,16 @@ public class PositionController {
 		}
 	}
 
+	@GetMapping("/positions/company/{companyId}")
+	public ResponseEntity<List<PositionDto>> getPositionById(@PathVariable Long companyId) {
+		try {
+			List<Position> positions = positionRepo.getPositionsByCompany_Id(companyId);
+			return ResponseEntity.ok(positions.stream().map(positionMapping::toPosition).toList());
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException();
+		}
+	}
+
 	@GetMapping("/positions")
 	public ResponseEntity<PaginatedModel<PositionDto>> getPositions(@RequestParam(required = false) String filter,
 																	@RequestParam(defaultValue = "0") int page,
