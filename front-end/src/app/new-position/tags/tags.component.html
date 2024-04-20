@@ -1,0 +1,29 @@
+@if (positionFormGroup) {
+  <mat-form-field class="tag-field" [formGroup]="positionFormGroup">
+    <mat-label>{{ label }}</mat-label>
+    <mat-chip-grid
+      #chipGrid
+      aria-label="Enter tags"
+      [formControlName]="tagControlName">
+      @for (tag of tagControl().value; track tag) {
+        <mat-chip-row
+          color="primary"
+          highlighted
+          (removed)="remove(tag)"
+          [editable]="true"
+          (edited)="edit(tag, $event)">
+          {{ tag }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      }
+      <input
+        placeholder="New tag..."
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        matChipInputAddOnBlur="true"
+        (matChipInputTokenEnd)="add($event)" />
+    </mat-chip-grid>
+  </mat-form-field>
+}

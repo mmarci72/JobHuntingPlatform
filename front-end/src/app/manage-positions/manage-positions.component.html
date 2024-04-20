@@ -1,0 +1,26 @@
+<div class="companies-wrapper">
+  @for (company of companies; track company.id) {
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ company.name }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="manage-position-wrapper">
+        <h2>Manage positions</h2>
+        @if (company.id) {
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/newPosition', company.id]">
+            New Position
+          </button>
+          @for (
+            position of positionsByCompany[company.id] | async;
+            track position.positionId
+          ) {
+            <p>{{ position.positionName }}</p>
+          }
+        }
+      </div>
+    </mat-expansion-panel>
+  }
+</div>

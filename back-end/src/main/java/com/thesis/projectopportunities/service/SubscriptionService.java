@@ -75,8 +75,7 @@ public class SubscriptionService {
 
 		if (positions.size() == 1) {
 			sendNotificationsForOnePosition(subscriptions, positions.get(0));
-		}
-		else {
+		} else {
 			sendNotificationsForMultiplePositions(subscriptions, positions);
 		}
 
@@ -91,8 +90,7 @@ public class SubscriptionService {
 	private void sendNotification(Subscription subscription, String messageJson) {
 		try {
 			pushService.send(new Notification(subscription, messageJson));
-		}
-		catch (GeneralSecurityException | IOException | JoseException | ExecutionException | InterruptedException e) {
+		} catch (GeneralSecurityException | IOException | JoseException | ExecutionException | InterruptedException e) {
 			LOGGER.error(e.getMessage());
 
 			Thread.currentThread().interrupt();
@@ -100,21 +98,21 @@ public class SubscriptionService {
 	}
 
 	private void sendNotificationsForOnePosition(List<com.thesis.projectopportunities.model.Subscription> subscriptions,
-		Position position) {
+												 Position position) {
 		subscriptions.forEach(subscription -> {
 			var preference = preferenceRepo.findById(subscription.getUsername());
 			if (preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get())) {
 				var sub = setupSubscription(subscription);
 				sendNotification(sub,
 					String.format(MESSAGE_FOR_ONE_POSITION, position.getSeniorityName().getLiteral().toLowerCase(),
-						position.getRoleName().getLiteral().toLowerCase().replace('_', ' '),
+						position.getRoleName().toLowerCase().replace('_', ' '),
 						position.getCompany().getName()));
 			}
 		});
 	}
 
 	private void sendNotificationsForMultiplePositions(List<com.thesis.projectopportunities.model.Subscription> subscriptions,
-		List<Position> positions) {
+													   List<Position> positions) {
 
 		subscriptions.forEach(subscription -> {
 			int counter = numberOfPositionsToSend(positions, subscription);
@@ -136,7 +134,7 @@ public class SubscriptionService {
 	}
 
 	private int numberOfPositionsToSend(List<Position> positions,
-		com.thesis.projectopportunities.model.Subscription subscription) {
+										com.thesis.projectopportunities.model.Subscription subscription) {
 		AtomicInteger counter = new AtomicInteger(0);
 
 		positions.forEach(position -> {

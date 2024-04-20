@@ -127,7 +127,7 @@ export class JobDetailsComponent {
   private getApplication(): Observable<Application | undefined> {
     return from(
       this.keycloakService.loadUserProfile().then(userProfile => {
-        if (!this.position) {
+        if (!this.position?.positionId) {
           return;
         }
 
@@ -136,7 +136,7 @@ export class JobDetailsComponent {
           username: userProfile.username ?? "",
           firstName: userProfile.firstName ?? "",
           lastName: userProfile.lastName ?? "",
-          positionId: this.position?.positionId,
+          positionId: this.position.positionId,
         };
 
         return application;

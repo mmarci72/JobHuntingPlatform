@@ -1,0 +1,12 @@
+.tag-field {
+  margin-top: 2rem;
+  width: 25%
+}
+
+mat-chip-grid input::placeholder, mat-label {
+  color: black;
+}
+
+mat-chip-row button:hover {
+  background-color: transparent;
+}

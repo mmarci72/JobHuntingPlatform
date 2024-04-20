@@ -1,0 +1,102 @@
+<div class="form-wrapper">
+  <h2>Add new position</h2>
+  <form [formGroup]="positionFormGroup" (ngSubmit)="createPosition()">
+    <mat-form-field color="primary">
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Position name"
+        required
+        matInput />
+      @if (positionFormGroup.invalid) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        formControlName="roleName"
+        placeholder="Role name"
+        required
+        matInput />
+      @if (positionFormGroup.invalid) {
+        <mat-error>This field is required</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="position-salary">
+      <mat-form-field>
+        <input
+          type="number"
+          formControlName="salaryMin"
+          placeholder="Minimum salary"
+          required
+          matInput />
+        @if (positionFormGroup.invalid) {
+          <mat-error>This field is required</mat-error>
+        }
+      </mat-form-field>
+      -
+      <mat-form-field>
+        <input
+          type="number"
+          formControlName="salaryMax"
+          placeholder="Maximum salary"
+          matInput />
+      </mat-form-field>
+    </div>
+
+    <mat-expansion-panel class="filter" expanded="false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Seniority</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-radio-group
+        formControlName="seniorities"
+        class="seniority-filter"
+        aria-label="Select an option">
+        @for (seniority of seniorities; track $index) {
+          <div class="seniority-wrapper">
+            <mat-radio-button [value]="seniority">{{
+              seniority
+            }}</mat-radio-button>
+          </div>
+        }
+      </mat-radio-group>
+    </mat-expansion-panel>
+
+    <app-md-editor
+      label="Position Description"
+      formControlName="positionDescription"
+      [positionFormGroup]="positionFormGroup"
+      ngDefaultControl>
+    </app-md-editor>
+
+    <app-md-editor
+      label="Responsibilities Description"
+      formControlName="responsibilitiesDescription"
+      [positionFormGroup]="positionFormGroup"
+      ngDefaultControl>
+    </app-md-editor>
+
+    <app-md-editor
+      label="Requirements Description"
+      formControlName="requirementsDescription"
+      [positionFormGroup]="positionFormGroup"
+      ngDefaultControl>
+    </app-md-editor>
+
+    <app-tags
+      tagControlName="technologies"
+      [positionFormGroup]="positionFormGroup"
+      label="Technologies">
+    </app-tags>
+
+    <app-tags
+      tagControlName="languages"
+      [positionFormGroup]="positionFormGroup"
+      label="Languages"></app-tags>
+    <button class="submit-button" type="submit" mat-raised-button>
+      Create
+    </button>
+  </form>
+</div>

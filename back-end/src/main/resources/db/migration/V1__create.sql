@@ -7,15 +7,6 @@ CREATE TYPE seniority as ENUM
 	'ANY'
 );
 
-CREATE TYPE role as ENUM
-(
-	'SOFTWARE_ENGINEER',
-	'TESTER',
-	'PROJECT_MANAGER',
-	'SOLUTION_ARCHITECT',
-	'REQUIREMENT_ENGINEER'
-);
-
 CREATE TYPE industry_domain as ENUM
 (
 	'BANKING',
@@ -26,7 +17,6 @@ CREATE TYPE industry_domain as ENUM
 );
 
 CREATE CAST (varchar AS seniority) WITH INOUT AS IMPLICIT;
-CREATE CAST (varchar AS role) WITH INOUT AS IMPLICIT;
 CREATE CAST (varchar AS industry_domain) WITH INOUT AS IMPLICIT;
 
 
@@ -58,7 +48,7 @@ CREATE TABLE position
 	position_name                text 	   NOT NULL,
 	start_date                   DATE,
 	seniority_name               seniority NOT NULL,
-	role_name                    role 	   NOT NULL,
+	role_name                    text 	   NOT NULL,
 	requirements_description     text 	   NOT NULL,
 	position_description		     text 	   NOT NULL,
 	responsibilities_description text 	   NOT NULL,

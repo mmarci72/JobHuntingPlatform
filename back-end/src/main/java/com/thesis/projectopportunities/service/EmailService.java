@@ -88,7 +88,7 @@ public class EmailService {
 		ctx.setVariable("signUpDate", new Date());
 		ctx.setVariable("projectName", position.getCompany().getName());
 		ctx.setVariable("positionSeniority", position.getSeniorityName().getLiteral().toLowerCase());
-		ctx.setVariable("positionRoleName", position.getRoleName().getLiteral().toLowerCase().replace("_", " "));
+		ctx.setVariable("positionRoleName", position.getRoleName().toLowerCase().replace("_", " "));
 		ctx.setVariable("username", interestedParty.getUsername());
 		ctx.setVariable("userEmail", interestedParty.getEmail());
 		setUpEmail("html/email-signup-template", ctx, subject, toUser);
