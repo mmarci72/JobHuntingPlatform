@@ -20,3 +20,27 @@ mat-expansion-panel {
   align-items: center;
 }
 
+.position-name {
+  width: 20%;
+  align-items: flex-start;
+}
+
+.action-buttons {
+  margin-left: 2rem;
+  margin-right: 2rem;
+  width: auto;
+}
+
+.action-buttons, .position-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.position-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+}

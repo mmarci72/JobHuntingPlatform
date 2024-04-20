@@ -9,9 +9,9 @@
       [formControlName]="formControlName">
     </angular-markdown-editor>
     @if (
-      positionFormGroup?.get(formControlName)?.invalid &&
-      (positionFormGroup?.get(formControlName)?.dirty ||
-        positionFormGroup?.get(formControlName)?.touched)
+      positionFormGroup.get(formControlName)?.invalid &&
+      (positionFormGroup.get(formControlName)?.dirty ||
+        positionFormGroup.get(formControlName)?.touched)
     ) {
       <mat-error>This field is required</mat-error>
     }

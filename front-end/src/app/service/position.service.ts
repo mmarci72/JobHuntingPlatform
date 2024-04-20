@@ -18,8 +18,19 @@ export class PositionService extends BaseService<PaginatedPosition> {
     super("/positions", http);
   }
 
-  public addPosition(position: Position): Observable<Position> {
-    return this.http.post<Position>(this.fullURL, position);
+  public addPosition(position: Position): Observable<void> {
+    return this.http.post<void>(this.fullURL, position);
+  }
+
+  public deletePosition(positionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.fullURL}/${positionId}`);
+  }
+
+  public patchPosition(position: Position): Observable<Position> {
+    return this.http.patch<Position>(
+      `${this.fullURL}/${position.positionId}`,
+      position
+    );
   }
 
   public getPositions(
