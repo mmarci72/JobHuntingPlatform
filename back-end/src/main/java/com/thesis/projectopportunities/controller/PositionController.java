@@ -4,14 +4,15 @@ import com.thesis.projectopportunities.dto.PositionDto;
 import com.thesis.projectopportunities.mapping.PositionMapping;
 import com.thesis.projectopportunities.model.PaginatedModel;
 import com.thesis.projectopportunities.model.Position;
+import com.thesis.projectopportunities.repo.CompanyPermissionRepo;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.PositionService;
-import com.thesis.projectopportunities.service.UserNotificationService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,17 +26,17 @@ public class PositionController {
 
 	private final PositionService positionService;
 
-	private final UserNotificationService userNotificationService;
-
 	private final PositionMapping positionMapping;
+	private final CompanyPermissionRepo companyPermissionRepo;
 
 	@PostMapping("/positions")
-	public ResponseEntity<Position> addPosition(@RequestBody PositionDto position) {
-		var savedPosition = positionRepo.save(positionMapping.toPosition(position));
-		var responseEntity = new ResponseEntity<>(savedPosition, HttpStatus.CREATED);
-		position.setPositionId(savedPosition.getPositionId());
-		userNotificationService.newNotification(positionMapping.toPosition(position));
-		return responseEntity;
+	public ResponseEntity<Position> addPosition(@RequestBody PositionDto position, Authentication authentication) {
+
+		var positionAdded = positionService.addPosition(position, authentication.getName());
+		if (positionAdded == null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(positionAdded, HttpStatus.CREATED);
 	}
 
 	@GetMapping("/positions/{id}")
@@ -74,13 +75,21 @@ public class PositionController {
 	}
 
 	@DeleteMapping("/positions/{id}")
-	public void deletePosition(@PathVariable int id) {
+	public void deletePosition(@PathVariable int id, Authentication authentication) {
+
+		var position =
+			positionRepo.findById(id);
+
+		if (position.isEmpty() || !companyPermissionRepo.existsByCompanyIdAndUsername(position.get().getCompany().getId(),
+			authentication.getName())) {
+			return;
+		}
 		positionRepo.deleteById(id);
 	}
 
 	@PatchMapping("/positions/{id}")
-	public void patchPosition(@PathVariable int id, @RequestBody PositionDto positionDto) {
-		positionService.update(positionDto, id);
+	public void patchPosition(@PathVariable int id, @RequestBody PositionDto positionDto, Authentication authentication) {
+		positionService.update(positionDto, id, authentication.getName());
 	}
 }
 

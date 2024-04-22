@@ -29,5 +29,14 @@ public class ApplicationDto {
 	private String email;
 
 	@JsonProperty
+	private String phoneNumber;
+
+	@JsonProperty
+	private boolean reviewed;
+
+	@JsonProperty
+	private boolean approved;
+
+	@JsonProperty
 	private LocalDateTime applicationDate;
 }

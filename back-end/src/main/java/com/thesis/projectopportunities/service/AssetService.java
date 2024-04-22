@@ -75,7 +75,7 @@ public class AssetService {
 	}
 
 	public byte[] getResumeAsByte(String userName) throws IOException {
-		return getImageAsByte(getResumeFileNameFromUserName(userName));
+		return getImageAsByte(RESUME_FOLDER_NAME + getResumeFileNameFromUserName(userName));
 	}
 
 	public boolean doesResumeExist(String userName) {

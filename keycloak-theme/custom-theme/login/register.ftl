@@ -55,6 +55,25 @@
 				</div>
             </#if>
 
+			<div class="${properties.kcFormGroupClass!} ${messagesPerField.printIfExists('phone',properties.kcFormGroupErrorClass!)}">
+				<div class="${properties.kcInputWrapperClass!}">
+					<input
+						placeholder="Phone number"
+						type="text"
+						id="phone"
+						class="${properties.kcInputClass!}"
+						name="user.attributes.phone"
+						value="${(register.formData['user.attributes.phone']!'')}"
+					/>
+
+					<#if messagesPerField.existsError('phone')>
+						<span id="input-error-phone" class="${properties.kcInputErrorMessageClass!}" aria-live="polite">
+                            ${kcSanitize(messagesPerField.get('phone'))?no_esc}
+                        </span>
+					</#if>
+				</div>
+			</div>
+
             <div class="${properties.kcFormGroupClass!}">
                 <div class="${properties.kcInputWrapperClass!}">
                     <input placeholder="Email" type="text" id="email" class="${properties.kcInputClass!}" name="email"

@@ -5,5 +5,8 @@ export type Application = {
   lastName: string;
   username: string;
   email: string;
+  phoneNumber: string;
   applicationDate?: Date;
+  approved: boolean;
+  reviewed: boolean;
 };

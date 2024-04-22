@@ -1,0 +1,97 @@
+<div class="table-wrapper">
+  <mat-checkbox
+    color="primary"
+    id="checkbox"
+    [checked]="isApplicationHistory"
+    (change)="showHistory()"
+    >View application history</mat-checkbox
+  >
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    matSortDisableClear="true"
+    class="mat-elevation-z5"
+    aria-describedby="applicants for position">
+    <ng-container matColumnDef="name">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by project name">
+        Name
+      </th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.firstName + " " + application.lastName }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by technologies">
+        Email
+      </th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.email }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="phone">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by project start date">
+        Phone number
+      </th>
+      <td mat-cell *matCellDef="let application">
+        {{ application.phoneNumber }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="resume">
+      <th mat-header-cell *matHeaderCellDef>Resume</th>
+      <td mat-cell *matCellDef="let application">
+        <mat-icon (click)="downloadResume(application.username)"
+          >download</mat-icon
+        >
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="approve">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by project start date">
+        Resume
+      </th>
+      <td mat-cell *matCellDef="let application">
+        @if (
+          !application.reviewed ||
+          (application.reviewed && !application.approved)
+        ) {
+          <mat-icon (click)="approveApplication(application.id, true)"
+            >done</mat-icon
+          >
+        } @else if (
+          !application.reviewed ||
+          (application.reviewed && application.approved)
+        ) {
+          <mat-icon (click)="approveApplication(application.id, false)"
+            >close</mat-icon
+          >
+        }
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let myRowData; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[10, 30, 50, 100]"
+    [showFirstLastButtons]="true"
+    [hidePageSize]="false">
+  </mat-paginator>
+</div>

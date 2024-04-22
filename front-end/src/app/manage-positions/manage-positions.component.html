@@ -31,7 +31,7 @@
                 ]"
                 >edit</mat-icon
               >
-              <mat-icon (click)="viewApplications(position.positionId)"
+              <mat-icon [routerLink]="['/viewApplicants', position.positionId]"
                 >view_list</mat-icon
               >
               <mat-icon (click)="deletePosition(position.positionId)"

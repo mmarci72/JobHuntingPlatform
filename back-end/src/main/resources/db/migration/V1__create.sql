@@ -30,7 +30,7 @@ CREATE TABLE company
 	size_max             INT,
 	industry_domain_name industry_domain,
 	logo_file_name       varchar(255),
-	creation_date        DATE DEFAULT now()
+	creation_date        DATE DEFAULT CURRENT_DATE
 );
 
 CREATE TABLE company_permission (
@@ -54,7 +54,7 @@ CREATE TABLE position
 	responsibilities_description text 	   NOT NULL,
 	salary_min					 INT 	   NOT NULL,
 	salary_max					 INT,
-	post_date                    DATE 	   DEFAULT now(),
+	post_date                    DATE 	   DEFAULT CURRENT_DATE NOT NULL,
 	FOREIGN KEY (company_id) REFERENCES company (id)
 );
 
@@ -92,6 +92,8 @@ CREATE TABLE application
 	phone_number	  varchar(255),
 	linkedin	      varchar(255),
 	github		      varchar(255),
+	approved		  bool,
+	reviewed		  bool DEFAULT FALSE,
 	cover_letter_path varchar(255),
 	application_date  varchar(255) DEFAULT now(),
 	FOREIGN KEY (position_id) REFERENCES position (position_id)

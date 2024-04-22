@@ -10,6 +10,7 @@ import { NewCompanyComponent } from "./new-company/new-company.component";
 import { NewPositionComponent } from "./new-position/new-position.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { SettingsComponent } from "./settings/settings.component";
+import { ViewApplicantsComponent } from "./view-applicants/view-applicants.component";
 
 export const routes: Routes = [
   {
@@ -58,6 +59,12 @@ export const routes: Routes = [
   {
     path: "editPosition/:companyId/:positionId",
     component: EditPositionComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ["RECRUITER"] },
+  },
+  {
+    path: "viewApplicants/:positionId",
+    component: ViewApplicantsComponent,
     canActivate: [AuthGuard],
     data: { roles: ["RECRUITER"] },
   },
