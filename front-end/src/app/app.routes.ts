@@ -4,6 +4,7 @@ import { AuthGuard } from "./auth/auth-guard";
 import { HomeComponent } from "./home/home.component";
 import { JobDetailsComponent } from "./job-details/job-details.component";
 import { ManageCompanyComponent } from "./manage-company/manage-company.component";
+import { EditPositionComponent } from "./manage-positions/edit-position/edit-position.component";
 import { ManagePositionsComponent } from "./manage-positions/manage-positions.component";
 import { NewCompanyComponent } from "./new-company/new-company.component";
 import { NewPositionComponent } from "./new-position/new-position.component";
@@ -51,6 +52,12 @@ export const routes: Routes = [
   {
     path: "newPosition/:companyId",
     component: NewPositionComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ["RECRUITER"] },
+  },
+  {
+    path: "editPosition/:companyId/:positionId",
+    component: EditPositionComponent,
     canActivate: [AuthGuard],
     data: { roles: ["RECRUITER"] },
   },

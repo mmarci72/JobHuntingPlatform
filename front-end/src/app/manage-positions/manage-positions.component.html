@@ -4,23 +4,43 @@
       <mat-expansion-panel-header>
         <mat-panel-title>{{ company.name }}</mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="manage-position-wrapper">
-        <h2>Manage positions</h2>
-        @if (company.id) {
+      @if (company.id) {
+        <div class="manage-position-wrapper">
+          <h2>Manage positions</h2>
           <button
             mat-raised-button
             color="primary"
             [routerLink]="['/newPosition', company.id]">
             New Position
           </button>
-          @for (
-            position of positionsByCompany[company.id] | async;
-            track position.positionId
-          ) {
-            <p>{{ position.positionName }}</p>
-          }
+        </div>
+        @for (
+          position of positionsByCompany[company.id] | async;
+          track position.positionId
+        ) {
+          <div class="position-wrapper">
+            <div class="position-name">
+              <p>{{ position.positionName }}</p>
+            </div>
+            <div class="action-buttons">
+              <mat-icon
+                [routerLink]="[
+                  '/editPosition',
+                  company.id,
+                  position.positionId
+                ]"
+                >edit</mat-icon
+              >
+              <mat-icon (click)="viewApplications(position.positionId)"
+                >view_list</mat-icon
+              >
+              <mat-icon (click)="deletePosition(position.positionId)"
+                >delete</mat-icon
+              >
+            </div>
+          </div>
         }
-      </div>
+      }
     </mat-expansion-panel>
   }
 </div>
