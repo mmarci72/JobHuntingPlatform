@@ -30,5 +30,5 @@ export const comparePositions = (position1: Position, position2: Position) => {
     return position1.positionName.localeCompare(position2.positionName);
   }
 
-  return position1.postDate.getTime() - position2.postDate.getTime();
+  return position2.postDate.getTime() - position1.postDate.getTime();
 };

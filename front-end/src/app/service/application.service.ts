@@ -13,6 +13,9 @@ export class ApplicationService extends BaseService<Application> {
     super("/application", http);
   }
 
+  public getApplications(positionId: number): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.fullURL}/${positionId}`);
+  }
   public postApplication(application: Application): Observable<string> {
     return this.http.post(this.fullURL, application, {
       responseType: "text",
@@ -33,5 +36,15 @@ export class ApplicationService extends BaseService<Application> {
     queryParams = queryParams.append("username", username);
 
     return this.http.get(this.fullURL + "/exists", { params: queryParams });
+  }
+
+  public approveApplication(
+    applicationId: number,
+    approved: boolean
+  ): Observable<string> {
+    return this.http.get(
+      `${this.fullURL}/approve/${applicationId}/${approved}`,
+      { responseType: "text" }
+    );
   }
 }

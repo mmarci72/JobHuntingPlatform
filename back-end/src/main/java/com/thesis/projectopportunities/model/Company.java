@@ -40,7 +40,7 @@ public class Company {
 	@Enumerated(EnumType.STRING)
 	private IndustryDomainEnum industryDomainName;
 
-	private LocalDateTime creationDate;
+	private LocalDateTime creationDate = LocalDateTime.now();
 
 	private String logoFileName;
 

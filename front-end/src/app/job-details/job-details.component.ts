@@ -1,5 +1,7 @@
+import * as console from "node:console";
+
 import { AsyncPipe, DatePipe, NgOptimizedImage } from "@angular/common";
-import { Component } from "@angular/core";
+import { AfterViewInit, Component } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
@@ -40,7 +42,7 @@ import { LocationSvgComponent } from "../shared/location-svg/location-svg.compon
   templateUrl: "./job-details.component.html",
   styleUrl: "./job-details.component.scss",
 })
-export class JobDetailsComponent {
+export class JobDetailsComponent implements AfterViewInit {
   protected position?: Position;
 
   protected position$ = this.route.paramMap.pipe(
@@ -118,7 +120,6 @@ export class JobDetailsComponent {
       if (!application) {
         return;
       }
-
       this.newApplication.next(application);
     });
     this.didApply.next();
@@ -132,15 +133,23 @@ export class JobDetailsComponent {
         }
 
         const application: Application = {
+          approved: false,
+          reviewed: false,
           email: userProfile.email ?? "",
           username: userProfile.username ?? "",
           firstName: userProfile.firstName ?? "",
           lastName: userProfile.lastName ?? "",
           positionId: this.position.positionId,
+          // @ts-expect-error The library does not support this, but it works :)
+          phoneNumber: userProfile!["attributes"].phone[0],
         };
 
         return application;
       })
     );
+  }
+
+  ngAfterViewInit(): void {
+    this.didApply.next();
   }
 }

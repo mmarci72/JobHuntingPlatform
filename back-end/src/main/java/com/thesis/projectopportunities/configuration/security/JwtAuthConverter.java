@@ -27,7 +27,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 		Collection<GrantedAuthority> authorities = Stream.concat(
 			jwtGrantedAuthoritiesConverter.convert(jwt).stream(),
 			extractResourceRoles(jwt).stream()).collect(Collectors.toSet());
-		return new JwtAuthenticationToken(jwt, authorities);
+		return new JwtAuthenticationToken(jwt, authorities, getUserNameFromJwt(jwt));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,4 +44,9 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 			.map(role -> new SimpleGrantedAuthority("ROLE_" + role))
 			.collect(Collectors.toSet());
 	}
+
+	private String getUserNameFromJwt(Jwt jwt) {
+		return jwt.getClaimAsString("preferred_username");
+	}
+
 }

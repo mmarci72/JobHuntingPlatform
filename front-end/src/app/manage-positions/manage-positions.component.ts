@@ -104,10 +104,4 @@ export class ManagePositionsComponent {
       data: { positionId, deleteEvent: this.deleteEvent },
     });
   }
-
-  viewApplications(positionId: number | undefined) {
-    if (!positionId) {
-      return;
-    }
-  }
 }

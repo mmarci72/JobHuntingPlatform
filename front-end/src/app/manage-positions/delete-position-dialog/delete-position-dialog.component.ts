@@ -29,9 +29,8 @@ export class DeletePositionDialogComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: { positionId: number; deleteEvent: EventEmitter<void> }
   ) {}
-  deletePosition() {
+  protected deletePosition() {
     this.positionService.deletePosition(this.data.positionId).subscribe(() => {
-      debugger;
       this.data.deleteEvent.emit();
     });
   }

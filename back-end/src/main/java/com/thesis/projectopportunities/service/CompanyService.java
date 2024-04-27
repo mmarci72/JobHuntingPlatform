@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,8 @@ public class CompanyService {
 
 	public CompanyDto addNewCompany(CompanyDto companyDto, String username) {
 		Company company = companyMapping.toCompany(companyDto);
+
+		company.setCreationDate(LocalDateTime.now());
 
 		if (!keycloakService.addRecruiterRole(username)) {
 			return null;
@@ -65,7 +68,7 @@ public class CompanyService {
 		} catch (IOException e) {
 			return false;
 		}
-		
+
 		companyPermissionRepo.deleteByCompanyId(companyId);
 
 		companyRepo.deleteById(companyId);

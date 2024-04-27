@@ -32,6 +32,9 @@ public class Application {
 
 	private String phoneNumber;
 
+	private boolean approved;
+	private boolean reviewed;
+
 	private String linkedin;
 
 	private String github;
