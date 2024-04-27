@@ -17,6 +17,8 @@ import com.thesis.projectopportunities.repo.UserNotificationRepo;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +40,7 @@ public class UserNotificationService {
 	private final NotificationQueueRepo notificationQueueRepo;
 
 	private final PositionRepo positionRepo;
+	private final KeycloakService keycloakService;
 
 	public void update(UserNotificationDto userNotificationDto, String id) {
 		var userNotification =
@@ -47,8 +50,7 @@ public class UserNotificationService {
 			userNotificationMapper.update(userNotificationDto, userNotification.get());
 			userNotificationRepo.save(userNotification.get());
 
-		}
-		else {
+		} else {
 			userNotificationRepo.save(userNotificationMapper.toUserNotification(userNotificationDto));
 		}
 	}
@@ -68,59 +70,28 @@ public class UserNotificationService {
 		var positions =
 			queue.stream().map(notification -> positionRepo.findById(notification.getPositionId())
 				.orElseThrow(EntityNotFoundException::new)).toList();
-		if (positions.size() == 1) {
-			sendDetailedEmail(positions.get(0));
-		}
-		else {
-			sendSummaryEmails(positions);
-		}
+
+		sendSummaryEmails(positions);
 		notificationQueueRepo.deleteAll();
 		messageService.sendNotifications(positions);
 	}
 
-	private void sendDetailedEmail(Position position) {
-		var users = userNotificationRepo.findByEmailNotificationEnabledTrue();
-		String subject = "New position posted";
-		AtomicInteger successfulEmailCount = new AtomicInteger(0);
-		AtomicInteger emailsToSend = new AtomicInteger(0);
-
-		users.forEach(user ->
-			{
-				try {
-					var preference = preferenceRepo.findById(user.getUsername());
-				}
-				catch (EmailNotSentException e) {
-					LOGGER.error(e.getMessage(), e.getCause());
-				}
-			}
-		);
-
-		LOGGER.debug(successfulEmailCount + " out of the " + emailsToSend + " email messages could be successfully sent");
-	}
-
 	private void sendSummaryEmails(List<Position> positions) {
 		var users = userNotificationRepo.findByEmailNotificationEnabledTrue();
-		String subject = "New positions posted";
+		String subject = "New jobs posted";
 		AtomicInteger successfulEmailCount = new AtomicInteger(0);
 
 		users.forEach(user -> {
-			var preference = preferenceRepo.findById(user.getUsername());
-			List<Position> filteredPositions = positions.stream()
-				.filter(position -> checkPreference(preference, position)).toList();
-			if (!filteredPositions.isEmpty()) {
-				try {
-					successfulEmailCount.getAndIncrement();
-				}
-				catch (EmailNotSentException e) {
-					LOGGER.error(e.getMessage(), e.getCause());
-				}
+			try {
+				emailService.sendNewSummaryJobsEmail(subject, positions,
+					this.keycloakService.getUserDetails(user.getUserId()));
+				successfulEmailCount.getAndIncrement();
+			} catch (EmailNotSentException e) {
+				LOGGER.error(e.getMessage(), e.getCause());
+
 			}
 		});
 
 		LOGGER.debug(successfulEmailCount + " out of the " + users.size() + " email messages could be successfully sent");
-	}
-
-	private static boolean checkPreference(Optional<Preference> preference, Position position) {
-		return preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get());
 	}
 }

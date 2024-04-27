@@ -110,7 +110,16 @@ public class KeycloakService {
 		if (searchResults.isEmpty()) {
 			return null;
 		}
-
 		return searchResults.get(0).getId();
+	}
+
+	public UserRepresentation getUserDetails(String userId) {
+		try (Keycloak keycloak = getKeycloakBuilder()) {
+
+			var keycloakRealm = keycloak.realm(REALM);
+
+			return keycloakRealm.users().get(userId).toRepresentation();
+
+		}
 	}
 }

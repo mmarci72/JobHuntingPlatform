@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class UserNotification {
 
 	@Id
-	private String username;
+	private String userId;
 
 	private Boolean emailNotificationEnabled = false;
 

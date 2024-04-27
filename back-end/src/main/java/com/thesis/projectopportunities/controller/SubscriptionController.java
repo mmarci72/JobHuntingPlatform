@@ -4,6 +4,7 @@ import com.thesis.projectopportunities.model.Subscription;
 import com.thesis.projectopportunities.repo.SubscriptionRepo;
 import com.thesis.projectopportunities.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +22,14 @@ public class SubscriptionController {
 	private final SubscriptionService subscriptionService;
 
 	@PostMapping("/subscriptions")
-	public void addSubscription(@RequestBody Subscription subscription) {
+	public ResponseEntity<String> addSubscription(@RequestBody Subscription subscription) {
 		subscriptionService.addNewSubscription(subscription);
+		return ResponseEntity.ok("Subscription added");
 	}
 
-	@DeleteMapping("/subscriptions/{username}")
-	public void deleteSubscription(@PathVariable String username) {
-		subscriptionRepo.deleteById(username);
+	@DeleteMapping("/subscriptions/{userId}")
+	public void deleteSubscription(@PathVariable String userId) {
+		subscriptionRepo.deleteById(userId);
 	}
 }
+

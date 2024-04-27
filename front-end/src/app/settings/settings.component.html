@@ -1,8 +1,16 @@
 <div class="settings pt-2">
-  <mat-checkbox color="primary" class="center">
+  <mat-checkbox
+    [checked]="userNotification.emailNotificationEnabled ?? false"
+    (change)="emailNotificationChange()"
+    color="primary"
+    class="center">
     <p>Enable email notifications when a new position is added</p>
   </mat-checkbox>
-  <mat-checkbox color="primary" class="center">
+  <mat-checkbox
+    [checked]="userNotification.pushNotificationEnabled ?? false"
+    (change)="pushNotificationChange()"
+    color="primary"
+    class="center">
     <p>Enable push notifications when a new position is added</p>
   </mat-checkbox>
 

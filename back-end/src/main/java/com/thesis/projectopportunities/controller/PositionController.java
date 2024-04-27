@@ -4,7 +4,6 @@ import com.thesis.projectopportunities.dto.PositionDto;
 import com.thesis.projectopportunities.mapping.PositionMapping;
 import com.thesis.projectopportunities.model.PaginatedModel;
 import com.thesis.projectopportunities.model.Position;
-import com.thesis.projectopportunities.repo.CompanyPermissionRepo;
 import com.thesis.projectopportunities.repo.PositionRepo;
 import com.thesis.projectopportunities.service.PositionService;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,7 +26,6 @@ public class PositionController {
 	private final PositionService positionService;
 
 	private final PositionMapping positionMapping;
-	private final CompanyPermissionRepo companyPermissionRepo;
 
 	@PostMapping("/positions")
 	public ResponseEntity<Position> addPosition(@RequestBody PositionDto position, Authentication authentication) {
@@ -77,14 +75,7 @@ public class PositionController {
 	@DeleteMapping("/positions/{id}")
 	public void deletePosition(@PathVariable int id, Authentication authentication) {
 
-		var position =
-			positionRepo.findById(id);
-
-		if (position.isEmpty() || !companyPermissionRepo.existsByCompanyIdAndUsername(position.get().getCompany().getId(),
-			authentication.getName())) {
-			return;
-		}
-		positionRepo.deleteById(id);
+		positionService.deletePosition(id, authentication.getName());
 	}
 
 	@PatchMapping("/positions/{id}")

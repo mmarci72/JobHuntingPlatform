@@ -36,10 +36,10 @@ public class SubscriptionService {
 		{
 		             "notification": {
 		                 "title": "A new position has been posted!",
-		                 "body": "A new %s %s position has been posted for the %s company"
+		                 "body": "1 new position have been posted to the website, go check it out!"
 		             }
 		}
-		             """;
+		            \s""";
 
 	private static final String MESSAGE_FOR_MULTIPLE_POSITIONS = """
 		{
@@ -48,7 +48,7 @@ public class SubscriptionService {
 		                 "body": "%s new positions have been posted to the website, go check it out!"
 		             }
 		}
-		             """;
+		            \s""";
 
 	@Setter(onMethod_ = @Autowired)
 	private VapidProperties properties;
@@ -62,9 +62,9 @@ public class SubscriptionService {
 	private final UserNotificationRepo userNotificationRepo;
 
 	public void addNewSubscription(com.thesis.projectopportunities.model.Subscription subscription) {
-		String username = subscription.getUsername();
+		String userId = subscription.getUserId();
 		boolean isPushNotificationEnabled =
-			userNotificationRepo.getByUsername(username).orElseThrow(EntityNotFoundException::new).getPushNotificationEnabled();
+			userNotificationRepo.getByUserId(userId).orElseThrow(EntityNotFoundException::new).getPushNotificationEnabled();
 		if (isPushNotificationEnabled) {
 			subscriptionRepo.save(subscription);
 		}
@@ -100,13 +100,10 @@ public class SubscriptionService {
 	private void sendNotificationsForOnePosition(List<com.thesis.projectopportunities.model.Subscription> subscriptions,
 												 Position position) {
 		subscriptions.forEach(subscription -> {
-			var preference = preferenceRepo.findById(subscription.getUsername());
+			var preference = preferenceRepo.findById(subscription.getUserId());
 			if (preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get())) {
 				var sub = setupSubscription(subscription);
-				sendNotification(sub,
-					String.format(MESSAGE_FOR_ONE_POSITION, position.getSeniorityName().getLiteral().toLowerCase(),
-						position.getRoleName().toLowerCase().replace('_', ' '),
-						position.getCompany().getName()));
+				sendNotification(sub, MESSAGE_FOR_ONE_POSITION);
 			}
 		});
 	}
@@ -138,7 +135,7 @@ public class SubscriptionService {
 		AtomicInteger counter = new AtomicInteger(0);
 
 		positions.forEach(position -> {
-			var preference = preferenceRepo.findById(subscription.getUsername());
+			var preference = preferenceRepo.findById(subscription.getUserId());
 			if (preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get())) {
 				counter.getAndIncrement();
 			}
