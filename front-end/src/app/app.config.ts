@@ -6,6 +6,7 @@ import {
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { provideRouter, withComponentInputBinding } from "@angular/router";
+import { provideServiceWorker } from "@angular/service-worker";
 import { AngularMarkdownEditorModule } from "angular-markdown-editor";
 import { KeycloakService } from "keycloak-angular";
 import { MARKED_OPTIONS, provideMarkdown } from "ngx-markdown";
@@ -38,5 +39,8 @@ export const appConfig: ApplicationConfig = {
         iconlibrary: "fa",
       })
     ),
+    provideServiceWorker("ngsw-worker.js", {
+      enabled: true,
+    }),
   ],
 };

@@ -2,9 +2,14 @@ import { Component } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { catchError, EMPTY } from "rxjs";
+import { KeycloakService } from "keycloak-angular";
+import { catchError, EMPTY, of } from "rxjs";
 
+import { UserNotification } from "../model/user-notification.model";
 import { AssetService } from "../service/asset.service";
+import { PushNotificationService } from "../service/push-notification.service";
+import { SubscriptionService } from "../service/subscription.service";
+import { UserNotificationService } from "../service/user-notification.service";
 import { SettingsPreferencesComponent } from "./settings-preferences/settings-preferences.component";
 
 @Component({
@@ -15,15 +20,63 @@ import { SettingsPreferencesComponent } from "./settings-preferences/settings-pr
   styleUrl: "./settings.component.scss",
 })
 export class SettingsComponent {
+  userNotification: UserNotification = {
+    userId: undefined,
+    emailNotificationEnabled: false,
+    pushNotificationEnabled: false,
+  };
+
   private readonly snackbarMessage = "Resume uploaded successfully";
   private readonly errorSnackbarMessage = "Error uploading the resume";
 
-  constructor(
-    private assetService: AssetService,
-    private snackBar: MatSnackBar
-  ) {}
+  private readonly successString = "Changes saved!";
+  private readonly errorString = "Error saving changes!";
 
-  uploadResume(event: Event) {
+  constructor(
+    private readonly keycloakService: KeycloakService,
+    private readonly assetService: AssetService,
+    private readonly snackBar: MatSnackBar,
+    private readonly userNotificationService: UserNotificationService,
+    private readonly pushNotificationService: PushNotificationService,
+    private readonly subscriptionService: SubscriptionService
+  ) {
+    this.keycloakService.loadUserProfile().then(keycloakProfile => {
+      if (!keycloakProfile.id) {
+        return;
+      }
+      this.userNotification = {
+        userId: keycloakProfile.id,
+        emailNotificationEnabled: false,
+        pushNotificationEnabled: false,
+      };
+      this.userNotificationService
+        .getPreferences(keycloakProfile.id)
+        .subscribe(preference => {
+          this.userNotification.pushNotificationEnabled =
+            preference.pushNotificationEnabled;
+          this.userNotification.emailNotificationEnabled =
+            preference.emailNotificationEnabled;
+        });
+    });
+  }
+
+  protected emailNotificationChange() {
+    this.userNotification.emailNotificationEnabled =
+      !this.userNotification.emailNotificationEnabled;
+
+    this.userNotificationService
+      .changeNotification(this.userNotification)
+      .pipe(
+        catchError(err => {
+          this.openSnackBar(this.errorString);
+          console.error(err);
+          return of(null);
+        })
+      )
+      .subscribe(() => this.openSnackBar(this.successString));
+  }
+
+  protected uploadResume(event: Event) {
     if (!event.target) {
       return;
     }
@@ -50,5 +103,34 @@ export class SettingsComponent {
 
   private openSnackBar(message: string) {
     this.snackBar.open(message, "OK", { duration: 3000 });
+  }
+
+  protected pushNotificationChange() {
+    this.userNotification.pushNotificationEnabled =
+      !this.userNotification.pushNotificationEnabled;
+
+    this.userNotificationService
+      .changeNotification(this.userNotification)
+      .subscribe(async () => {
+        if (this.userNotification.pushNotificationEnabled) {
+          try {
+            const value = this.pushNotificationService.generateSubscription();
+            value.subscribe(() => this.openSnackBar("Changes saved!"));
+          } catch (e) {
+            this.openSnackBar(this.errorString);
+          }
+        } else if (this.userNotification?.userId) {
+          this.subscriptionService
+            .deleteSubscription(this.userNotification.userId)
+            .pipe(
+              catchError(err => {
+                this.openSnackBar(this.errorString);
+                console.error(err);
+                return of(null);
+              })
+            )
+            .subscribe(() => this.openSnackBar(this.successString));
+        }
+      });
   }
 }

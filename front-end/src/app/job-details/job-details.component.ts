@@ -1,5 +1,3 @@
-import * as console from "node:console";
-
 import { AsyncPipe, DatePipe, NgOptimizedImage } from "@angular/common";
 import { AfterViewInit, Component } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
@@ -141,7 +139,7 @@ export class JobDetailsComponent implements AfterViewInit {
           lastName: userProfile.lastName ?? "",
           positionId: this.position.positionId,
           // @ts-expect-error The library does not support this, but it works :)
-          phoneNumber: userProfile!["attributes"].phone[0],
+          phoneNumber: userProfile["attributes"].phone[0],
         };
 
         return application;

@@ -1,11 +1,16 @@
 <div class="table-wrapper">
-  <mat-checkbox
-    color="primary"
-    id="checkbox"
-    [checked]="isApplicationHistory"
-    (change)="showHistory()"
-    >View application history</mat-checkbox
-  >
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      value=""
+      id="flexCheckDefault"
+      [checked]="isApplicationHistory"
+      (change)="showHistory()" />
+    <label class="form-check-label" for="flexCheckDefault">
+      View applicant history
+    </label>
+  </div>
   <table
     mat-table
     [dataSource]="dataSource"

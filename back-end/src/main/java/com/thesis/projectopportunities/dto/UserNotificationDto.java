@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class UserNotificationDto {
 
 	@JsonProperty
-	private String username;
+	private String userId;
 
 	@JsonProperty
 	private Boolean emailNotificationEnabled;

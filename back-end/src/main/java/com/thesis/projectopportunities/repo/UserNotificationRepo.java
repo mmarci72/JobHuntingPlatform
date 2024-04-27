@@ -12,5 +12,5 @@ public interface UserNotificationRepo extends JpaRepository<UserNotification, St
 
 	List<UserNotification> findByEmailNotificationEnabledTrue();
 
-	Optional<UserNotification> getByUsername(String username);
+	Optional<UserNotification> getByUserId(String userid);
 }

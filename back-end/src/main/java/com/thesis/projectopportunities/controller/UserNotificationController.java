@@ -26,11 +26,11 @@ public class UserNotificationController {
 
 	private final UserNotificationService userNotificationService;
 
-	@GetMapping("/notifications/{username}")
-	public ResponseEntity<UserNotificationDto> getByUsername(@PathVariable String username) {
+	@GetMapping("/notifications/{userId}")
+	public ResponseEntity<UserNotificationDto> getByUserId(@PathVariable String userId) {
 		return ResponseEntity.ok(
 			userNotificationMapper.toUserNotification(
-				userNotificationRepo.getByUsername(username).orElseThrow(ResourceNotFoundException::new)));
+				userNotificationRepo.getByUserId(userId).orElseThrow(ResourceNotFoundException::new)));
 	}
 
 	@PostMapping("/notifications")

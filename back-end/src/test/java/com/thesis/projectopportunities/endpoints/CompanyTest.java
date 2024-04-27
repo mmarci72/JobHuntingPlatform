@@ -74,7 +74,6 @@ class CompanyTest extends BaseSystemTest {
 		CompanyDto newProject = new CompanyDto();
 
 		newProject.setName("test");
-		newProject.setDescription("test");
 		newProject.setId((long) 10);
 		newProject.setCreationDate(LocalDateTime.now());
 		newProject.setIndustryDomain(IndustryDomainEnum.GROWTH_MARKETS);

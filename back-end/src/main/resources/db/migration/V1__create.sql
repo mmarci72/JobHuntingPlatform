@@ -115,14 +115,14 @@ CREATE TABLE interests
 
 CREATE TABLE user_notification
 (
-	username                   varchar(255) PRIMARY KEY,
+	user_id                   varchar(255) PRIMARY KEY,
 	email_notification_enabled boolean,
 	push_notification_enabled  boolean
 );
 
 CREATE TABLE subscription
 (
-	username          varchar(255) PRIMARY KEY,
+	user_id          varchar(255) PRIMARY KEY,
 	push_subscription jsonb
 );
 
