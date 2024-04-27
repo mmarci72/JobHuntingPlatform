@@ -81,4 +81,15 @@ public class PositionService {
 		}
 	}
 
+	public void deletePosition(int positionId, String username) {
+		var position =
+			positionRepo.findById(positionId);
+
+		if (position.isEmpty() || !companyPermissionRepo.existsByCompanyIdAndUsername(position.get().getCompany().getId(),
+			username)) {
+			return;
+		}
+		positionRepo.deleteById(positionId);
+	}
+
 }
