@@ -102,8 +102,14 @@ export class PositionFormComponent implements OnInit {
         this.position?.positionDescription ?? "",
         Validators.required,
       ],
-      salaryMin: [this.position?.salaryMin ?? null, Validators.required],
-      salaryMax: [this.position?.salaryMax ?? null],
+      salaryMin: [
+        this.position?.salaryMin ?? null,
+        [Validators.required, Validators.min(0), Validators.max(10000000)],
+      ],
+      salaryMax: [
+        this.position?.salaryMax ?? null,
+        [Validators.min(0), Validators.max(10000000)],
+      ],
       technologies: [this.position?.technologies ?? [], Validators.required],
       languages: [this.position?.languages ?? [], Validators.required],
     });

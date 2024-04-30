@@ -3,7 +3,7 @@ CREATE TYPE seniority as ENUM
     'INTERN',
 	'JUNIOR',
 	'SENIOR',
-	'PROFESSIONAL',
+	'EXPERT',
 	'ANY'
 );
 

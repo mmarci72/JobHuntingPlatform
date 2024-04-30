@@ -1,6 +1,6 @@
 @if (positionFormGroup) {
   <div class="editor" [formGroup]="positionFormGroup">
-    <h2>Responsibilities Description:</h2>
+    <h2>{{ label }}:</h2>
     <angular-markdown-editor
       ngDefaultControl
       [textareaId]="formControlName"

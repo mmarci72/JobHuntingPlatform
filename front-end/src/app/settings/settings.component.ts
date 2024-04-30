@@ -1,9 +1,11 @@
-import { Component } from "@angular/core";
+import { AsyncPipe } from "@angular/common";
+import { Component, EventEmitter } from "@angular/core";
 import { MatButton } from "@angular/material/button";
 import { MatCheckbox } from "@angular/material/checkbox";
+import { MatIcon } from "@angular/material/icon";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { KeycloakService } from "keycloak-angular";
-import { catchError, EMPTY, of } from "rxjs";
+import { catchError, EMPTY, mergeMap, of } from "rxjs";
 
 import { UserNotification } from "../model/user-notification.model";
 import { AssetService } from "../service/asset.service";
@@ -15,7 +17,13 @@ import { SettingsPreferencesComponent } from "./settings-preferences/settings-pr
 @Component({
   selector: "app-settings",
   standalone: true,
-  imports: [SettingsPreferencesComponent, MatCheckbox, MatButton],
+  imports: [
+    SettingsPreferencesComponent,
+    MatCheckbox,
+    MatButton,
+    MatIcon,
+    AsyncPipe,
+  ],
   templateUrl: "./settings.component.html",
   styleUrl: "./settings.component.scss",
 })
@@ -31,6 +39,15 @@ export class SettingsComponent {
 
   private readonly successString = "Changes saved!";
   private readonly errorString = "Error saving changes!";
+
+  private username = this.keycloakService.getUsername();
+
+  protected resumeExists = false;
+
+  protected checkResumeExists = new EventEmitter<void>();
+  protected resumeExists$ = this.checkResumeExists.pipe(
+    mergeMap(() => this.assetService.doesResumeExist(this.username))
+  );
 
   constructor(
     private readonly keycloakService: KeycloakService,
@@ -58,6 +75,12 @@ export class SettingsComponent {
             preference.emailNotificationEnabled;
         });
     });
+
+    this.resumeExists$.subscribe(
+      doesResumeExist => (this.resumeExists = doesResumeExist)
+    );
+
+    this.checkResumeExists.next();
   }
 
   protected emailNotificationChange() {
@@ -97,7 +120,10 @@ export class SettingsComponent {
         })
       );
 
-      upload$.subscribe(() => this.openSnackBar(this.snackbarMessage));
+      upload$.subscribe(() => {
+        this.openSnackBar(this.snackbarMessage);
+        this.checkResumeExists.next();
+      });
     }
   }
 
@@ -132,5 +158,11 @@ export class SettingsComponent {
             .subscribe(() => this.openSnackBar(this.successString));
         }
       });
+  }
+
+  downloadResume() {
+    this.assetService
+      .getResume(this.username)
+      .subscribe(resume => window.open(resume));
   }
 }

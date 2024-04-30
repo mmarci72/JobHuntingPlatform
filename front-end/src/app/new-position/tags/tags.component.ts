@@ -6,6 +6,7 @@ import {
   MatChipGrid,
   MatChipInput,
   MatChipInputEvent,
+  MatChipRemove,
   MatChipRow,
 } from "@angular/material/chips";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
@@ -15,12 +16,13 @@ import { MatIcon } from "@angular/material/icon";
   selector: "app-tags",
   standalone: true,
   imports: [
-    MatChipGrid,
+    MatIcon,
+    MatChipRemove,
     MatChipRow,
+    ReactiveFormsModule,
+    MatChipGrid,
     MatLabel,
     MatFormField,
-    ReactiveFormsModule,
-    MatIcon,
     MatChipInput,
   ],
   templateUrl: "./tags.component.html",
@@ -44,7 +46,7 @@ export class TagsComponent {
   protected add(event: MatChipInputEvent) {
     const value: string = (event.value || "").trim();
 
-    if (value) {
+    if (value && !this.tagControl().value.find(tag => tag === value)) {
       this.tagControl().value.push(value);
     }
 

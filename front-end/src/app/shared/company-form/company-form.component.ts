@@ -56,9 +56,16 @@ export class CompanyFormComponent implements OnInit {
     this.companyFormGroup = formBuilder.group({
       name: ["", Validators.required],
       location: ["", Validators.required],
-      founded: [null, Validators.required],
-      sizeMin: [null, Validators.required],
-      sizeMax: [null, Validators.required],
+      founded: [
+        null,
+        [
+          Validators.required,
+          Validators.max(new Date().getFullYear()),
+          Validators.min(0),
+        ],
+      ],
+      sizeMin: [null, [Validators.required, Validators.min(0)]],
+      sizeMax: [null, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -107,14 +114,17 @@ export class CompanyFormComponent implements OnInit {
       this.companyService
         .postCompany(company, this.userName)
         .subscribe(company => {
-          this.showSnackbar();
           if (!this.logoFileName || !this.logo) {
             throw new Error("Logo must be selected");
           }
           if (!company.id) {
             throw new Error("Company id is null");
           }
-          this.assetService.postCompanyLogo(this.logo, company.id).subscribe();
+          this.assetService
+            .postCompanyLogo(this.logo, company.id)
+            .subscribe(() => {
+              window.location.reload();
+            });
         });
     }
   }
@@ -136,7 +146,7 @@ export class CompanyFormComponent implements OnInit {
   }
 
   private showSnackbar() {
-    this.snackBar.open("Company created successfully", "Ok", {
+    return this.snackBar.open("Company created successfully", "Ok", {
       duration: 1000,
     });
   }

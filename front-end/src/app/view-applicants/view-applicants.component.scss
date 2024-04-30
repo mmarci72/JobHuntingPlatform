@@ -11,10 +11,6 @@
 
 }
 
-.mat-mdc-checkbox {
-  --mdc-form-field-label-text-color: white;
-}
-
 table, mat-paginator {
   background-color: white;
   min-width: 60%;
@@ -25,13 +21,7 @@ mat-icon {
   cursor: pointer;
 }
 
-.mdc-checkbox__native-control {
-  --mat-full-pseudo-checkbox-unselected-icon-color: white !important;
-}
-
 #checkbox #checkbox-input {
-  border-color: white !important;
   color: white;
-  --mat-full-pseudo-checkbox-unselected-icon-color: white;
-  background-color: white !important;
+  background-color: white
 }

@@ -1,7 +1,6 @@
 package com.thesis.projectopportunities.mapping;
 
 import com.thesis.projectopportunities.dto.PreferenceDto;
-import com.thesis.projectopportunities.enums.RoleEnum;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
 import com.thesis.projectopportunities.model.Preference;
 import com.thesis.projectopportunities.model.SettingsPreference;
@@ -29,9 +28,6 @@ public interface PreferenceMapping {
 
 	@Named("convertPreferencesFromDto")
 	default SettingsPreference convertPreferencesFromDto(SettingsPreference preferences) {
-
-		preferences.setRoles(preferences.getRoles().stream().map(role ->
-			RoleEnum.toEnum(role).toString()).toList());
 		preferences.setSeniorities(preferences.getSeniorities().stream().map(seniority ->
 			SeniorityEnum.toEnum(seniority).toString()).toList());
 
@@ -40,7 +36,6 @@ public interface PreferenceMapping {
 
 	@Named("convertPreferencesToDto")
 	default SettingsPreference convertPreferencesToDto(SettingsPreference preferences) {
-		preferences.setRoles(preferences.getRoles().stream().map(role -> RoleEnum.valueOf(role).getLiteral()).toList());
 		preferences.setSeniorities(preferences.getSeniorities().stream()
 			.map(seniorities -> SeniorityEnum.valueOf(seniorities).getLiteral()).toList());
 

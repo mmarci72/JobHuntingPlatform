@@ -30,8 +30,10 @@
         placeholder="Minimum salary"
         required
         matInput />
-      @if (positionFormGroup.invalid) {
+      @if (positionFormGroup.hasError("required")) {
         <mat-error>This field is required</mat-error>
+      } @else if (positionFormGroup.get("salaryMin")?.invalid) {
+        <mat-error>Salary is invalid</mat-error>
       }
     </mat-form-field>
     -
@@ -41,6 +43,11 @@
         formControlName="salaryMax"
         placeholder="Maximum salary"
         matInput />
+      @if (positionFormGroup.hasError("required")) {
+        <mat-error>This field is required</mat-error>
+      } @else if (positionFormGroup.get("salaryMax")?.invalid) {
+        <mat-error>Salary is invalid</mat-error>
+      }
     </mat-form-field>
   </div>
 
