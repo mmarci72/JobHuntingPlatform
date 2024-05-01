@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { MatTabLink } from "@angular/material/tabs";
 import { RouterLink } from "@angular/router";
 import { KeycloakService } from "keycloak-angular";
@@ -13,7 +13,9 @@ import { KeycloakService } from "keycloak-angular";
 })
 export class HeaderComponent {
   protected username;
-  protected isInRole = false;
+
+  @Input()
+  public isInRole = false;
 
   constructor(private readonly keycloakService: KeycloakService) {
     this.username = keycloakService.getUsername();

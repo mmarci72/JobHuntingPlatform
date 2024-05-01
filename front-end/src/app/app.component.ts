@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { KeycloakService } from "keycloak-angular";
 
 import { HeaderComponent } from "./header/header.component";
 
@@ -13,4 +14,12 @@ import { HeaderComponent } from "./header/header.component";
 })
 export class AppComponent {
   title = "Job Hunting Portal";
+
+  protected isInRole = false;
+
+  constructor(private readonly keycloakService: KeycloakService) {}
+
+  checkForPermission() {
+    this.isInRole = this.keycloakService.isUserInRole("RECRUITER");
+  }
 }

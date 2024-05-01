@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum SeniorityEnum {
 	INTERN("Intern"),
 	JUNIOR("Junior"),
-	PROFESSIONAL("Professional"),
 	SENIOR("Senior"),
+	EXPERT("Expert"),
 	ANY("Any");
 
 	private final String literal;
@@ -24,8 +24,8 @@ public enum SeniorityEnum {
 			case "junior" -> {
 				return SeniorityEnum.JUNIOR;
 			}
-			case "professional" -> {
-				return SeniorityEnum.PROFESSIONAL;
+			case "expert" -> {
+				return SeniorityEnum.EXPERT;
 			}
 			case "senior" -> {
 				return SeniorityEnum.SENIOR;
@@ -34,7 +34,7 @@ public enum SeniorityEnum {
 				return SeniorityEnum.ANY;
 			}
 			default -> throw new IllegalArgumentException("Non existent seniority");
- 
+
 		}
 	}
 }

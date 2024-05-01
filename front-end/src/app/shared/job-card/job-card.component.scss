@@ -46,7 +46,11 @@ img {
 .info {
   margin-top: 10px;
   padding: 0 20px;
-  justify-content: space-around
+  justify-content: space-around;
+  max-width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .info h5 {
@@ -97,5 +101,11 @@ img {
 
 .listing.details>div p {
   font-size: 16px;
+  white-space: nowrap;
+}
+
+.text {
+  text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import com.thesis.projectopportunities.BaseSystemTest;
 import com.thesis.projectopportunities.dto.CompanyDto;
 import com.thesis.projectopportunities.dto.PositionDto;
-import com.thesis.projectopportunities.enums.RoleEnum;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
 import com.thesis.projectopportunities.enums.IndustryDomainEnum;
 import io.restassured.RestAssured;
@@ -82,7 +81,7 @@ class CompanyTest extends BaseSystemTest {
 
 		position.setPositionId(1);
 		position.setPostDate(LocalDateTime.now());
-		position.setRoleName(RoleEnum.PROJECT_MANAGER.toString());
+		position.setRoleName("Software Engineer");
 		position.setSeniorityName(SeniorityEnum.JUNIOR.toString());
 
 		newProject.setPositions(List.of(position));

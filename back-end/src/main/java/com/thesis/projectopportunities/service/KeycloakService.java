@@ -63,7 +63,7 @@ public class KeycloakService {
 
 	private Keycloak getKeycloakBuilder() {
 		return KeycloakBuilder.builder()
-			.serverUrl("http://localhost:8090")
+			.serverUrl(server)
 			.realm("master")
 			.username("user")
 			.password("admin")

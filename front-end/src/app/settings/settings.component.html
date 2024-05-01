@@ -1,31 +1,45 @@
 <div class="settings pt-2">
-  <mat-checkbox
-    [checked]="userNotification.emailNotificationEnabled ?? false"
-    (change)="emailNotificationChange()"
-    color="primary"
-    class="center">
-    <p>Enable email notifications when a new position is added</p>
-  </mat-checkbox>
-  <mat-checkbox
-    [checked]="userNotification.pushNotificationEnabled ?? false"
-    (change)="pushNotificationChange()"
-    color="primary"
-    class="center">
-    <p>Enable push notifications when a new position is added</p>
-  </mat-checkbox>
+  <div class="form-check center">
+    <input
+      type="checkbox"
+      id="emailNotifications"
+      class="form-check-input"
+      [checked]="userNotification.emailNotificationEnabled ?? false"
+      (change)="emailNotificationChange()" />
+    <label for="emailNotifications" class="form-check-label"
+      >Enable email notifications when a new position is added</label
+    >
+  </div>
+  <div class="form-check center">
+    <input
+      type="checkbox"
+      id="pushNotifications"
+      class="form-check-input"
+      [checked]="userNotification.pushNotificationEnabled ?? false"
+      (change)="pushNotificationChange()" />
+    <label for="pushNotifications" class="form-check-label"
+      >Enable push notifications when a new position is added</label
+    >
+  </div>
 
   <ng-container>
     <app-settings-preferences></app-settings-preferences>
   </ng-container>
 
-  <button
-    class="center"
-    mat-raised-button
-    color="primary"
-    (click)="fileUpload.click()">
-    Upload resume
-  </button>
-
+  <div class="resume">
+    <button mat-raised-button color="primary" (click)="fileUpload.click()">
+      Upload resume
+    </button>
+    @if (resumeExists) {
+      <button
+        mat-raised-button
+        color="primary"
+        class="download-resume"
+        (click)="downloadResume()">
+        Download resume
+      </button>
+    }
+  </div>
   <input
     type="file"
     class="file-input"

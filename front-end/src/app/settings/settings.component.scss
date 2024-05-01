@@ -18,3 +18,23 @@ p {
   margin: 0;
   color: white;
 }
+
+.resume {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.download-resume {
+  margin-left: 1.3rem;
+  cursor: pointer;
+}
+
+.form-check-input {
+  margin-right: 0.7rem;
+}
+
+.form-check {
+  margin-bottom: 0.5rem;
+}

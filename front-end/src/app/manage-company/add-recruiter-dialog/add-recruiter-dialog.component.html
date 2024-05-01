@@ -1,14 +1,10 @@
 <h1 mat-dialog-title>Add recruiter</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="outline" floatLabel="always" color="primary">
-    <input
-      class="username-input"
-      matInput
-      [(ngModel)]="username"
-      placeholder="username"
-      required />
+    <mat-label>Username</mat-label>
+    <input class="username-input" matInput [(ngModel)]="username" required />
   </mat-form-field>
-  <button matSuffix mat-raised-button color="primary" (click)="addRecruiter()">
+  <button mat-raised-button color="primary" (click)="addRecruiter()">
     Add
   </button>
 </div>

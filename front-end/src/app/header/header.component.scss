@@ -24,6 +24,10 @@ li {
   margin: 0.1px;
 }
 
+ul {
+  width: 100%;
+}
+
 .center {
   display: flex;
   margin: auto;
@@ -55,16 +59,18 @@ a:hover {
   font-size: 30px;
 }
 
-.settings-container {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 90%
+}
+.logos {
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  width: 10%
 }
 
-.logout-container {
-  position: absolute;
-  right: 3%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}

@@ -29,8 +29,10 @@
         placeholder="Foundation year"
         required
         matInput />
-      @if (companyFormGroup.invalid) {
+      @if (companyFormGroup.hasError("required")) {
         <mat-error>This field is required</mat-error>
+      } @else if (companyFormGroup.get("founded")?.invalid) {
+        <mat-error>Year is invalid</mat-error>
       }
     </mat-form-field>
     <div class="company-size">
