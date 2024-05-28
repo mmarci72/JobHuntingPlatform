@@ -25,7 +25,7 @@ class PreferenceTest extends BaseSystemTest {
 
 		RestAssured.given()
 			.get("/preferences/ujvarim").then()
-			.statusCode(HttpStatus.SC_OK).body("username", is("ujvarim"));
+			.statusCode(HttpStatus.SC_OK).body("userId", is("ujvarim"));
 	}
 
 	@Test
@@ -42,23 +42,19 @@ class PreferenceTest extends BaseSystemTest {
 			.contentType(ContentType.JSON).then()
 			.statusCode(HttpStatus.SC_OK);
 
-		preference.getPreferences().setRoles(List.of("Tester"));
-
 		RestAssured.given().body(preference)
 			.contentType(ContentType.JSON)
 			.patch("/preferences/ujvarim").then()
-			.body("preferences.roles", hasSize(1));
+			.body("preferences.seniorities", hasSize(2));
 	}
 
 	private Preference constructPreference() {
 		Preference preference = new Preference();
 
-		preference.setUsername("ujvarim");
+		preference.setUserId("ujvarim");
 
 		SettingsPreference settingsPreference = new SettingsPreference();
 
-		settingsPreference.setRoles(List.of("Tester", "Software Engineer"));
-		settingsPreference.setUnits(List.of("Banking"));
 		settingsPreference.setSeniorities(List.of("Senior", "Intern"));
 
 		preference.setPreferences(settingsPreference);

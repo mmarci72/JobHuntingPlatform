@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PreferenceDto {
 
 	@JsonProperty
-	private String username;
+	private String userId;
 
 	@JsonProperty
 	private SettingsPreference preferences;

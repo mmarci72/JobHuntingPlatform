@@ -82,8 +82,14 @@ public class UserNotificationService {
 		AtomicInteger successfulEmailCount = new AtomicInteger(0);
 
 		users.forEach(user -> {
+			var preference = preferenceRepo.findById(user.getUserId());
+			List<Position> filteredPositions = positions.stream()
+				.filter(position -> checkPreference(preference, position)).toList();
+			if (filteredPositions.isEmpty()) {
+				return;
+			}
 			try {
-				emailService.sendNewSummaryJobsEmail(subject, positions,
+				emailService.sendNewSummaryJobsEmail(subject, filteredPositions,
 					this.keycloakService.getUserDetails(user.getUserId()));
 				successfulEmailCount.getAndIncrement();
 			} catch (EmailNotSentException e) {
@@ -93,5 +99,9 @@ public class UserNotificationService {
 		});
 
 		LOGGER.debug(successfulEmailCount + " out of the " + users.size() + " email messages could be successfully sent");
+	}
+
+	private static boolean checkPreference(Optional<Preference> preference, Position position) {
+		return preference.isEmpty() || PreferenceService.checkPreferences(position, preference.get());
 	}
 }

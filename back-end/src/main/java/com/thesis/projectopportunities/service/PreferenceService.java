@@ -2,7 +2,6 @@ package com.thesis.projectopportunities.service;
 
 import com.thesis.projectopportunities.dto.PreferenceDto;
 import com.thesis.projectopportunities.enums.SeniorityEnum;
-import com.thesis.projectopportunities.enums.IndustryDomainEnum;
 import com.thesis.projectopportunities.mapping.PreferenceMapping;
 import com.thesis.projectopportunities.model.Preference;
 import com.thesis.projectopportunities.model.Position;
@@ -18,9 +17,11 @@ public class PreferenceService {
 
 	private final PreferenceMapping preferenceMapper;
 
-	public void update(String username, PreferenceDto preferenceDto) {
+	public void update(String userId, PreferenceDto preferenceDto) {
+
+		preferenceDto.setUserId(userId);
 		var preference =
-			preferenceRepo.findById(username);
+			preferenceRepo.findById(userId);
 
 		if (preference.isPresent()) {
 			preferenceMapper.update(preferenceDto, preference.get());
@@ -34,9 +35,9 @@ public class PreferenceService {
 	public static boolean checkPreferences(Position position, Preference preference) {
 		var preferences = preference.getPreferences();
 
-		return (preferences.getRoles().contains(position.getRoleName()) &&
-			(preferences.getSeniorities().contains(position.getSeniorityName().getLiteral()) || position.getSeniorityName()
-				.equals(SeniorityEnum.ANY)) &&
-			preferences.getUnits().stream().map(IndustryDomainEnum::toEnum).toList().contains(position.getCompany().getIndustryDomainName()));
+		return
+			(preferences.getSeniorities().stream()
+				.anyMatch(seniority -> position.getSeniorityName().getLiteral().equalsIgnoreCase(seniority)) || position.getSeniorityName()
+				.equals(SeniorityEnum.ANY));
 	}
 }

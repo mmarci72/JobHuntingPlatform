@@ -19,8 +19,8 @@ class UserNotificationTest extends BaseSystemTest {
 			.post("/notifications").then()
 			.statusCode(HttpStatus.SC_OK);
 
-		RestAssured.given().get("/notifications/ujvarim").then()
-			.statusCode(HttpStatus.SC_OK).body("username", equalTo("ujvarim"))
+		RestAssured.given().get("/notifications/test").then()
+			.statusCode(HttpStatus.SC_OK).body("userId", equalTo("test"))
 			.body("emailNotificationEnabled", equalTo(true))
 			.body("pushNotificationEnabled", equalTo(false));
 	}
@@ -43,18 +43,18 @@ class UserNotificationTest extends BaseSystemTest {
 		userNotification.setPushNotificationEnabled(true);
 
 		RestAssured.given().body(userNotification).contentType(ContentType.JSON)
-			.patch("/notifications/ujvarim").then()
+			.patch("/notifications/test").then()
 			.statusCode(HttpStatus.SC_OK);
 
-		RestAssured.given().get("/notifications/ujvarim").then()
-			.statusCode(HttpStatus.SC_OK).body("username", equalTo("ujvarim"))
+		RestAssured.given().get("/notifications/test").then()
+			.statusCode(HttpStatus.SC_OK).body("userId", equalTo("test"))
 			.body("emailNotificationEnabled", equalTo(false))
 			.body("pushNotificationEnabled", equalTo(true));
 	}
 
 	@Test
 	void test_add_new_notification() {
-		RestAssured.given().get("/notifications/ujvarim").then()
+		RestAssured.given().get("/notifications/test").then()
 			.statusCode(HttpStatus.SC_NOT_FOUND);
 
 
@@ -62,9 +62,9 @@ class UserNotificationTest extends BaseSystemTest {
 			.post("/notifications").then()
 			.statusCode(HttpStatus.SC_OK);
 
-		RestAssured.given().get("/notifications/ujvarim").then()
+		RestAssured.given().get("/notifications/test").then()
 			.statusCode(HttpStatus.SC_OK)
-			.body("username", equalTo("ujvarim"))
+			.body("userId", equalTo("test"))
 			.body("emailNotificationEnabled", equalTo(true))
 			.body("pushNotificationEnabled", equalTo(false));
 
@@ -75,7 +75,7 @@ class UserNotificationTest extends BaseSystemTest {
 
 		userNotification.setEmailNotificationEnabled(true);
 		userNotification.setPushNotificationEnabled(false);
-		userNotification.setUsername("ujvarim");
+		userNotification.setUserId("test");
 
 		return userNotification;
 	}
