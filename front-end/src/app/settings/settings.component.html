@@ -22,9 +22,12 @@
     >
   </div>
 
-  <ng-container>
+  @if (
+    userNotification.emailNotificationEnabled ||
+    userNotification.pushNotificationEnabled
+  ) {
     <app-settings-preferences></app-settings-preferences>
-  </ng-container>
+  }
 
   <div class="resume">
     <button mat-raised-button color="primary" (click)="fileUpload.click()">

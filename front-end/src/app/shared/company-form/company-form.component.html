@@ -65,19 +65,12 @@
       <input
         class="file-picker"
         id="file"
+        [files]="logo"
         type="file"
         required
         (change)="onFilePicked($event)"
         accept="image/*" />
-      <div
-        *ngIf="
-          (companyFormGroup.invalid &&
-            (companyFormGroup.dirty || companyFormGroup.touched) &&
-            companyFormGroup.get('companyLogo')?.errors?.['required']) ||
-          (logo && logoFileName)
-        ">
-        You must upload a logo
-      </div>
+      <div *ngIf="!logo || !logoFileName">You must upload a logo</div>
     </div>
 
     <button type="submit" mat-raised-button (change)="onFilePicked($event)">

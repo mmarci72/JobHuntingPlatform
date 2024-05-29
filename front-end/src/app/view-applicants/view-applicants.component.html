@@ -57,7 +57,9 @@
     <ng-container matColumnDef="resume">
       <th mat-header-cell *matHeaderCellDef>Resume</th>
       <td mat-cell *matCellDef="let application">
-        <mat-icon (click)="downloadResume(application.username)"
+        <mat-icon
+          (keyup)="approveApplication(application.id, true)"
+          (click)="downloadResume(application.username)"
           >download</mat-icon
         >
       </td>
@@ -75,14 +77,19 @@
           !application.reviewed ||
           (application.reviewed && !application.approved)
         ) {
-          <mat-icon (click)="approveApplication(application.id, true)"
+          <mat-icon
+            (keyup)="approveApplication(application.id, true)"
+            (click)="approveApplication(application.id, true)"
             >done</mat-icon
           >
-        } @else if (
+        }
+        @if (
           !application.reviewed ||
           (application.reviewed && application.approved)
         ) {
-          <mat-icon (click)="approveApplication(application.id, false)"
+          <mat-icon
+            (keyup)="approveApplication(application.id, true)"
+            (click)="approveApplication(application.id, false)"
             >close</mat-icon
           >
         }

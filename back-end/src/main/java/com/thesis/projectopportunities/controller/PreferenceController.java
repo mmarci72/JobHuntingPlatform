@@ -25,9 +25,9 @@ public class PreferenceController {
 
 	private final PreferenceService preferenceService;
 
-	@GetMapping("/preferences/{username}")
-	public PreferenceDto getPreferencesForUser(@PathVariable String username) {
-		return preferenceMapping.toPreference(preferenceRepo.findById(username)
+	@GetMapping("/preferences/{userId}")
+	public PreferenceDto getPreferencesForUser(@PathVariable String userId) {
+		return preferenceMapping.toPreference(preferenceRepo.findById(userId)
 			.orElseThrow(ResourceNotFoundException::new));
 	}
 
@@ -36,10 +36,10 @@ public class PreferenceController {
 		preferenceRepo.save(preferenceMapping.toPreference(preferenceDto));
 	}
 
-	@PatchMapping("/preferences/{username}")
-	public PreferenceDto patchPreferences(@PathVariable String username, @RequestBody PreferenceDto preferenceDto) {
-		preferenceService.update(username, preferenceDto);
+	@PatchMapping("/preferences/{userId}")
+	public PreferenceDto patchPreferences(@RequestBody PreferenceDto preferenceDto, @PathVariable String userId) {
+		preferenceService.update(userId, preferenceDto);
 
-		return preferenceMapping.toPreference(preferenceRepo.findById(username).orElseThrow(ResourceNotFoundException::new));
+		return preferenceMapping.toPreference(preferenceRepo.findById(userId).orElseThrow(ResourceNotFoundException::new));
 	}
 }

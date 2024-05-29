@@ -99,7 +99,7 @@ export class CompanyFormComponent implements OnInit {
       this.companyService
         .updateCompany(company, this.userName)
         .subscribe(() => {
-          this.showSnackbar();
+          this.showSnackbar("Company edited successfully");
           if (!this.logoFileName || !this.logo) {
             throw new Error("Logo must be selected");
           }
@@ -145,8 +145,8 @@ export class CompanyFormComponent implements OnInit {
     this.logo = file;
   }
 
-  private showSnackbar() {
-    return this.snackBar.open("Company created successfully", "Ok", {
+  private showSnackbar(message: string) {
+    return this.snackBar.open(message, "Ok", {
       duration: 1000,
     });
   }
@@ -158,7 +158,9 @@ export class CompanyFormComponent implements OnInit {
 
     this.assetService
       .getCompanyLogo(this.company.logoFileName)
-      .subscribe(logo => (this.logo = logo));
+      .subscribe(logo => {
+        this.logo = logo;
+      });
 
     this.logoFileName = this.company.logoFileName;
     this.doesCompanyExist = true;

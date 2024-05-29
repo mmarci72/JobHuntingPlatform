@@ -15,11 +15,11 @@ class SeniorityTest extends BaseSystemTest {
 	@Test
 	void test_get_all_seniority() {
 		List<String> seniorities = RestAssured.given().get("/seniorities").then()
-				.statusCode(HttpStatus.SC_OK)
-				.extract().jsonPath().getList("$", String.class);
+			.statusCode(HttpStatus.SC_OK)
+			.extract().jsonPath().getList("$", String.class);
 
 		Assertions.assertEquals(5, seniorities.size());
 
-		Assertions.assertTrue(seniorities.containsAll(List.of("Intern", "Junior", "Professional", "Senior")));
+		Assertions.assertTrue(seniorities.containsAll(List.of("Intern", "Junior", "Expert", "Senior")));
 	}
 }

@@ -36,7 +36,7 @@ class SubscriptionTest extends BaseSystemTest {
 	private Subscription constructNewSubscription() {
 		Subscription subscription = new Subscription();
 
-		subscription.setUsername("ujvarim");
+		subscription.setUserId("test");
 
 		PushSubscription pushSubscription = new PushSubscription();
 		pushSubscription.setEndpoint("test");
@@ -58,7 +58,7 @@ class SubscriptionTest extends BaseSystemTest {
 
 		userNotification.setEmailNotificationEnabled(true);
 		userNotification.setPushNotificationEnabled(true);
-		userNotification.setUsername("ujvarim");
+		userNotification.setUserId("test");
 
 		return userNotification;
 	}

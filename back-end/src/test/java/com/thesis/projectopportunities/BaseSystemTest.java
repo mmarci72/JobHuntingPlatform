@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.thesis.projectopportunities.configuration.keycloak.KeycloakConfiguration;
 import com.thesis.projectopportunities.service.EmailService;
+import com.thesis.projectopportunities.service.KeycloakService;
 import com.thesis.projectopportunities.service.SubscriptionService;
 import io.restassured.RestAssured;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,6 +48,9 @@ public abstract class BaseSystemTest {
 	protected KeycloakConfiguration keycloakConfiguration;
 
 	@MockBean
+	protected KeycloakService keycloakService;
+
+	@MockBean
 	protected EmailService emailService;
 
 	@MockBean
@@ -80,14 +84,13 @@ public abstract class BaseSystemTest {
 
 				OAuth2AuthenticatedPrincipal principal;
 
-				if ("ROLE_ADMIN_CLIENT".equals(role)) {
+				if ("ROLE_RECRUITER_CLIENT".equals(role)) {
 					principal = ADMIN_PRINCIPAL;
-				}
-				else {
+				} else {
 					principal = PUBLIC_PRINCIPAL;
 				}
 				OAuth2AccessToken accessToken = new OAuth2AccessToken(OAuth2AccessToken.TokenType.BEARER,
-						"asdf", Instant.now(), Instant.MAX);
+					"asdf", Instant.now(), Instant.MAX);
 				return new BearerTokenAuthentication(principal, accessToken, principal.getAuthorities());
 			}
 		};
@@ -95,11 +98,11 @@ public abstract class BaseSystemTest {
 		@Bean("loginConfigurer")
 		public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 			return http.cors(Customizer.withDefaults()).csrf(AbstractHttpConfigurer::disable)
-					.anonymous(it -> it.authenticationFilter(filter))
-					.authorizeHttpRequests(
-							auth -> auth.requestMatchers(HttpMethod.POST, "/projects").hasAuthority("ROLE_ADMIN_CLIENT")
-									.requestMatchers(HttpMethod.POST, "/positions").hasAuthority("ROLE_ADMIN_CLIENT").anyRequest()
-									.permitAll()).build();
+				.anonymous(it -> it.authenticationFilter(filter))
+				.authorizeHttpRequests(
+					auth -> auth.requestMatchers(HttpMethod.POST, "/companies").hasAuthority("ROLE_RECRUITER_CLIENT")
+						.requestMatchers(HttpMethod.POST, "/positions").hasAuthority("ROLE_RECRUITER_CLIENT").anyRequest()
+						.permitAll()).build();
 		}
 
 
@@ -124,9 +127,8 @@ public abstract class BaseSystemTest {
 				}
 				if (isAdmin) {
 					this.authorities = new HashSet<>();
-					this.authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN_CLIENT"));
-				}
-				else {
+					this.authorities.add(new SimpleGrantedAuthority("ROLE_RECRUITER_CLIENT"));
+				} else {
 					this.authorities = new HashSet<>();
 				}
 				this.attributes = Collections.unmodifiableMap(attributes);

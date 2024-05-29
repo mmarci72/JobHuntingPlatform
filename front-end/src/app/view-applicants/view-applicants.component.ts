@@ -99,7 +99,9 @@ export class ViewApplicantsComponent implements OnInit {
           )
         )
       )
-      .subscribe(applications => (this.dataSource.data = applications));
+      .subscribe(applications => {
+        this.dataSource.data = applications;
+      });
   }
 
   downloadResume(username: string) {

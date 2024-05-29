@@ -16,7 +16,7 @@ import org.hibernate.annotations.Type;
 public class Preference implements Serializable {
 
 	@Id
-	private String username;
+	private String userId;
 
 	@Type(JsonType.class)
 	@Column(columnDefinition = "jsonb")

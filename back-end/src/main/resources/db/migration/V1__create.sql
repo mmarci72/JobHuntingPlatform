@@ -38,7 +38,7 @@ CREATE TABLE company_permission (
 	company_id INT NOT NULL,
 	username varchar(255) NOT NULL,
 
-	FOREIGN KEY (company_id) REFERENCES company (id)
+	FOREIGN KEY (company_id) REFERENCES company (id) ON DELETE CASCADE
 );
 
 CREATE TABLE position
@@ -101,7 +101,7 @@ CREATE TABLE application
 
 CREATE TABLE preference
 (
-	username    varchar(255) PRIMARY KEY,
+	user_id    varchar(255) PRIMARY KEY,
 	preferences jsonb
 );
 

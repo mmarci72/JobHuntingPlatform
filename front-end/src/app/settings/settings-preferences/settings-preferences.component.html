@@ -1,0 +1,26 @@
+<form
+  [formGroup]="preferenceForm"
+  (ngSubmit)="savePreferences()"
+  [noValidate]="false"
+  class="text-center">
+  <h1 class="mt-4">Notification preferences</h1>
+  <p>Select what seniority you would like to get notifications for</p>
+
+  <mat-form-field>
+    <mat-select
+      placeholder="Any"
+      formControlName="seniority"
+      [panelWidth]="null"
+      multiple
+      [(ngModel)]="selectedSeniorities">
+      <mat-option *ngFor="let seniority of seniorities" [value]="seniority">
+        {{ seniority }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br />
+  <button class="save" mat-raised-button type="submit" color="primary">
+    Save
+  </button>
+</form>
