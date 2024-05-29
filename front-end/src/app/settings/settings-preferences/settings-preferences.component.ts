@@ -54,9 +54,10 @@ export class SettingsPreferencesComponent implements OnInit {
       unit: [""],
     });
 
-    this.keycloakService
-      .loadUserProfile()
-      .then(profile => (this.userId = profile.id));
+    this.keycloakService.loadUserProfile().then(profile => {
+      this.userId = profile.id;
+      this.getPreferences();
+    });
   }
 
   private getSeniorities() {
@@ -69,7 +70,6 @@ export class SettingsPreferencesComponent implements OnInit {
     if (!this.userId) {
       return;
     }
-
     this.preferenceService
       .getPreferencesForUser(this.userId)
       .pipe(catchError(() => of(null)))
@@ -111,6 +111,5 @@ export class SettingsPreferencesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSeniorities();
-    this.getPreferences();
   }
 }
