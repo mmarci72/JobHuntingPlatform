@@ -59,6 +59,13 @@ export class AssetService extends BaseService<Blob, string> {
       })
       .pipe(map(image => URL.createObjectURL(image)));
   }
+
+  public deleteResume(userName: string): Observable<void> {
+    return this.http.delete<void>(
+      `${this.fullURL}/${this.resumeEndpoint}/${userName}`
+    );
+  }
+
   public doesResumeExist(userName: string) {
     return this.http.get<boolean>(
       `${this.fullURL}/${this.resumeExistsEndpoint}/${userName}`

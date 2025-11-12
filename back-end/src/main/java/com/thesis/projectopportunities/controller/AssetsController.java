@@ -85,4 +85,11 @@ public class AssetsController {
 
 		return ResponseEntity.internalServerError().body("Error saving the resume");
 	}
+
+	@DeleteMapping("/assets/resume/{userName}")
+	public void deleteResume(@PathVariable String userName) {
+		var fileName = userName + ".pdf";
+		this.assetService.deleteResume(fileName);
+
+	}
 }

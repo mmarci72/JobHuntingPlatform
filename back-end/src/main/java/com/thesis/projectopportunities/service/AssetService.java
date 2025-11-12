@@ -102,9 +102,21 @@ public class AssetService {
 	public boolean writeResume(byte[] file, String fileName) {
 		String path = RESUME_FOLDER_NAME + fileName;
 
-
 		return this.saveFile(file, path);
 	}
+
+	public void deleteResume(String fileName) {
+		String path = assetsFolder + RESUME_FOLDER_NAME + fileName;
+		Path resumePath = Paths.get(path);
+
+		try {
+			Files.deleteIfExists(resumePath);
+		} catch (IOException e) {
+			throw new IllegalArgumentException("Error deleting the resume", e);
+		}
+
+	}
+
 
 	private boolean saveFile(byte[] file, String path) {
 		String fullPath = assetsFolder + path;

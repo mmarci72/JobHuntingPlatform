@@ -1,32 +1,22 @@
 <div class="settings pt-2">
   <div class="form-check center">
-    <input
-      type="checkbox"
-      id="emailNotifications"
-      class="form-check-input"
-      [checked]="userNotification.emailNotificationEnabled ?? false"
-      (change)="emailNotificationChange()" />
-    <label for="emailNotifications" class="form-check-label"
-      >Enable email notifications when a new position is added</label
-    >
+    <input type="checkbox" id="emailNotifications" class="form-check-input"
+      [checked]="userNotification.emailNotificationEnabled ?? false" (change)="emailNotificationChange()" />
+    <label for="emailNotifications" class="form-check-label">Enable email notifications when a new position is
+      added</label>
   </div>
   <div class="form-check center">
-    <input
-      type="checkbox"
-      id="pushNotifications"
-      class="form-check-input"
-      [checked]="userNotification.pushNotificationEnabled ?? false"
-      (change)="pushNotificationChange()" />
-    <label for="pushNotifications" class="form-check-label"
-      >Enable push notifications when a new position is added</label
-    >
+    <input type="checkbox" id="pushNotifications" class="form-check-input"
+      [checked]="userNotification.pushNotificationEnabled ?? false" (change)="pushNotificationChange()" />
+    <label for="pushNotifications" class="form-check-label">Enable push notifications when a new position is
+      added</label>
   </div>
 
   @if (
-    userNotification.emailNotificationEnabled ||
-    userNotification.pushNotificationEnabled
+  userNotification.emailNotificationEnabled ||
+  userNotification.pushNotificationEnabled
   ) {
-    <app-settings-preferences></app-settings-preferences>
+  <app-settings-preferences></app-settings-preferences>
   }
 
   <div class="resume">
@@ -34,18 +24,13 @@
       Upload resume
     </button>
     @if (resumeExists) {
-      <button
-        mat-raised-button
-        color="primary"
-        class="download-resume"
-        (click)="downloadResume()">
-        Download resume
-      </button>
+    <button mat-raised-button color="primary" class="download-resume" (click)="downloadResume()">
+      Download resume
+    </button>
+    <button mat-raised-button color="primary" class="download-resume" (click)="deleteResume()">
+      Delete resume
+    </button>
     }
   </div>
-  <input
-    type="file"
-    class="file-input"
-    (change)="uploadResume($event)"
-    #fileUpload />
+  <input type="file" class="file-input" (change)="uploadResume($event)" #fileUpload />
 </div>

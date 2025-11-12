@@ -165,4 +165,11 @@ export class SettingsComponent {
       .getResume(this.username)
       .subscribe(resume => window.open(resume));
   }
+
+  deleteResume() {
+    this.assetService.deleteResume(this.username).subscribe(() => {
+      this.checkResumeExists.next();
+      this.openSnackBar(this.successString);
+    });
+  }
 }
